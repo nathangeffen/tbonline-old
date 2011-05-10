@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{{block.super}} - Posts{% endblock %}
+
+{% block content %}
+
+<p id=count-posts>{% trans "Number of posts" %}: {{posts|length}}</p>
+
+{% include "post/post_list_snippet.html" %}
+
+{% include "post/paginator_snippet.html" %}
+
+{% endblock %}

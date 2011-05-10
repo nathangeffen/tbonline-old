@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{{block.super}} - {{image.title}}{% endblock %}
+
+{% block content %}
+
+<h1 id="image-title">{{image.title}}</h1>
+
+{% if image.get_credits %}
+    <p class="byline">{% trans "Credits" %}: {{image.get_credits}}</p>
+{% endif %}
+
+
+<div class="image-with-caption">
+
+ <a href="{{image.url}}" title="{{post.image.title}}">
+ <img src="{{image.file}}" alt={{post.image.title}}/> 
+ </a>
+ <p class="caption">{{image.caption|safe}}</p>
+
+</div>
+
+{{image.description|safe}}
+
+{% endblock %}

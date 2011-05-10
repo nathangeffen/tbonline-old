@@ -1,0 +1,7 @@
+{% for post in posts %}
+	
+	<div class="post-entry {% if post.sticky %}sticky{% endif %}">
+	{% include post.get_post_list_template %}
+	</div>
+	
+{% endfor %}

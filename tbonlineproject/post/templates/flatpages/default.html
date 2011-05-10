@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+
+{% load i18n %}
+{% load comments %}
+ 
+{% block title %}{{ block.super }} - {{ flatpage.title }}{% endblock %}
+
+{% block content %}
+
+{{ flatpage.content }}
+
+{% if flatpage.enable_comments %}
+
+    <div id="flatpage-comment-count">
+    {% get_comment_count for flatpage as comment_count %}
+    {{comment_count}} {% trans "comment" %}{{ comment_count|pluralize }}
+    </div>
+
+    <div id="flatpage-comments">
+   
+    <h2 id="comment-heading">
+    {% trans "Comments in chronological order" %}
+    </h2> 
+
+    {% render_comment_list for flatpage %}
+
+    {% render_comment_form for flatpage %}        
+
+    </div>
+       
+{% endif %}
+
+{% endblock %}

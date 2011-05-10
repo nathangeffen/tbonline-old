@@ -1,0 +1,36 @@
+{% extends "post/post_detail.html" %}
+{% load url from future %}
+
+{% block sidebar-column-2 %}
+
+<div id="toc">
+{{story.title}}
+{% with story.get_posts as toc %}
+
+<ol>
+
+{% for entry in toc %}
+
+    <li>
+
+    {% if entry.id != post.id %}
+        <a href=
+        "{% url "story_post" story.date_published.year story.date_published.month story.date_published.day story.slug entry.id %}"
+        >{{entry.title}}</a>
+    {% else %}
+        {{entry.title}}
+    {% endif %} 
+    
+    </li>
+
+{% endfor %}
+
+</ol>
+
+{% endwith %}
+
+</div>
+
+{{block.super}}
+
+{% endblock %}

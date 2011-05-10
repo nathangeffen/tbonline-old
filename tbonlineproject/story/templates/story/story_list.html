@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% load i18n %}
+
+{% block title %}{{block.super}} - {% trans "Stories" %}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Stories" %}</h1>
+
+{% for story in stories %}
+
+<h2><a href="{% url "story_detail" story.date_published.year story.date_published.month story.date_published.day story.slug %}">{{story.title}}</a></h1>
+
+{{story.description|safe}}
+
+{% endfor %}
+
+{% endblock %}

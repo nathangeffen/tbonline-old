@@ -1,0 +1,9 @@
+{% load url from future %}
+{% load i18n %}
+
+{% trans "Tags" %}: 
+{% for taggeditem in post.tags.all %}
+    <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{taggeditem.tag}}</a>
+{% empty %}
+    {% trans "None" %}
+{% endfor %} 

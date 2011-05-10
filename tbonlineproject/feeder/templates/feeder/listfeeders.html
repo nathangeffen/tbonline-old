@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% load i18n %}
+
+{% block title %}{{block.super}} - feeds{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Feeds read by this site" %}</h1>
+
+{% for feed in feeds %}
+    <p><a href="{% url "detailfeeder" feed.slug %}">{{feed.title}}</a></p>        
+{% empty %}
+    {% trans "There are no feeds currently read by this site" %}
+{% endfor %}
+
+{% endblock %}

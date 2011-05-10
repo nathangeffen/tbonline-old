@@ -1,0 +1,33 @@
+{% load i18n %}
+{% load comments %}
+
+<h1 class="title">{{post.title}}</h1>
+
+{% include 'post/byline_snippet.html' %}
+{% include 'post/dateline_snippet.html' %}
+
+{% block media %}{% endblock %}
+
+<div class="introduction">{{post.introduction|safe}}</div>
+
+<div class="body">{{post.body|safe}}</div>
+
+<div class="post-information">
+
+    {% include 'post/post_information_snippet.html' %}
+
+</div>
+
+<div id="comments-section">
+    
+    {% include 'post/comments_snippet.html' %}
+    
+</div>
+
+{% if post.copyright %}
+    {% with post.copyright as copyright %}
+        <div id="copyright">
+            {% include 'copyright/copyright_snippet.html' %}
+        </div>
+    {% endwith %}
+{% endif %}

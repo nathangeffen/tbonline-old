@@ -1,0 +1,33 @@
+{% load url from future %}
+{% load comments %}
+{% load i18n %}
+
+{% if comments_allowed == "authenticate" %}
+    <p>
+    {% trans "Please" %}
+    <a href="{% url 'django.contrib.auth.views.login' %}?next={{post.get_absolute_url}}%23comment_form">
+    {% trans "login" %}</a>
+    {% trans "or" %}
+    <a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}%23comment_form">            
+    {% trans "register" %}</a>
+    {% trans "to comment" %}.
+    </p>
+{% endif %}
+
+{% if comments_allowed == 'closed' %}
+    <p>
+    {% trans "This article is closed for comments" %}
+    </p>
+{% endif %}
+
+
+<h2 id="comment-heading">
+{% trans "Comments in chronological order" %}
+</h2> 
+
+{% render_comment_list for post %}
+
+{% if comments_allowed == 'true' %}
+    {% render_comment_form for post %}
+{% endif %}        
+

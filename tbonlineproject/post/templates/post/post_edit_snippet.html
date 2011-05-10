@@ -1,0 +1,9 @@
+{% load i18n %}
+
+{% if user.is_superuser %}
+        
+        <p>
+        <a href="{% url admin:post_basicpost_change post.id %}">{% trans "Edit" %}</a>
+        </p>    
+
+{% endif %}
