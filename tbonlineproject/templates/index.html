@@ -11,47 +11,9 @@
 
 {% include "post/paginator_snippet.html" %}
 
-{% block sidebar-column-1 %}
-    <div id="sidebar-column-1">
-    {% get_feeder "quackdown" as feeder %}
-
-    {% if feeder %}    
-
-            <h2>{{ feeder.title }}</h2>
-            <p>{{ feeder.description }}</p>
-            
-            {% for entry in feeder.get_rss_items %}
-                <h3><a href="{{entry.link}}">{{entry.title}}</a></h3>
-                {{entry.description|safe}}                
-            {% endfor %}
-
-    {% endif %}
-    </div>
-
-{% endblock %}
-
-{% block sidebar-column-2 %}
-<div id="sidebar-column-2>
-
-    <div id="feeds">
-        {% get_active_feeders as feeders %}
-
-        {% for feeder in feeders %}
-            <h2>{{ feeder.title }}</h2>
-            <p>{{ feeder.description }}</p>
-            
-            {% for entry in feeder.get_rss_items %}
-                <h3><a href="{{entry.link}}">{{entry.title}}</a></h3>
-                {{entry.description|safe}}                
-            {% endfor %}
-            
-        {% endfor %}        
-    
-    </div>
-
-</div>
 {% endblock %}
 
 
 
-{% endblock %}
+
+

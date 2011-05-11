@@ -59,7 +59,7 @@ class PostWithImageAdmin(BasicPostAdmin):
         
         (_('Content'), {
          'classes' : ['collapse open',],
-         'fields': ('teaser','introduction','body')
+         'fields': ('teaser','introduction','body', 'pullout_text',)
         }),
 
         (_('Image'), {

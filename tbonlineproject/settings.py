@@ -1,27 +1,13 @@
-# Django settings for tbonline project.
-
 import os
 import logging
 
-logger = logging.getLogger('projectlogger')
-logging.basicConfig(
-                    level = logging.DEBUG,
-                    format = '%(asctime)s %(levelname)s %(message)s'
-                    )
-
-try:
-    from local_settings import *
-except ImportError:
-    logger.warning("No local_settings.py file. Using defaults.")
-    DEBUG = True
-    SECRET_KEY = "12345"
-
-TEMPLATE_DEBUG = DEBUG
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
+
+SECRET_KEY = "abcde"
 ADMINS = (
-    ('TB Online Administrator', 'admin@tbonline.info'),
+          ('Administrator', 'admin@example.com'),
 )
 
 MANAGERS = ADMINS
@@ -109,6 +95,7 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -116,7 +103,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
-)
+    )  
+
+
 
 ROOT_URLCONF = 'tbonlineproject.urls'
 
@@ -124,6 +113,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    
     os.path.join(SITE_ROOT, 'templates'),
     os.path.join(SITE_ROOT, 'post/templates'),
     os.path.join(SITE_ROOT, 'gallery/templates'),
@@ -148,7 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'registration',
     'tagging',
-    'south',
+    #'south',
     'haystack',
     'enhancedtext',    
     'copyright',
@@ -189,9 +179,6 @@ AUTHENTICATION_BACKENDS = (
     'accounts.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend'
 )
-
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     
 ACCOUNT_ACTIVATION_DAYS = 2
 LOGIN_REDIRECT_URL = '/'
@@ -200,3 +187,37 @@ HAYSTACK_SITECONF = 'tbonlineproject.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'
 HAYSTACK_WHOOSH_PATH = os.path.join(SITE_ROOT, 'whoosh_search_index')
 HAYSTACK_XAPIAN_PATH = os.path.join(SITE_ROOT, 'xapian_search_index')
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+                               "django.core.context_processors.debug",
+                               "django.core.context_processors.i18n",
+                               "django.core.context_processors.media",
+                               "django.core.context_processors.static",
+                               "django.core.context_processors.request",
+                               "django.contrib.messages.context_processors.messages",
+                               "post.context_processors.current_site")
+
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+logging.basicConfig(
+                    level = logging.WARNING,
+                    format = '%(asctime)s %(levelname)s %(message)s'
+                    )
+
+logger = logging.getLogger('projectlogger')
+
+try:
+    import local_settings
+    from local_settings import *          
+except ImportError:
+    logger.warning("No local_settings file.")
+else: 
+    PROJECT_TEMPLATE_DIR = getattr(local_settings, "PROJECT_TEMPLATE_DIR", None)
+    
+    if PROJECT_TEMPLATE_DIR:
+        TEMPLATE_DIRS =  (PROJECT_TEMPLATE_DIR,) + TEMPLATE_DIRS

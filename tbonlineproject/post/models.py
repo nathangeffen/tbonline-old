@@ -37,6 +37,9 @@ class BasicPost(models.Model):
     body = EnhancedTextField(blank=True,
             default=EnhancedText("", "\W"))
         
+    pullout_text = models.CharField(max_length=400, blank=True,
+                        help_text=_('Usually used for a nice quote that will '
+                                    'be prominently displayed'))
     slug = models.SlugField(help_text=_('Used in the URL to identify the post.'))    
     homepage = models.BooleanField(default=True,
             help_text=_('Check to display on home page'))

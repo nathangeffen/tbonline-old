@@ -1,71 +1,9 @@
+{% extends 'zolastandard-201104.html' %}
 {% load i18n %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block website-meta %}
+    <meta name="author" content="Nathan Geffen"/>
+    <meta name="description" content="Barebones Django framework"/>
+    <meta name="keywords" content="Website"/>
+{% endblock %}
 
-<head>
-
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta name="author" content="Nathan Geffen"/>
-	<meta name="description" content="Barebones Django framework"/>
-	<meta name="keywords" content="Website"/>        
-
-	<script type="text/javascript">
-	
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-22851877-1']);
-	  _gaq.push(['_trackPageview']);
-	
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	
-	</script>
-
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}style.css"/>
-             
-    <title>{% block title %}A Django Website Framework{% endblock %}</title>
-
-</head>
-
-<body>
-
-<div id="wrapper">
-
-    <div id="header">
-
-        <div id="logo">
-               <a href="/" title="Barebones site for Django framework">
-               Barebones site for Django framework
-               </a>        
-        </div> <!--logo-->       
-
-	</div> <!-- header --> 
-
-    <div id="columns">
-
-
-		{% block sidebar-column-1 %}
-		{% endblock %}
-	
-        <div id="content-column">
-        {% block content %}
-        {% endblock %}
-        </div>
-
-		{% block sidebar-column-2 %}
-		{% endblock %}
-
-    </div>
-
-    <div id="footer">
-    {% block footer %}
-		
-    {% endblock %}
-    </div>      
-
-</div>	<!-- wrapper -->
-
-</body>

@@ -16,8 +16,8 @@ class SingleFeedRetriever(template.Node):
         try:
             context[self.var_name] = Feed.objects.get(slug=self.slug) 
         except Feed.DoesNotExist:
-            return ''
-
+            return ""
+    
 
 
 def do_get_feeder(parser, token):
@@ -46,6 +46,8 @@ class AllFeedRetriever(template.Node):
 
     def render(self, context):
         context[self.var_name] = Feed.objects.filter(active=True)
+        if len(context[self.var_name]) == 0:
+            return ""
 
 
 def do_get_active_feeders(parser, token):
