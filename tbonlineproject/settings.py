@@ -119,7 +119,6 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'gallery/templates'),
     os.path.join(SITE_ROOT, 'feeder/templates'),
     os.path.join(SITE_ROOT, 'copyright/templates'),
-    os.path.join(SITE_ROOT, 'enhancedtext/templates'),
 )
 
 INSTALLED_APPS = (
@@ -140,8 +139,7 @@ INSTALLED_APPS = (
     'registration',
     'tagging',
     #'south',
-    'haystack',
-    'enhancedtext',    
+    'haystack',    
     'copyright',
     'credit',
     'gallery',

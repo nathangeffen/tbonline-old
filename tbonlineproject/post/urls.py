@@ -43,4 +43,7 @@ urlpatterns = patterns('post.views',
     # List view by tag
     url(r'^tag/(?P<tag>[\"\w\" \-]+)/$', PostsByTagView.as_view(), name='post_tag_list'),
 
+
+    # Preview for Markdown for enhanced text fields
+    (r'^markdownpreview/$', 'markdownpreview'),
 )

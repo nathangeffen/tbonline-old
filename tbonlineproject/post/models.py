@@ -19,7 +19,7 @@ from credit.utils import credit_list
 from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
-from enhancedtext.fields import EnhancedTextField, EnhancedText
+from fields import EnhancedTextField, EnhancedText
 
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.
@@ -92,12 +92,10 @@ class BasicPost(models.Model):
 
     def get_teaser(self):
         if unicode(self.teaser):
-            print 'Got here teaser ', self.teaser
             return self.teaser
         if unicode(self.introduction):
-            print 'Got here intro ', self.introduction
             return self.introduction
-        print 'Got here neither'
+
         return truncate_html_words(unicode(self.body), settings.TRUNCATE_WORDS)
         
     def get_introduction(self):
