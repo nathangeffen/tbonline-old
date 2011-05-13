@@ -1,0 +1,51 @@
+{% load i18n %}
+{% load url from future %}
+
+<div id="main-menu">
+
+<ul>
+    <li>
+        {% url 'home' as index_url %}
+        <a href="{{index_url}}" {% if request.path == index_url %}class="current"{% endif %}>
+        {% trans "Home" %} 
+        </a>            
+    </li>
+    <li>
+        <a href="/about/" {% if request.path == "/about/" %}class="current"{% endif %}>
+        {% trans "About" %} 
+        </a>            
+    </li>
+    <li>
+        <a href="/medicines/" {% if request.path == "/medicines/" %}class="current"{% endif %}>
+        {% trans "Medicines" %} 
+        </a>            
+    </li>    
+    <li>
+        <a href="/diagnostics/" {% if request.path == "/diagnostics/" %}class="current"{% endif %}>
+        {% trans "Diagnostics" %} 
+        </a>            
+    </li>        
+    <li>
+        <a href="/learn/" {% if request.path == "/learn/" %}class="current"{% endif %}>
+        {% trans "Learn" %} 
+        </a>            
+    </li>
+    <li>
+        <a href="/documents/" {% if request.path == "/documents/" %}class="current"{% endif %}>
+        {% trans "Documents" %} 
+        </a>            
+    </li>                            
+    <li>
+        {% url 'contact' as contact_url  %}
+        <a href="{{contact_url}}"{% if request.path == contact_url %}class="current"{% endif %}>
+        {% trans "Contact" %} 
+        </a>            
+    </li>
+    
+    {% if user.is_staff %}
+        <li><a href="/admin/">{% trans "Admin" %}</a></li>
+    {% endif %}
+    
+</ul>
+
+</div>

@@ -2,6 +2,22 @@
 {% load comments %}
 {% load i18n %}
 
+<div id="comment-heading">
+{% get_comment_count for post as comment_count %}
+
+{% if comment_count > 0 %}
+    <h2>{% trans "Comments in chronological order" %}</h2>
+{% endif %}
+</div> 
+
+{% render_comment_list for post %}
+
+{% if comments_allowed == 'true' %}
+    <p id="invite-comment">{% trans "Please leave a comment." %}</p>
+    {% render_comment_form for post %}
+{% endif %}        
+
+
 {% if comments_allowed == "authenticate" %}
     <p>
     {% trans "Please" %}
@@ -20,14 +36,4 @@
     </p>
 {% endif %}
 
-
-<h2 id="comment-heading">
-{% trans "Comments in chronological order" %}
-</h2> 
-
-{% render_comment_list for post %}
-
-{% if comments_allowed == 'true' %}
-    {% render_comment_form for post %}
-{% endif %}        
 

@@ -1,8 +1,9 @@
 body, html {
     background: #a7a09a;
     color: #000;    
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 10pt;
+    font-family: Arial,Helmet,Freesans,sans-serif;
+    font-size: 11.5pt;
+    line-height: 20px;
     margin:0;
     padding:0;
     background: #FFFFFF url("/media/tbonline/images/tbonlinemasthead.jpeg") repeat-x;
@@ -38,13 +39,13 @@ body, html {
 #search {
     position: absolute;
     font-weight: bold;
-    top: 20%;
-    left: 61%;    
+    top: 15%;
+    left: 60.5%;    
 }
 
 #feed {
     position: absolute;
-    top: 20%;
+    top: 15.5%;
     left: 81%;
 }
 
@@ -106,20 +107,24 @@ body, html {
 #content {
     background: #FFFFFF;
 	float: left;
-    width: 650px;
+    width: 635px;
     padding-bottom: 5px;
+    margin-right: 10px;
 }
 
-#content h1 {margin: 0px;}
+#content h1 {
+	margin: 0px;
+	padding-top: 5px;
+}
 
 #content p {margin: 5px;} 
 
 
 .post-entry {
-    border-bottom: solid;
+    border-bottom: 3px solid #DDDDDD;
     border-width: 1px;
-    padding-bottom: 25px;
-    margin-bottom: 25px;         
+    padding-bottom: 15px; 
+    margin-bottom: 15px;         
 }
 
 
@@ -170,19 +175,83 @@ span.last-updated {
 } 
 
 .teaser {
-    font-size: 11pt;
     padding-top: 5px;	
+}
+
+.introduction {
+    font-size: 13pt;
+    font-style: italic;
+    padding-top: 5px;   
 }
 
 .post-information {
     clear: both;	
 }
 
+.post-body {
+	clear: both;
+    border-bottom: 3px solid #DDDDDD;
+    border-width: 1px;
+    margin-bottom: 15px;
+}
+
+p#invite-comment {font-weight: bold; }
+
+form {
+    border: 2px solid;
+    padding: 5px;
+}
+
+
+#search form {
+    border: none;	
+}
+
+label {
+    display: block;
+    font-size: 110%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+ul.errorlist {
+    color: red;
+    list-style-type: none;	
+    margin: 10px 0 0 0; 
+    padding: 10px 0 0 0; 
+}
+
+dl#comments dt {
+    font-size: 110%;
+    font-weight: bold;	
+}
+
+dl#comments dd {
+    -moz-border-radius: 10px 10px 10px 10px;
+    background: none repeat scroll 0 0 #DDDDDD;
+    margin: 0 20px;
+    padding: 5px;
+    margin: 5px 5px 20px 5px;
+}
+
+.comment-flag {
+	margin-top: 0px;
+    margin-bottom: 25px;	
+}
+
 #sidebar-1 { 
-    margin: 0;
+	font-size: 10pt;
+	line-height: 15px;
+    margin-left: 15px;
+    margin-bottom: 15px;
     float: left;
-    width: 300px;
-    
+    width: 290px;
+}
+
+.featured-block {
+    background: #F8F8F8;	
+    padding: 5px;
+    margin-bottom: 5px;
 }
 
 #footer {

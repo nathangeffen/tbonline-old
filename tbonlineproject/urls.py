@@ -2,7 +2,11 @@ from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
 
+from contact_form.views import contact_form
+
 from post.views import PublishedFrontPagePostsView
+
+from post.forms import EnhancedContactForm
 
 admin.autodiscover()
 
@@ -17,6 +21,8 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^accounts/', include('registration.urls')),
     (r'^search/', include('haystack.urls')),
+    url(r'^contact/$', contact_form, {'form_class': EnhancedContactForm}, name='contact'),                            
+    (r'^contact/', include('contact_form.urls')),
     (r'^enhancedtext/', include('enhancedtext.urls')),    
     (r'^grappelli/', include('grappelli.urls')),
     (r'^admin/filebrowser/', include('filebrowser.urls')),

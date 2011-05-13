@@ -6,6 +6,8 @@ from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext as _
 from django.contrib.flatpages.admin import FlatPageAdmin
 from django.contrib.flatpages.models import FlatPage
+from django.contrib.comments.models import Comment, CommentFlag
+from django.contrib.comments.admin import CommentsAdmin
 from django import forms
 
 from tagging.models import TaggedItem  
@@ -90,8 +92,15 @@ class FlatPageForm(forms.ModelForm):
 class CustomFlatPageAdmin(FlatPageAdmin):
     form = FlatPageForm 
 
+class CustomCommentAdmin(CommentsAdmin):
+    list_display = ('id', 'name', 'content_type', 'object_pk', 'ip_address', 'submit_date', 'is_public', 'is_removed')
+
 admin.site.register(BasicPost, BasicPostAdmin)
 admin.site.register(PostWithImage, PostWithImageAdmin)
 
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, CustomFlatPageAdmin)
+
+admin.site.unregister(Comment)
+admin.site.register(Comment, CustomCommentAdmin)
+admin.site.register(CommentFlag)

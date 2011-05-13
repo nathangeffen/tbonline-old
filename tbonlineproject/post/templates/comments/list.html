@@ -1,10 +1,38 @@
+{% load i18n %}
+{% load markup %}
+
 <dl id="comments">
   {% for comment in comment_list %}
     <dt id="c{{ comment.id }}">
-        {{ comment.submit_date }} - {{ comment.name }}
+        {% if comment.user_url %}
+            <a name="c{{comment.id}}" href="{{comment.user_url}}">{{comment.user_name}}</a>
+        {% else %}
+            <a name="c{{comment.id}}"></a>{{comment.user_name}}
+        {% endif %}
+        {% trans "wrote on" %} {{comment.submit_date|date:"j F Y"}}
+        {% trans "at" %} {{comment.submit_date|time}}
     </dt>
     <dd>
-        <p>{{ comment.comment }}</p>
+        {{comment.comment|markdown:"safe,tables"}}
     </dd>
+    
+    <div class="comment-flag">
+            {% if user.is_authenticated %}
+                <p>
+                <a href="{% url django.contrib.comments.views.moderation.flag comment.id %}">
+                {% trans "Flag this comment as inappropriate" %}</a> 
+            {% endif %}
+            {% if perms.comments.can_moderate %}
+                |
+                <a href="{% url django.contrib.comments.views.moderation.delete comment.id %}">
+                {%trans "Delete"%}</a>  
+                </p>
+            {% endif %}
+    </div>
+   
   {% endfor %}
 </dl>
+
+
+            
+  

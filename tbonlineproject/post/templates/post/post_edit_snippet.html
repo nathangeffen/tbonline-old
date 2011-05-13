@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% if user.is_superuser %}
+{% if perms.post.change_basicpost %}
         
         <p>
         <a href="{% url admin:post_basicpost_change post.id %}">{% trans "Edit" %}</a>
