@@ -1,6 +1,8 @@
 {% load i18n %}
 
-<form method="get" action="/search/">
+<div id="search">
+    <form method="get" action="/search/">
     <input type="text" name="q" id="id_q" />
     <input type="submit" value={% trans "Search" %}>    
-</form>           
+    </form>           
+</div>

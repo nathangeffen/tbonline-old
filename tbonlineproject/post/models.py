@@ -8,7 +8,7 @@ import settings
 from django.db import models
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
-
+from django.utils.text import truncate_html_words
 from model_utils.managers import InheritanceManager 
 
 
@@ -89,7 +89,24 @@ class BasicPost(models.Model):
             return self.introduction
         else:
             return self.teaser
-            
+
+    def get_teaser(self):
+        if unicode(self.teaser):
+            print 'Got here teaser ', self.teaser
+            return self.teaser
+        if unicode(self.introduction):
+            print 'Got here intro ', self.introduction
+            return self.introduction
+        print 'Got here neither'
+        return truncate_html_words(unicode(self.body), settings.TRUNCATE_WORDS)
+        
+    def get_introduction(self):
+        if unicode(self.introduction):
+            return self.introduction
+        if unicode(self.teaser):
+            return self.teaser
+        return ""
+                        
     @models.permalink
     def get_absolute_url(self):
         if self.date_published:

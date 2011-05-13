@@ -1,8 +1,8 @@
 {% load i18n %}
 
-
-<a href="{% block feed-url%}posts/feed{% endblock %}">
+<div id="feed">
+    <a href="{% block feed-url%}posts/feed{% endblock %}">
     <img src="{{STATIC_URL}}post/icons/feed.png" 
     alt="RSS Feed" title="{% trans "RSS Feed" %}"/>
-</a>
-
+    </a>
+</div>

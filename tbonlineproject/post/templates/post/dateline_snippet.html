@@ -1,6 +1,10 @@
 {% load i18n %}
 {% if post.date_published %}
-    <div id="dateline">
-    <p>Published: {{post.date_published}}</p>
-    </div>
+    <p class="dateline">
+    {{post.date_published}}
+    {% if post.date_published != post.last_modified %} 
+        <span class="last-updated">
+        {% trans "Last updated" %} {{post.last_modified}}</span>
+    </p>
+    {% endif %}
 {% endif %}

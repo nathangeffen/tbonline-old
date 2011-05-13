@@ -1,5 +1,7 @@
+{% load i18n %}
+
 {% if post.get_authors %}
-    <div id="byline">
-    <p>{{post.get_authors}}</p>
-    </div>
+    <p class="byline">
+    {% trans "By" %} {{post.get_authors}}
+    </p>
 {% endif %}

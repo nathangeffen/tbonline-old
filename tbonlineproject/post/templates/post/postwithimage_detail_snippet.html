@@ -4,15 +4,12 @@
 
 {% block media %}
 
-    <div main-image>
-
-        <div id="image-with-caption">    
-            <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
-            <img src="{% version post.image.file 'small' %}" alt={{post.image.title}}/> 
-            </a>
-            <p id="caption">{{post.image.caption}}</p>
-        </div>
-
+    <div class="picture left">    
+        <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
+        <img src="{% version post.image.file 'small' %}" alt={{post.image.title}}/> 
+        </a>
+        <br/>
+        {{post.image.caption}}
     </div>
     
 {% endblock %}

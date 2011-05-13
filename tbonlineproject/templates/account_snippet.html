@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load url from future %}
+
+{% block login %}
+<div id="account">
+      {% if user.is_authenticated %}
+          {% trans "Welcome" %}      
+          {% if user.get_full_name %} 
+              {{user.get_full_name}}
+          {% else %}
+              {{user.username}}
+          {% endif %}
+          |          
+          <a href="{% url 'django.contrib.auth.views.logout' %}">
+          {% trans "Logout" %}
+          </a>
+      {% else %}
+          {% trans "Welcome. Please feel free to" %}
+          <a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">
+          {% trans "register" %}</a>
+          {% trans "or" %} 
+          <a href="{% url 'django.contrib.auth.views.login' %}?next={{post.get_absolute_url}}">
+          {% trans "login" %}</a>.                            
+      {% endif %}      
+</div> <!--account-->            
+{% endblock %}
+        
+

@@ -8,7 +8,7 @@
 
 {% block media %}{% endblock %}
 
-<div class="introduction">{{post.introduction|safe}}</div>
+<div class="introduction">{{post.get_introduction|safe}}</div>
 
 <div class="body">{{post.body|safe}}</div>
 

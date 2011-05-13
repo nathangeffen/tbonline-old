@@ -1,10 +1,72 @@
-{% extends 'zolastandard-201104.html' %}
 {% load i18n %}
+{% load url from future %}
 
-{% block website-meta %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="CMT, TAC, TAG, i-Base"/>
     <meta name="description" content="Tuberculosis advocacy and education"/>
-    <meta name="keywords" content="TB, Tuberculosis, white plague, consumption, INH, IPT, medicines"/>
-{% endblock %}
+    <meta name="keywords" content="TB, Tuberculosis, white plague, consumption, INH, IPT, medicines"/>        
 
-{% block google-UA %}UA-22851877-1{% endblock %}
+    {% with google_code="UA-22851877-1" %}
+    {% include 'google_analytics_script_snippet.html' %}
+    {% endwith %}
+
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" 
+        href="{{MEDIA_URL}}tbonline/css/style.css"/>
+        
+        {% comment %}
+        Inline styles can be used if the style depends on context data.
+        {% endcomment %}
+        
+        {% block inline-styles %}     
+        {% endblock %}
+        
+        
+    {% endblock %}
+                     
+    <title>{% block title %}{{site.name}}{% endblock %}</title>
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <div id="header">
+    
+        {% with logo_file="tbonline/images/tbonlinelogo.png" %}
+        {% include 'logo_snippet.html' %}        
+        {% endwith %}
+        {% include 'account_snippet.html' %}        
+        {% include 'search_button_snippet.html' %}
+        {% include 'feed_button_snippet.html' %}
+        {% include 'menu_snippet.html' %}
+                 
+    </div> <!-- header --> 
+
+    <div id="columns">
+
+        <div id="content">{% block content %}{% endblock %}</div>
+        <div id="sidebar-1">
+        {% block sidebar-1 %}
+        {% include 'sidebar_1_snippet.html' %}
+        {% endblock %}
+        </div>
+        
+    </div>
+
+    <div id="footer">
+    {% block footer %}
+        {% include 'footer_snippet.html' %}
+    {% endblock %}
+    </div>      
+
+</div>  <!-- wrapper -->
+
+</body>
+
+

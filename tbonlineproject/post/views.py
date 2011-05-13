@@ -38,9 +38,6 @@ class DetailPostView(DetailPostViewMixin, DetailView):
 class DateDetailPostView(DetailPostViewMixin, DateDetailView):
     date_field = "date_published"
     month_format = "%m"
-    allow_future = True
-
-    
 
 class PostsByTagView(ListView):
 

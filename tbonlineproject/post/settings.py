@@ -19,3 +19,4 @@ CLOSE_COMMENTS_AFTER = getattr(settings, 'POST_CLOSE_COMMENTS_AFTER', 0)
 
 EMAIL_COMMENTS = getattr(settings, 'POST_EMAIL_COMMENTS', True)
 
+TRUNCATE_WORDS = getattr(settings, 'POST_TRUNCATE_WORDS', 95)

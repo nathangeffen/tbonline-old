@@ -22,6 +22,16 @@
         <link rel="stylesheet" type="text/css" 
         href="{% block main-stylesheet %}{{STATIC_URL}}zola/css/zolastandard-201104.css{% endblock %}"/>
     {% endblock %}
+    
+    {% block internal-styles %}
+        <style type="text/css">
+        #header {background: {% block header-background %}{% endblock %};}
+        
+        body {background-image: {% block body-background-image %}{% endblock %};}
+
+        {% block additional-internal-styles %}{% endblock %}
+         </style>        
+    {% endblock %}
                  
     <title>{% block title %}{{site.name}}{% endblock %}</title>
 

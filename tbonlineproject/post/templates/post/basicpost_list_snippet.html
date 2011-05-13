@@ -1,16 +1,17 @@
 {% load url from future %}
 {% load i18n %}
 
-<h2 class="title">
+<h1 class="title">
 <a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">
 {{post.title}}</a>
-</h2>
+</h1>
 
 {% include 'post/byline_snippet.html' %}
+{% include 'post/dateline_snippet.html' %}
 
 {% block media %} {% endblock %}
 
-<div class="teaser">{{post.teaser|safe}}</div>
+<div class="teaser">{{post.get_teaser|safe}}</div>
 
 <div class="post-information">
 
