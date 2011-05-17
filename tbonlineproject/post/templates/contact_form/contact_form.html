@@ -11,12 +11,8 @@
 
 <div id="contact_form">   
 <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
-    <ul>
-    {{form.as_ul}}
-    <li>
+    {{form.as_p}}
     <input type="submit" name="submit" class="btn" value="{% trans 'Send' %}" id="submit">
-    </li>
-    </ul>
 </form>
 </div>
 

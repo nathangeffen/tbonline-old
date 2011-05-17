@@ -41,7 +41,7 @@
         {% with logo_file="tbonline/images/tbonlinelogo.png" %}
         {% include 'logo_snippet.html' %}        
         {% endwith %}
-        {% include 'account_snippet.html' %}        
+        {% block account %}{% include 'account_snippet.html' %}{% endblock %}        
         {% include 'search_button_snippet.html' %}
         {% include 'feed_button_snippet.html' %}
         {% include 'menu_snippet.html' %}

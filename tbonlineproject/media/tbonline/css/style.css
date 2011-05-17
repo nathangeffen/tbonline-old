@@ -18,6 +18,7 @@ body, html {
 }
 
 #header {
+	position: relative;
 	margin: 0px;
 	padding: 0px;
 }            
@@ -26,27 +27,27 @@ body, html {
 #logo a {text-decoration: none;}
 #logo img {
 	 border: none;
-	 width: 60%;
+	 width: 600px;
 }
 
 #account {
     position: absolute;
     font-weight: bold;
-    top: 10%;
-    left: 61%;    
+    top: 60px;
+    left: 600px;    
 }
 
 #search {
     position: absolute;
     font-weight: bold;
-    top: 15%;
-    left: 60.5%;    
+    top: 90px;
+    left: 595px;    
 }
 
 #feed {
     position: absolute;
-    top: 15.5%;
-    left: 81%;
+    top: 95px;
+    left: 860px;
 }
 
 #feed img {border: none; }
@@ -237,6 +238,12 @@ dl#comments dd {
 .comment-flag {
 	margin-top: 0px;
     margin-bottom: 25px;	
+}
+
+.required label:after {
+    padding-left: 2px;
+    color: red;
+    content:"*";    
 }
 
 #sidebar-1 { 

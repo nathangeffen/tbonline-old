@@ -1,19 +1,39 @@
 {% load comments i18n %}
 <form action="{% comment_form_target %}" method="post">{% csrf_token %}
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
-  {% for field in form %}
-    {% if field.is_hidden %}
-      {{ field }}
-    {% else %}
-      {% if field.errors %}{{ field.errors }}{% endif %}
-      <p
-        {% if field.errors %} class="error"{% endif %}
-        {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
-        {{ field.label_tag }} {{ field }}
-      </p>
-    {% endif %}
-  {% endfor %}
-  <p class="submit">
+
+  {{form.content_type}}
+  {{form.object_pk}}
+  {{form.timestamp}}
+  {{form.security_hash}}
+  
+  {% if form.name.errors %}{{ form.name.errors }}{% endif %}
+  <p {% if not user.is_authenticated %}class="required"{% endif %}>
+    {{form.name.label_tag}}{{form.name}}
+  </p>
+  
+  {% if form.email.errors %}{{ form.email.errors }}{% endif %}  
+  <p {% if not user.is_authenticated %}class="required"{% endif %}>
+    {{form.email.label_tag}}{{form.email}}
+  </p>
+
+  {% if form.url.errors %}{{ form.url.errors }}{% endif %}  
+  <p>
+    {{form.url.label_tag}}{{form.url}}
+  </p>
+
+  {% if form.comment.errors %}{{ form.comment.errors }}{% endif %}  
+  <p class="required">
+    {{form.comment.label_tag}}{{form.comment}}
+  </p>
+
+  <p {% if field.errors %} 
+    class="error"{% endif %}
+    style="display:none;">
+    {{form.honeypot}}  
+  </p>
+
+  <p>
     <input type="submit" name="post" class="submit-post btn" value="{% trans "Post" %}" />
     <input type="submit" name="preview" class="submit-preview btn" value="{% trans "Preview" %}" />
   </p>

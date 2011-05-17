@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "registration/registration_base.html" %}
 {% load i18n %}
 
 {% block login %} {% endblock %}
@@ -14,6 +14,7 @@
 {% if user.is_authenticated %}
     <p class="messages">{% trans "You are already logged in as" %} <strong>{{user.username}}</strong>.</p>
     <p><a href="{% url django.contrib.auth.views.logout %}">{% trans "Logout" %}</a></p>
+    <p><a href="{% url django.contrib.auth.views.password_change %}">Change password</a></p>
 {% else %}
 
 
@@ -21,12 +22,11 @@
     {% csrf_token %}
     <ul>
     {{ form.username.errors }}
-    <li><label for="id_username" class="required">{% trans "Username or email" %}:</label> <input id="id_username" type="text" name="username" maxlength="30" /></li>
-    {{ form.username.errors }}
-    <li><label for="id_password" class="required">{% trans "Password" %}:</label> <input type="password" name="password" id="id_password" /></li>
+    <p  class="required"><label for="id_username">{% trans "Username or email" %}:</label> <input id="id_username" type="text" name="username" maxlength="75" /></p>
+    {{ form.password.errors }}
+    <p class="required"><label for="id_password">{% trans "Password" %}:</label> <input type="password" name="password" id="id_password" /></p>
 
-    <li><input type="submit" value="{% trans 'Login' %}" class="btn"/></li>
-    </ul>
+    <p><input type="submit" value="{% trans 'Login' %}" class="btn"/></p>
     <input type="hidden" name="next"  value="{{ next }}" />
     </form>
     

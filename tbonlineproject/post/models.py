@@ -21,6 +21,7 @@ from credit.models import OrderedCredit
 from gallery.models import Image 
 from fields import EnhancedTextField, EnhancedText
 
+
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.
     '''

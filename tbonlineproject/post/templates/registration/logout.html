@@ -1,7 +1,11 @@
-{% extends "base.html" %}
+{% extends "registration/registration_base.html" %}
 {% load i18n %}
+{% load url from future %}
 
 {% block content %}
 <h1>{% trans "Logged out" %}</h1>
+
+<p><a href="{% url 'django.contrib.auth.views.login' %}">{% trans "Log in again" %}</a></p>
+
 {% endblock %}
-{% block sidebar-content %} {% endblock %}
+

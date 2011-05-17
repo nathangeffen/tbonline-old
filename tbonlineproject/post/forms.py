@@ -12,10 +12,23 @@ class EnhancedContactForm(ContactForm):
     # This field will not be displayed to web users.
     # Hopefully spam bots will fill it in.
     accept_terms = HoneypotField() 
-                                    
     subject = forms.CharField(max_length=100,
                            label=_('Subject'))
+                                    
     
-    def __init__(self, *args, **kwargs):
-        ContactForm.__init__(self, *args, **kwargs)
+    def __init__(self, data=None, files=None, request=None, *args, **kwargs):
+        if request is None:
+            raise TypeError("Keyword argument 'request' must be supplied")
+
+        if request.user.is_authenticated():
+            kwargs['initial'] = {'name' : request.user.get_full_name() if request.user.get_full_name() != u''  else request.user.username,
+                                 'email' : request.user.email}
+            
+        super(EnhancedContactForm, self).__init__(data=data, 
+                                                  files=files, 
+                                                  request=request, 
+                                                  *args, 
+                                                  **kwargs)
+
         self.fields.keyOrder = ['name', 'email', 'subject', 'accept_terms', 'body']
+

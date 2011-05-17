@@ -29,6 +29,7 @@ class BasicPostAdmin(admin.ModelAdmin):
     date_hierarchy = 'date_published'
     prepopulated_fields = {"slug": ("title",)}
     inlines = [OrderedCreditInline, TaggedItemInline]
+    ordering = ('-last_modified',)
     
     class Media:
         css = {
@@ -46,7 +47,6 @@ class BasicPostAdmin(admin.ModelAdmin):
 
 class PostWithImageAdmin(BasicPostAdmin):
     list_display = ('id', 'title', 'image_thumbnail', 'date_published', 'is_published', 'date_added', 'last_modified')
-    ordering = ('-last_modified',)
     raw_id_fields = ['image',]
     related_lookup_fields = {
         'fk': ['image'],
