@@ -37,5 +37,5 @@ DEFAULT_FORMAT = getattr(settings, 'ENHANCEDTEXT_DEFAULT_FORMAT',
                        CONTENT_FORMATS[0][0])
 
 MARKDOWN_EXTENSIONS = getattr(settings, 'ENHANCEDTEXT_MARKDOWN_EXTENSIONS', 
-                        'safe,abbr,tables,def_list,footnotes')
+                        'abbr,tables,def_list,footnotes')
 

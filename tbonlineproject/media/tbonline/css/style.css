@@ -175,6 +175,7 @@ span.last-updated {
 	float:left; 
 } 
 
+
 .teaser {
     padding-top: 5px;	
 }
@@ -220,6 +221,19 @@ ul.errorlist {
     list-style-type: none;	
     margin: 10px 0 0 0; 
     padding: 10px 0 0 0; 
+}
+
+sup:before {
+    content: "[";
+    font-size: 8pt;	
+}
+sup {
+    font-size: 8pt;	
+}
+
+sup:after {
+    content: "]";
+    font-size: 8pt;	
 }
 
 dl#comments dt {
