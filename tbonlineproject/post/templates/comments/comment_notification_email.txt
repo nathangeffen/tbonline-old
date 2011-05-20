@@ -1,0 +1,22 @@
+{% load i18n %}
+{% load url from future %}
+
+{% trans "A comment has been posted" %}.
+{% trans "Title of article to which it was posted" %}: {{ content_object }}
+{% trans "URL" %}: {% url 'post_detail' content_object.date_published.year content_object.date_published.month content_object.date_published.day content_object.slug %}
+
+{% trans "User" %}: {{comment.user}}
+
+{% trans "User name" %}: {{comment.user_name}}
+
+{% trans "User email" %}: {{comment.user_email}}
+
+{% trans "User URL" %}: {{comment.user_url}}
+
+{% trans "Submit date" %}: {{comment.submit_date}}
+
+{% trans "IP address" %}: {{comment.ip_address}}
+
+{% trans "This is the comment" %}:
+
+{{ comment.comment }}
