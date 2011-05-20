@@ -1,7 +1,8 @@
 {% load i18n %}
+{% load url from future %}
 
 <div id="feed">
-    <a href="{% block feed-url%}posts/feed{% endblock %}">
+    <a href="{% block feed-url%}{% url 'post_feed' %}{% endblock %}">
     <img src="{{STATIC_URL}}post/icons/feed.png" 
     alt="RSS Feed" title="{% trans "RSS Feed" %}"/>
     </a>

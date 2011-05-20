@@ -38,7 +38,7 @@ urlpatterns = patterns('post.views',
                     template_name='post/post_detail.html')), name='post_draft_detail'),
 
     # RSS feed for posts 
-    (r'^feed/$', LatestEntriesFeed()),
+    url(r'^feed/$', LatestEntriesFeed(), name='post_feed'),
     
     # List view by tag
     url(r'^tag/(?P<tag>[\"\w\" \-]+)/$', PostsByTagView.as_view(), name='post_tag_list'),
