@@ -22,6 +22,7 @@ urlpatterns = patterns('post.views',
     url(r'^draft/(?P<pk>\d+)/$',
         permission_required('post.change_basicpost')
         (DraftPostView.as_view()), name='post_draft_detail'),
+
     # RSS feed for posts 
     url(r'^feed/$', LatestEntriesFeed(), name='post_feed'),
     
