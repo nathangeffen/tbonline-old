@@ -115,7 +115,7 @@ class BasicPost(models.Model):
                                str(self.slug) 
                                ])
         else: 
-            return ('draft_post', [str(self.id)]) 
+            return ('post_draft_detail', [str(self.id)]) 
 
     def is_published(self):
         try: 

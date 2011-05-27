@@ -24,10 +24,13 @@ class PublishedFrontPagePostsView(ListView):
 
 class DetailPostViewMixin(object):
     context_object_name = "post"
-    queryset=BasicPost.objects.filter(
-        date_published__lte=datetime.datetime.now()).\
-        select_subclasses()
     template_name='post/post_detail.html'
+
+
+    def get_queryset(self):
+        return BasicPost.objects.filter(
+                date_published__lte=datetime.datetime.now()).\
+                select_subclasses()
     
     def get_context_data(self, **kwargs):
         context = super(DetailPostViewMixin, self).get_context_data(**kwargs)
@@ -41,7 +44,6 @@ class DetailPostView(DetailPostViewMixin, DetailView):
 class DateDetailPostView(DetailPostViewMixin, DateDetailView):
     date_field = "date_published"
     month_format = "%m"
-    allow_future = True
 
 class PostsByTagView(ListView):
 

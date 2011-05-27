@@ -4,5 +4,5 @@
 
 {% get_comment_count for post as comment_count %}
 {{comment_count}} 
-<a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}#comments">
+<a href="{{ post.get_absolute_url }}#comments">
 {% trans "comment" %}{{ comment_count|pluralize }}</a>
