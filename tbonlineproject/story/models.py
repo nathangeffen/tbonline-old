@@ -41,11 +41,7 @@ class Story(models.Model):
     @models.permalink
     def get_absolute_url(self):
         if self.date_published:
-            return ('story_detail',[str(self.date_published.year),
-                               str(self.date_published.month),
-                               str(self.date_published.day), 
-                               str(self.slug) 
-                               ])
+            return ('story_detail', [str(self.id)])
         else: 
             return ('draft_story', [str(self.id)],) 
     

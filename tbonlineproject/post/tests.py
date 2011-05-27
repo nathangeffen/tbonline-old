@@ -5,12 +5,110 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
-from django.test import TestCase
+import datetime
 
+from django.utils import unittest
+from django.test.client import Client
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+from post.models import BasicPost, PostWithImage
+from gallery.models import Image
+
+#class PostTest(unittest.TestCase):
+#
+#    def setUp(self):
+#        """
+#        Create some posts
+#        """
+#        self.basicpost1 = BasicPost.objects.create(title='The title',
+#                                           slug='basicpost-1',                                                   
+#                                           subtitle='The subtitle',
+#                                           teaser='<p>The teaser</p>',
+#                                           introduction='<p>The introduction</p>',
+#                                           body='<p>The body</p>'
+#                                           )
+#
+#        self.basicpost2 = BasicPost.objects.create(title='The title',
+#                                           slug='basicpost-2',                                                   
+#                                           subtitle='The subtitle',
+#                                           teaser='<p>The teaser</p>',
+#                                           introduction='<p>The introduction</p>',
+#                                           body='<p>The body</p>',
+#                                           date_published=datetime.datetime.now()+datetime.timedelta(days=1)
+#                                           )
+#
+#        self.basicpost3 = BasicPost.objects.create(title='The title',
+#                                           slug='basicpost-3',                                                   
+#                                           subtitle='The subtitle',
+#                                           teaser='<p>The teaser</p>',
+#                                           introduction='<p>The introduction</p>',
+#                                           body='<p>The body</p>',
+#                                           date_published=datetime.datetime.now()
+#                                           )
+#
+#
+#        self.image1 = Image.objects.create(title="Image title",
+#                                           slug='image1') 
+#
+#        self.postwithimage1 = PostWithImage.objects.create(title='The title',
+#                                           slug='postwithimage-1',
+#                                           subtitle='The subtitle',
+#                                           teaser='<p>The teaser</p>',
+#                                           introduction='<p>The introduction</p>',
+#                                           body='<p>The body</p>',
+#                                           image=self.image1
+#                                           )
+#
+#        self.postwithimage2 = PostWithImage.objects.create(title='The title',
+#                                           slug='postwithimage-2',
+#                                           subtitle='The subtitle',
+#                                           teaser='<p>The teaser</p>',
+#                                           introduction='<p>The introduction</p>',
+#                                           body='<p>The body</p>',
+#                                           date_published=datetime.datetime.now()+datetime.timedelta(days=1),
+#                                           image=self.image1
+#                                           )
+#
+#        self.postwithimage2 = PostWithImage.objects.create(title='The title',
+#                                           slug='postwithimage-2',
+#                                           subtitle='The subtitle',
+#                                           teaser='<p>The teaser</p>',
+#                                           introduction='<p>The introduction</p>',
+#                                           body='<p>The body</p>',
+#                                           date_published=datetime.datetime.now(),
+#                                           image=self.image1
+#                                           )
+
+#    def testCountAllPosts(self):
+#        posts = BasicPost.objects.select_subclasses()
+#        self.assertEqual(len(posts), 6)
+#
+#    def testCountPublishedPosts(self):
+#        posts = BasicPost.objects.filter(date_published__lte=datetime.datetime.now())
+#        self.assertEqual(len(posts), 2) 
+#
+#    def testPostPublishedListView(self):
+#        c = Client()
+#        response = c.get('/posts/')     
+#        self.assertEquals(response.status_code, 200)
+#        self.assertEquals(len(response.context['posts']),2)
+#
+#
+#from django.contrib.auth.models import User
+#
+#class AccountTest(unittest.TestCase):
+#    
+#    def setUp(self):
+#        User.objects.create(username="joebloggs", email="joebloggs@example.com", password="abcde")
+#        
+#    def testUser(self):
+#        self.assertEquals(len(User.objects.all()),1) 
+#        
+#    
+#    def testLogin(self):
+#        c = Client()      
+#        response = c.post('/accounts/login/', {'username': 'joebloggs@example.com', 'password': 'abcde'})
+#        self.assertEquals(response.status_code, 200)
+#        response = c.post('/accounts/logout')
+#        self.assertEquals(response.status_code, 200)
+#        response = c.post('/accounts/login/', {'username': 'joebloggs', 'password': 'abcde'})
+#        self.assertEquals(response.status_code, 200)

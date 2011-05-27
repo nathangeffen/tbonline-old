@@ -7,6 +7,8 @@
 
 {% block content %}
 
+{% include 'post/messages_snippet.html' %}
+
 <h1>{{story.title}}</h1>
 
 {{story.description|safe}}
@@ -14,7 +16,7 @@
 {% for post in story.get_posts %}
 
     <h2><a href=
-    "{% url "story_post" story.date_published.year story.date_published.month story.date_published.day story.slug post.id %}"
+    "{% url "story_post" story.id post.id %}"
     >{{ post.title }}</a></h2>
     {{ post.teaser|safe }}
 

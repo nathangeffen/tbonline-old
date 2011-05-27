@@ -15,7 +15,7 @@
 
     {% if entry.id != post.id %}
         <a href=
-        "{% url "story_post" story.date_published.year story.date_published.month story.date_published.day story.slug entry.id %}"
+        "{% url "story_post"  story.id entry.id %}"
         >{{entry.title}}</a>
     {% else %}
         {{entry.title}}

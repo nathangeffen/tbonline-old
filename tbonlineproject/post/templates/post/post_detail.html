@@ -5,10 +5,8 @@
 {% block content %}
 
 <div class="post-entry">
-
-
+{% include 'post/messages_snippet.html' %}
 {% include 'post/post_edit_snippet.html' %}
-{% include 'post/addtoany_snippet.html' %}
 {% include post.get_post_detail_template %}
 </div>
 

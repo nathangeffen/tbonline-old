@@ -236,6 +236,10 @@ sup:after {
     font-size: 8pt;	
 }
 
+.a2a_dd img {
+    margin-bottom: -3px;
+}
+
 dl#comments dt {
     font-size: 110%;
     font-weight: bold;	

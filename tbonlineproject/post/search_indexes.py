@@ -1,7 +1,7 @@
 import datetime
 from haystack.indexes import *
 from haystack import site
-from models import BasicPost
+from post.models import BasicPost
 
 
 class BasicPostIndex(SearchIndex):
