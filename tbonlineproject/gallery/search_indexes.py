@@ -1,7 +1,7 @@
 import datetime
 from haystack.indexes import *
 from haystack import site
-from models import Gallery, Image
+from gallery.models import Gallery, Image
 
 class GalleryIndex(SearchIndex):
     text = CharField(document=True, use_template=True)
