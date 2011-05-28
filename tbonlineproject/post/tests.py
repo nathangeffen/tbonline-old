@@ -9,10 +9,77 @@ import datetime
 
 from django.utils import unittest
 from django.test.client import Client
-from django.test.client import RequestFactory
 
 from post.models import BasicPost, PostWithImage
 from gallery.models import Image
+
+
+def add_posts():
+    posts = []
+    posts.append(   BasicPost.objects.create(title='The title',
+                                           slug='basicpost-1',                                                   
+                                           subtitle='The subtitle',
+                                           teaser='<p>The teaser</p>',
+                                           introduction='<p>The introduction</p>',
+                                           body='<p>The body</p>'
+                                           ))
+
+    posts.append(   BasicPost.objects.create(title='The title',
+                                           slug='basicpost-2',                                                   
+                                           subtitle='The subtitle',
+                                           teaser='<p>The teaser</p>',
+                                           introduction='<p>The introduction</p>',
+                                           body='<p>The body</p>',
+                                           date_published=datetime.datetime.now()+datetime.timedelta(days=1)
+                                           ))
+
+    posts.append(   BasicPost.objects.create(title='The title',
+                                           slug='basicpost-3',                                                   
+                                           subtitle='The subtitle',
+                                           teaser='<p>The teaser</p>',
+                                           introduction='<p>The introduction</p>',
+                                           body='<p>The body</p>',
+                                           date_published=datetime.datetime.now()
+                                           ))
+
+
+    image1 = Image.objects.create(title="Image title",
+                                           slug='image1') 
+
+    posts.append(   PostWithImage.objects.create(title='The title',
+                                           slug='postwithimage-1',
+                                           subtitle='The subtitle',
+                                           teaser='<p>The teaser</p>',
+                                           introduction='<p>The introduction</p>',
+                                           body='<p>The body</p>',
+                                           image=image1
+                                           ))
+
+    posts.append(   PostWithImage.objects.create(title='The title',
+                                           slug='postwithimage-2',
+                                           subtitle='The subtitle',
+                                           teaser='<p>The teaser</p>',
+                                           introduction='<p>The introduction</p>',
+                                           body='<p>The body</p>',
+                                           date_published=datetime.datetime.now()+datetime.timedelta(days=1),
+                                           image=image1
+                                           ))
+
+    posts.append(   PostWithImage.objects.create(title='The title',
+                                           slug='postwithimage-3',
+                                           subtitle='The subtitle',
+                                           teaser='<p>The teaser</p>',
+                                           introduction='<p>The introduction</p>',
+                                           body='<p>The body</p>',
+                                           date_published=datetime.datetime.now(),
+                                           image=image1
+                                           ))
+
+    return posts
+
+def delete_posts():
+    Image.objects.all().delete()
+    BasicPost.objects.all().delete()
 
 class PostTest(unittest.TestCase):
 
@@ -20,70 +87,11 @@ class PostTest(unittest.TestCase):
         """
         Create some posts
         """
-        self.basicpost1 = BasicPost.objects.create(title='The title',
-                                           slug='basicpost-1',                                                   
-                                           subtitle='The subtitle',
-                                           teaser='<p>The teaser</p>',
-                                           introduction='<p>The introduction</p>',
-                                           body='<p>The body</p>'
-                                           )
-
-        self.basicpost2 = BasicPost.objects.create(title='The title',
-                                           slug='basicpost-2',                                                   
-                                           subtitle='The subtitle',
-                                           teaser='<p>The teaser</p>',
-                                           introduction='<p>The introduction</p>',
-                                           body='<p>The body</p>',
-                                           date_published=datetime.datetime.now()+datetime.timedelta(days=1)
-                                           )
-
-        self.basicpost3 = BasicPost.objects.create(title='The title',
-                                           slug='basicpost-3',                                                   
-                                           subtitle='The subtitle',
-                                           teaser='<p>The teaser</p>',
-                                           introduction='<p>The introduction</p>',
-                                           body='<p>The body</p>',
-                                           date_published=datetime.datetime.now()
-                                           )
-
-
-        self.image1 = Image.objects.create(title="Image title",
-                                           slug='image1') 
-
-        self.postwithimage1 = PostWithImage.objects.create(title='The title',
-                                           slug='postwithimage-1',
-                                           subtitle='The subtitle',
-                                           teaser='<p>The teaser</p>',
-                                           introduction='<p>The introduction</p>',
-                                           body='<p>The body</p>',
-                                           image=self.image1
-                                           )
-
-        self.postwithimage2 = PostWithImage.objects.create(title='The title',
-                                           slug='postwithimage-2',
-                                           subtitle='The subtitle',
-                                           teaser='<p>The teaser</p>',
-                                           introduction='<p>The introduction</p>',
-                                           body='<p>The body</p>',
-                                           date_published=datetime.datetime.now()+datetime.timedelta(days=1),
-                                           image=self.image1
-                                           )
-
-        self.postwithimage3 = PostWithImage.objects.create(title='The title',
-                                           slug='postwithimage-3',
-                                           subtitle='The subtitle',
-                                           teaser='<p>The teaser</p>',
-                                           introduction='<p>The introduction</p>',
-                                           body='<p>The body</p>',
-                                           date_published=datetime.datetime.now(),
-                                           image=self.image1
-                                           )
-        self.factory = RequestFactory()
+        self.test_posts = add_posts()
+        
 
     def tearDown(self):
-        BasicPost.objects.all().delete()
-        Image.objects.all().delete()
-        self.factory = None
+        delete_posts()
 
     def testCountAllPosts(self):
         posts = BasicPost.objects.select_subclasses()
@@ -105,14 +113,14 @@ class PostTest(unittest.TestCase):
 
     def testPostDetailView(self):
         c = Client()
-        response = c.get('/posts/id/1/')
+        response = c.get('/posts/id/1/', follow=True)
         self.assertEquals(response.status_code, 404)
-        response = c.get('/posts/id/3/')
+        response = c.get('/posts/id/3/', follow=True)
         self.assertEquals(response.status_code, 200)
 
-        response = c.get('/posts/id/4/')
+        response = c.get('/posts/id/4/', follow=True)
         self.assertEquals(response.status_code, 404)
-        response = c.get('/posts/id/6/')
+        response = c.get('/posts/id/6/', follow=True)
         self.assertEquals(response.status_code, 200)
 
 

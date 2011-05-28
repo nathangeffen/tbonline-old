@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-from story.views import StoryListView, StoryDetailView, StoryPostView, DraftStoryView
+from story.views import StoryListView, StoryDetailView, StoryPostView, DraftStoryView, DraftStoryPostView
 from django.contrib.auth.decorators import permission_required
 
 
@@ -16,6 +16,11 @@ urlpatterns = patterns('story.views',
 
     
     url(r'^draft/(?P<pk>\d+)/$',
-        permission_required('post.change_basicpost')
-        (DraftStoryView.as_view()), name='draft_story')
+        permission_required('post.change_story')
+        (DraftStoryView.as_view()), name='draft_story'),
+
+    url(r'^draft/(?P<pk>\d+)/(?P<post_id>\d+)/$',
+        permission_required('post.change_story')
+        (DraftStoryPostView.as_view()), name='draft_story_post')
+
 )

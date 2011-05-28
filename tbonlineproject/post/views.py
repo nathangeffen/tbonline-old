@@ -2,12 +2,14 @@
 
 import datetime
 
-from django.views.generic import ListView, DateDetailView, DetailView
+from django.views.generic import ListView, DateDetailView, DetailView, RedirectView
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.markup.templatetags.markup import markdown
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
 
 from post.models import BasicPost, PostModerator
 from post import settings
@@ -75,7 +77,18 @@ class DraftPostView(DetailPostView):
             messages.info(self.request, _('This post is not published. You have permission to view it .'))
 
         return context
-        
+           
+class RedirectPostView(RedirectView):
+    query_string = True
+    
+    def get_redirect_url(self, **kwargs):
+        post = get_object_or_404(BasicPost, pk=int(kwargs['pk']), date_published__lte=datetime.datetime.now())
+        return reverse('post_detail', args=[str(post.date_published.year),
+                               str(post.date_published.month),
+                               str(post.date_published.day), 
+                               str(post.slug) 
+                               ])
+
 
     
 class DateDetailPostView(DetailPostViewMixin, DateDetailView):

@@ -16,8 +16,13 @@
 {% for post in story.get_posts %}
 
     <h2><a href=
-    "{% url "story_post" story.id post.id %}"
-    >{{ post.title }}</a></h2>
+    "{% if story.is_published %}
+        {% url "story_post" story.id post.id %}
+     {% else %}
+        {% url "draft_story_post" story.id post.id %}
+    {% endif %}">
+    {{ post.title }}
+    </a></h2>
     {{ post.teaser|safe }}
 
 {% endfor %}

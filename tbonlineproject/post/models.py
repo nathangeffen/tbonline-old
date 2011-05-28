@@ -3,7 +3,6 @@
 '''
 
 import datetime
-import settings
 
 from django.db import models
 from django.contrib.contenttypes import generic
@@ -19,8 +18,8 @@ from credit.utils import credit_list
 from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
-from fields import EnhancedTextField, EnhancedText
-
+from post.fields import EnhancedTextField, EnhancedText
+from post import settings
 
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.
@@ -105,17 +104,6 @@ class BasicPost(models.Model):
         if unicode(self.teaser):
             return self.teaser
         return ""
-                        
-    @models.permalink
-    def get_absolute_url(self):
-        if self.date_published:
-            return ('post_detail',[str(self.date_published.year),
-                               str(self.date_published.month),
-                               str(self.date_published.day), 
-                               str(self.slug) 
-                               ])
-        else: 
-            return ('post_draft_detail', [str(self.id)]) 
 
     def is_published(self):
         try: 
@@ -126,7 +114,18 @@ class BasicPost(models.Model):
         except:
             return False
     is_published.short_description = _("published")
-    
+                        
+    @models.permalink
+    def get_absolute_url(self):
+        if self.is_published():
+            return ('post_detail',[str(self.date_published.year),
+                               str(self.date_published.month),
+                               str(self.date_published.day), 
+                               str(self.slug) 
+                               ])
+        else: 
+            return ('post_draft_detail', [str(self.id)]) 
+
     def __unicode__(self):
         return self.title
     
@@ -137,7 +136,6 @@ class BasicPost(models.Model):
         unique_together = ('slug', 'date_published')
 
 from django.contrib.comments.moderation import CommentModerator, moderator
-
 
 class PostWithImage(BasicPost):
     '''All the attributes of BasicPost but also contains an image, presumably 
@@ -244,4 +242,3 @@ class PostModerator(CommentModerator):
 for Post in [BasicPost, PostWithImage, PostWithSlideshow, PostWithEmbeddedObject]:
     if Post not in moderator._registry:
         moderator.register(Post, PostModerator)
-

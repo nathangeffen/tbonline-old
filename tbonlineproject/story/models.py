@@ -33,6 +33,16 @@ class Story(models.Model):
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
                                       blank=True, null=True)
 
+    def is_published(self):
+        try: 
+            if datetime.datetime.now() >= self.date_published:
+                return True
+            else:
+                return False
+        except:
+            return False
+    is_published.short_description = _("published")
+
     def get_posts(self):
         posts = [orderedpost.post for orderedpost in self.orderedpost_set.all() 
             if orderedpost.post.is_published()]
@@ -40,8 +50,8 @@ class Story(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        if self.date_published:
-            return ('story_detail', [str(self.id)])
+        if self.is_published():
+            return ('story_detail', [str(self.id)], )
         else: 
             return ('draft_story', [str(self.id)],) 
     

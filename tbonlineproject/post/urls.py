@@ -1,7 +1,8 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.decorators import permission_required
 
-from post.views import ListPostView, DateDetailPostView, DetailPostView, PostsByTagView, DraftPostView
+from post.views import ListPostView, DateDetailPostView, DetailPostView, \
+    PostsByTagView, DraftPostView, RedirectPostView
 from post.feeds import LatestEntriesFeed
 
 urlpatterns = patterns('post.views',
@@ -16,7 +17,7 @@ urlpatterns = patterns('post.views',
     
     # Detail view for post by id
     url(r'^id/(?P<pk>\d+)/$', 
-        DetailPostView.as_view(), name='post_id_detail'),
+        RedirectPostView.as_view(), name='post_id_detail'),
     
     # Detail view for unpublished post 
     url(r'^draft/(?P<pk>\d+)/$',
@@ -33,3 +34,4 @@ urlpatterns = patterns('post.views',
     # Preview for Markdown for enhanced text fields
     (r'^markdownpreview/$', 'markdownpreview'),
 )
+
