@@ -86,7 +86,7 @@ class RedirectPostView(RedirectView):
         return reverse('post_detail', args=[str(post.date_published.year),
                                str(post.date_published.month),
                                str(post.date_published.day), 
-                               str(post.slug) 
+                               post.slug 
                                ])
 
 

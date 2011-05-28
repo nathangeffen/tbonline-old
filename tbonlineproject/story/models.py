@@ -51,7 +51,11 @@ class Story(models.Model):
     @models.permalink
     def get_absolute_url(self):
         if self.is_published():
-            return ('story_detail', [str(self.id)], )
+            return ('story_detail', [str(self.date_published.year),
+                               str(self.date_published.month),
+                               str(self.date_published.day), 
+                               self.slug 
+                               ])
         else: 
             return ('draft_story', [str(self.id)],) 
     
@@ -69,6 +73,18 @@ class OrderedPost(models.Model):
     story = models.ForeignKey(Story)
     post = models.ForeignKey(BasicPost)
     position = models.PositiveIntegerField(default=0)
+
+    @models.permalink
+    def get_absolute_url(self):
+        if self.story.is_published():
+            return ('story_post', [str(self.story.date_published.year),
+                               str(self.story.date_published.month),
+                               str(self.story.date_published.day), 
+                               self.story.slug,
+                               str(self.post.pk) 
+                               ])
+        else: 
+            return ('draft_story_post', [str(self.story.pk), str(self.post.pk)],) 
 
     def __unicode__(self):
         return unicode(self.story) + ' - ' + unicode(self.post)

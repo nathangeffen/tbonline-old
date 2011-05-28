@@ -11,7 +11,7 @@
 
 {% for story in stories %}
 
-<h2><a href="{% url "story_detail" story.id %}">{{story.title}}</a></h1>
+<h2><a href="{% url "story_id_detail" story.id %}">{{story.title}}</a></h1>
 
 {{story.description|safe}}
 

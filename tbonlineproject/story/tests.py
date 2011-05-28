@@ -9,6 +9,7 @@ import datetime
 
 from django.test import TestCase
 from django.test.client import Client
+from django.contrib.auth.models import User
 
 from story.models import Story
 from post.tests import add_posts, delete_posts
@@ -68,36 +69,34 @@ class SimpleTest(TestCase):
 
     def testStoryDetailView(self):
         c = Client()
-        response = c.get('/stories/1/')
+        response = c.get('/stories/1/', follow=True)
         self.assertEquals(response.status_code, 404)
-        response = c.get('/stories/1/1/')
+        response = c.get('/stories/1/post/1/', follow=True)
         self.assertEquals(response.status_code, 404)
-        response = c.get('/stories/3/')
+        response = c.get('/stories/3/', follow=True)
         self.assertEquals(response.status_code, 200)        
-        response = c.get('/stories/3/1/')
+        response = c.get('/stories/3/post/1/', follow=True)
         self.assertEquals(response.status_code, 404)
-        response = c.get('/stories/3/6/')
+        response = c.get('/stories/3/post/6/', follow=True)
         self.assertEquals(response.status_code, 200)
         
     def testStoryDraftView(self):
 
         c = Client()
-#        response = c.get('/stories/1/', follow=True)
-#
-#        # Should return 404 because user is not logged in and this post is not published
-#        self.assertEquals(response.status_code, 200)
-#        self.assertEquals(response.redirect_chain[0][0], 'http://testserver/accounts/login/?next=/posts/draft/1/')
-#        
-#        
-#        u = User.objects.create(username="joebloggs", email="joebloggs@example.com", is_superuser=True, is_staff=True)
-#        u.set_password('abcde')
-#        u.save()
-#        self.assertEquals(c.login(username='joebloggs', password='abcde'), True)
-#
-#        # Should return 200 for logged in user
-#        response = c.get('/posts/draft/1/', follow=True)
-#        self.assertEquals(response.status_code, 200)
-#        self.assertEquals(response.context['post'].id, 1)
+        response = c.get('/stories/1/', follow=True)
+
+        # Should return 404 because user is not logged in and this story is not published
+        self.assertEquals(response.status_code, 404)
+
+        u = User.objects.create(username="joebloggs", email="joebloggs@example.com", is_superuser=True, is_staff=True)
+        u.set_password('abcde')
+        u.save()
+        self.assertEquals(c.login(username='joebloggs', password='abcde'), True)
+
+        # Should return 200 for logged in user
+        response = c.get('/stories/draft/1/', follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.context['story'].id, 1)
 
 
 

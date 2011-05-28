@@ -13,17 +13,12 @@
 
 {{story.description|safe}}
 
-{% for post in story.get_posts %}
-
-    <h2><a href=
-    "{% if story.is_published %}
-        {% url "story_post" story.id post.id %}
-     {% else %}
-        {% url "draft_story_post" story.id post.id %}
-    {% endif %}">
-    {{ post.title }}
-    </a></h2>
-    {{ post.teaser|safe }}
+{% for orderedpost in story.orderedpost_set.all %}
+    
+    {% if orderedpost.post.is_published or not story.is_published %}
+        <h2><a href="{{orderedpost.get_absolute_url}}">{{ orderedpost.post.title }}</a></h2>
+        {{ orderedpost.post.teaser|safe }}
+    {% endif %}
 
 {% endfor %}
 

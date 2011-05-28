@@ -12,7 +12,7 @@ from django.utils.html import escape, urlize, linebreaks
 from django.contrib.markup.templatetags.markup import restructuredtext, markdown, textile
 from django.utils.safestring import mark_safe
 
-from settings import CONTENT_FORMATS, DEFAULT_FORMAT, MARKDOWN_EXTENSIONS
+from post.settings import CONTENT_FORMATS, DEFAULT_FORMAT, MARKDOWN_EXTENSIONS
 
 
 class EnhancedText(object):
