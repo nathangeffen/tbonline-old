@@ -22,15 +22,18 @@ EMAIL_COMMENTS = getattr(settings, 'POST_EMAIL_COMMENTS', True)
 TRUNCATE_WORDS = getattr(settings, 'POST_TRUNCATE_WORDS', 95)
 
 
+from django.utils.translation import ugettext as _
+
 CONTENT_FORMATS = (
-    ('\P', 'Plain text'),
-    ('\E', 'Plain text with URLs and line breaks'),
-    ('\R', 'reStructuredText'),    
-    ('\M', 'Markdown'),
-    ('\T', 'Textile'),
-    ('\H', 'HTML'),    
-    ('\W', 'HTML editor'),  
+    ('\P', _('Plain text')),
+    ('\E', _('Plain text with URLs and line breaks')),
+    ('\R', _('reStructuredText')),    
+    ('\M', _('Markdown')),
+    ('\T', _('Textile')),
+    ('\H', _('HTML')),    
+    ('\W', _('HTML editor')),  
 )
+
 
 DEFAULT_FORMAT = getattr(settings, 'ENHANCEDTEXT_DEFAULT_FORMAT', 
                        CONTENT_FORMATS[0][0])
