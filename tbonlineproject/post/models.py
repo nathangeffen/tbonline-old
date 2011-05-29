@@ -18,8 +18,8 @@ from credit.utils import credit_list
 from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
-from post.fields import EnhancedTextField, EnhancedText
-from post import settings
+from fields import EnhancedTextField, EnhancedText
+import settings
 
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.

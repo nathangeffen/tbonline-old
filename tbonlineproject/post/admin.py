@@ -12,7 +12,7 @@ from django import forms
 
 from tagging.models import TaggedItem  
 
-from post.models import BasicPost, PostWithImage
+from models import BasicPost, PostWithImage
 
 from credit.admin import OrderedCreditInline
 

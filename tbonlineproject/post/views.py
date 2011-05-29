@@ -11,8 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
-from post.models import BasicPost, PostModerator
-from post import settings
+from models import BasicPost, PostModerator
+import settings
 
 
 class ListPostView(ListView):

@@ -2,7 +2,7 @@ from django.contrib.syndication.views import Feed
 from django.contrib.sites.models import Site
 from django.utils.translation import ugettext as _
 
-from post.models import BasicPost
+from models import BasicPost
 
 current_site_name =  Site.objects.get_current().name
 

@@ -10,7 +10,7 @@ import datetime
 from django.utils import unittest
 from django.test.client import Client
 
-from post.models import BasicPost, PostWithImage
+from models import BasicPost, PostWithImage
 from gallery.models import Image
 
 
