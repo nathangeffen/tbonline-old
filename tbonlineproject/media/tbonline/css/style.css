@@ -105,6 +105,10 @@ body, html {
     color: red; 
 }
 
+h1.title, h1.title a {
+    color: #930608;	
+}
+
 #content {
     background: #FFFFFF;
 	float: left;
@@ -262,6 +266,11 @@ dl#comments dd {
     padding-left: 2px;
     color: red;
     content:"*";    
+}
+
+
+#copyright {
+    margin-top: 15px;	
 }
 
 #sidebar-1 { 

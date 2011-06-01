@@ -6,7 +6,14 @@
 
     <div class="picture left">    
         <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
-        <img src="{% version post.image.file 'small' %}" alt={{post.image.title}}/> 
+        <img src=
+        "{% version_object post.image.file 'small' as theimage %}
+        {% if theimage.width %}
+            {{theimage}}
+        {% else %}
+            {{post.image.file}}
+        {% endif %}" 
+        alt={{post.image.title}}/> 
         </a>
         <br/>
         {{post.image.caption}}

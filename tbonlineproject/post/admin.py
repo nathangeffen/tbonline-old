@@ -61,8 +61,14 @@ class PostWithImageAdmin(BasicPostAdmin):
         
         (_('Content'), {
          'classes' : ['collapse open',],
-         'fields': ('teaser','introduction','body', 'pullout_text',)
+         'fields': ('body',)
         }),
+
+        (_('Teaser. introduction and pullout text'), {
+         'classes' : ['collapse closed',],
+         'fields': ('teaser','introduction', 'pullout_text',)
+        }),
+
 
         (_('Image'), {
          'classes' : ['collapse open',],
@@ -72,8 +78,9 @@ class PostWithImageAdmin(BasicPostAdmin):
         
         (_('Display features'), {
          'classes' : ['collapse closed',],
-         'fields': ('homepage','sticky','allow_comments')
+         'fields': ('homepage','sticky','allow_comments', 'copyright')
         }),
+                 
         (_('HTML templates'), {
          'classes' : ['collapse closed',],
          'fields': ('single_post_template','many_post_template')
