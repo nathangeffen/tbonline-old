@@ -1,0 +1,11 @@
+{% extends "post/post_detail.html" %}
+
+{% block sidebar-1 %}
+
+<div class="featured-block">
+{%include 'story/story_toc.html' %}
+</div>
+
+{{block.super}}
+
+{% endblock %}

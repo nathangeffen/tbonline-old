@@ -1,10 +1,8 @@
-{% extends "post/post_detail.html" %}
 {% load url from future %}
 
-{% block sidebar-column-2 %}
-
 <div id="toc">
-{{story.title}}
+<h2>{{story.title}}</h2>
+
 {% with story.get_posts as toc %}
 
 <ol>
@@ -15,7 +13,7 @@
 
     {% if entry.id != post.id %}
         <a href=
-        "{% url "story_post"  story.id entry.id %}"
+        "{% url "story_post_id"  story.id entry.id %}"
         >{{entry.title}}</a>
     {% else %}
         {{entry.title}}
@@ -31,6 +29,3 @@
 
 </div>
 
-{{block.super}}
-
-{% endblock %}

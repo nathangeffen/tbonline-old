@@ -47,6 +47,8 @@ class SimpleTest(TestCase):
         self.story3.orderedpost_set.create(post=self.test_posts[3])
         self.story3.orderedpost_set.create(post=self.test_posts[1])
         self.story3.orderedpost_set.create(post=self.test_posts[4])
+        self.story3.orderedpost_set.create(post=self.test_posts[0])        
+        self.story3.orderedpost_set.create(post=self.test_posts[2])        
         self.story3.orderedpost_set.create(post=self.test_posts[5])
         self.story3.save()
 
@@ -97,8 +99,6 @@ class SimpleTest(TestCase):
         response = c.get('/stories/draft/1/', follow=True)
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.context['story'].id, 1)
-
-
 
     def tearDown(self):
         delete_posts()
