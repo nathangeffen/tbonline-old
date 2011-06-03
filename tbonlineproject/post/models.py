@@ -6,8 +6,10 @@ import datetime
 
 from django.db import models
 from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import truncate_html_words
+from django.core.exceptions import ObjectDoesNotExist
 from model_utils.managers import InheritanceManager 
 
 
@@ -20,6 +22,7 @@ from credit.models import OrderedCredit
 from gallery.models import Image 
 from fields import EnhancedTextField, EnhancedText
 import settings
+
 
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.
@@ -74,6 +77,7 @@ class BasicPost(models.Model):
             import os
             return os.path.join(self._meta.app_label,
                 self.__class__.__name__.lower() + list_or_detail + '.html')
+
             
     def get_post_list_template(self):
         return self.__get_template__(self.many_post_template, '_list_snippet')
@@ -114,7 +118,41 @@ class BasicPost(models.Model):
         except:
             return False
     is_published.short_description = _("published")
-                        
+    is_published.boolean = True
+    @staticmethod
+    def get_subclasses():
+        return [rel for rel in BasicPost._meta.get_all_related_objects() if isinstance(rel.field, models.OneToOneField) and issubclass(rel.field.model, BasicPost)]
+    
+    def get_class(self):
+        '''Will return the type of self unless this is a BasicPost in which case 
+        it will try to see if there's a subclass and return that. If that fails. return
+        BasicPost.
+        '''
+        if isinstance(self, BasicPost):
+            for cls in BasicPost.get_subclasses():
+                try:
+                    inst = getattr(self, cls.var_name)
+                    if inst:
+                        return type(inst)
+                except ObjectDoesNotExist:
+                    pass
+            return BasicPost
+        else:
+            return type(self)
+
+    @models.permalink
+    def get_admin_url(self):
+        cls = self.get_class() 
+        return ('admin:post_'+ self.get_class().__name__.lower() +'_change', [str(self.pk)])
+
+    def render_admin_url(self):
+        return u'<a href="'+ self.get_admin_url() + u'">'+ unicode(self.pk) + u'</a>'
+    
+    render_admin_url.short_description = _('ID')
+    render_admin_url.allow_tags = True
+    render_admin_url.admin_order_field = 'id' 
+
+
     @models.permalink
     def get_absolute_url(self):
         if self.is_published():
@@ -161,7 +199,6 @@ class PostWithImage(BasicPost):
     class Meta:
         verbose_name = _('post with image')
         verbose_name_plural = _('posts with images')
-    
                 
 class PostWithSlideshow(BasicPost):
     '''Post with multiple images which can then be displayed as a slideshow.

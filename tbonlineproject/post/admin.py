@@ -23,7 +23,7 @@ class TaggedItemInline(generic.GenericTabularInline):
 
 class BasicPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'teaser', 'body')
-    list_display = ('id', 'title', 'date_published', 'is_published', 'date_added', 'last_modified')
+    list_display = ('render_admin_url', 'title', 'date_published', 'is_published', 'date_added', 'last_modified')
     list_editable = ('title', 'date_published')
     list_filter = ('date_published',)
     date_hierarchy = 'date_published'
