@@ -1,10 +1,10 @@
 body, html {
     background: #a7a09a;
     color: #000;    
-    font-family: Arial,Helmet,Freesans,sans-serif;
-    font-size: 11.5pt;
-    line-height: 20px;
-    margin:0;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 12pt;
+    /*line-height: 20px;*/
+    margin-bottom:0;
     padding:0;
     background: #FFFFFF url("/media/tbonline/images/tbonlinemasthead.jpeg") repeat-x;
 }
@@ -116,15 +116,8 @@ h1.title, h1.title a {
     width: 635px;
     padding-bottom: 5px;
     margin-right: 10px;
-}
-
-#content {
-	margin: 0px;
 	padding-top: 5px;
 }
-
-#content p {margin: 5px;} 
-
 
 .post-entry {
     border-bottom: 3px solid #DDDDDD;
@@ -191,16 +184,25 @@ span.last-updated {
     padding-top: 5px;   
 }
 
-.post-information {
+.post-content {
+	padding-top: 6px;
     clear: both;	
 }
 
 .post-body {
-	clear: both;
     border-bottom: 3px solid #DDDDDD;
     border-width: 1px;
     margin-bottom: 15px;
 }
+
+.post-body p {
+    margin: 12pt 5px 12pt 5px;		
+}
+
+.post-information {
+    clear: both;    
+}
+
 
 p#invite-comment {font-weight: bold; }
 
@@ -244,6 +246,24 @@ sup:after {
 .a2a_dd img {
     margin-bottom: -3px;
 }
+
+#primary-pullout {
+    border: dotted;
+    border-width: 1px;      
+    float: right;
+    margin: 20px;
+    width: 150px;   
+}
+
+blockquote {
+    padding: .5em;
+    background-color: #f6ebc1;
+    margin: 0px;
+    /*font-family: "Times New Roman",Georgia,Serif;*/
+    font-size: 110%;
+    font-weight: bold;
+}
+
 
 dl#comments dt {
     font-size: 110%;

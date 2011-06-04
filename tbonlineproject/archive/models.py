@@ -48,8 +48,7 @@ class Catalogue(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     documents = models.ManyToManyField(blank=True, null=True,
-                help_text=_('Documents comprising this archive.'),
-                through="OrderedDocument")
+                help_text=_('Documents comprising this archive.'))
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
                                       blank=True, null=True)
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
@@ -69,12 +68,7 @@ class Catalogue(models.Model):
     class Meta:
         verbose_name = _('catalogue')
         verbose_name_plural = _('catalogues')
-        ordering = ['-last_modified',]
-
-class OrderedDocument(models.Model):
-    catalogue = models.ForeignKey(Catalogue)
-    document = models.ForeignKey(Document)
-    position = models.PositiveIntegerField()
+        ordering = ['title',]
 
 
     
