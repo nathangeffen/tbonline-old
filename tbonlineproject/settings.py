@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'filebrowser',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.sitemaps',
     'registration',
     'tagging',
     'haystack',    

@@ -1,14 +1,25 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.sitemaps import FlatPageSitemap
 
 from contact_form.views import contact_form
 
 from post.views import PublishedFrontPagePostsView
 
 from post.forms import EnhancedContactForm
+from post.sitemap import PostSitemap
+from story.sitemap import StorySitemap
+from gallery.sitemap import ImageSitemap
 
 admin.autodiscover()
+
+sitemaps = {
+    'flatpages': FlatPageSitemap,
+    'post': PostSitemap,
+    'story': StorySitemap,
+    'image': ImageSitemap 
+}
 
 urlpatterns = patterns('',
     # Examples:
@@ -22,7 +33,9 @@ urlpatterns = patterns('',
     (r'^accounts/', include('registration.urls')),
     (r'^search/', include('haystack.urls')),
     url(r'^contact/$', contact_form, {'form_class': EnhancedContactForm}, name='contact'),                            
-    (r'^contact/', include('contact_form.urls')),    
+    (r'^contact/', include('contact_form.urls')),
+    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+        
     (r'^grappelli/', include('grappelli.urls')),
     (r'^admin/filebrowser/', include('filebrowser.urls')),
     
