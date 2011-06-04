@@ -1,0 +1,6 @@
+{% load url from future %}
+
+{% for document in documents %}
+<div class="document-entry">
+<p><a href="{% url 'document-detail' document.pk %}">{{document.title}}</a></p>
+</div>

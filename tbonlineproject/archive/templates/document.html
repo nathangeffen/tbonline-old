@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block title %}{{block.super}} - {{document.title}}{% endblock %}
+
+{% block content %}
+
+
+<h1>{{document.title}}</h1>
+{{document.description}}
+
+{% if document.file %}
+    <p><a href="{{document.file}}>Download</a></p>
+{% else %}
+    <hr/>
+    {{document.content}}
+{% endif %}
+
+{% endblock %}

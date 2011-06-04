@@ -6,11 +6,8 @@ from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 
 from filebrowser.fields import FileBrowseField
-from filebrowser.settings import ADMIN_THUMBNAIL
 
 from tagging.models import TaggedItem
-from django.contrib.contenttypes import generic
-from django.utils.translation import ugettext_lazy as _
 
 from credit.models import OrderedCredit
 from credit.utils import credit_list
