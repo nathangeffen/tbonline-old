@@ -95,8 +95,10 @@ class EnhancedTextWidget(forms.MultiWidget):
             return value.to_tuple()
         elif value:
             return EnhancedText(value).to_tuple()
-        elif self.initial:
+        elif self.initial and isinstance(self.initial, EnhancedText):
             return self.initial.to_tuple()
+        elif self.initial and isinstance(self.initial, str):
+            return EnhancedText(self.initial).to_tuple()
         else:
             return EnhancedText("", DEFAULT_FORMAT).to_tuple()
         

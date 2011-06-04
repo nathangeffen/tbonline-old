@@ -33,12 +33,12 @@ class BasicPost(models.Model):
                                       blank=True, null=True)    
     teaser = EnhancedTextField(blank=True, 
             help_text=_('For display on multi-post pages.'),
-            default=EnhancedText("", "\W"))
+            default=("\W"))
     introduction = EnhancedTextField(blank=True,
             help_text = _('Displayed on single post page separately from the body'),
-            default=EnhancedText("", "\W"))
+            default=("\W"))
     body = EnhancedTextField(blank=True,
-            default=EnhancedText("", "\W"))
+            default=("\W"))
         
     pullout_text = models.CharField(max_length=400, blank=True,
                         help_text=_('Usually used for a nice quote that will '
