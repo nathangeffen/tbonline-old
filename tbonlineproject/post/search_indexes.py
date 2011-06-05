@@ -1,6 +1,6 @@
 import datetime
 
-from models import BasicPost
+from post.models import BasicPost
 
 from haystack.indexes import SearchIndex, CharField, DateTimeField
 from haystack import site

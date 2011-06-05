@@ -21,7 +21,7 @@ from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
 from fields import EnhancedTextField, EnhancedText
-import settings
+from post import settings
 
 class PostManager(InheritanceManager):
     def published(self):

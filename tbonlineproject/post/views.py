@@ -15,7 +15,7 @@ from tagging.models import TaggedItem
 
 from models import BasicPost, PostModerator
 
-import settings
+from post import settings
 
 
 class ListPostView(ListView):
