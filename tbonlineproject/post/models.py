@@ -20,7 +20,7 @@ from credit.utils import credit_list
 from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
-from fields import EnhancedTextField, EnhancedText
+from post.fields import EnhancedTextField
 from post import settings
 
 class PostManager(InheritanceManager):

@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 
 from tagging.models import TaggedItem
 
-from models import BasicPost, PostModerator
+from post.models import BasicPost, PostModerator
 
 from post import settings
 
