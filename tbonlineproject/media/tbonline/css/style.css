@@ -328,3 +328,27 @@ dl#comments dd {
     padding-right: 10px;
 }
 
+
+a[href^="http"] {
+    padding-right: 12px;
+    background: url(/static/post/icons/external_link.png) no-repeat center right;
+    margin-right: 2px;
+}
+
+a[href^="mailto:"] {
+    padding-right: 15px;
+    background: url(/static/post/icons/mail.png) no-repeat center right;
+}
+
+a[href$=".pdf"], a[href$=".ps"] {
+    padding-right: 15px;
+    background: url(/static/post/icons/pdf.png) no-repeat center right;
+}
+
+a[href$=".doc"], a[href$=".odt"], a[href$=".xls"], a[href$=".epub"],
+a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".docx"] 
+{
+    padding-right: 15px;
+    background: url(/static/post/icons/document.png) no-repeat center right;
+}
+
