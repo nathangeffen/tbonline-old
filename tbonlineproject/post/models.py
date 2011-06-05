@@ -10,6 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import truncate_html_words
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.comments.moderation import CommentModerator, moderator
 from model_utils.managers import InheritanceManager 
 
 
@@ -23,6 +24,10 @@ from gallery.models import Image
 from fields import EnhancedTextField, EnhancedText
 import settings
 
+class PostManager(InheritanceManager):
+    def published(self):
+        return super(PostManager, self).get_query_set().filter(date_published__lte=datetime.datetime.now())        
+    
 
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.
@@ -67,8 +72,7 @@ class BasicPost(models.Model):
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
                                       blank=True, null=True)
-    objects = InheritanceManager()
-
+    objects = PostManager()
 
     def __get_template__(self, template_name, list_or_detail):
         if template_name:
@@ -173,7 +177,6 @@ class BasicPost(models.Model):
         ordering = ['-sticky', '-date_published']
         unique_together = ('slug', 'date_published')
 
-from django.contrib.comments.moderation import CommentModerator, moderator
 
 class PostWithImage(BasicPost):
     '''All the attributes of BasicPost but also contains an image, presumably 

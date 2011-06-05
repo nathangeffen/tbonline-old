@@ -248,20 +248,30 @@ sup:after {
 }
 
 #primary-pullout {
-    border: dotted;
+    /*border: dotted;
     border-width: 1px;      
     float: right;
     margin: 20px;
-    width: 150px;   
+    width: 150px;*/
+    font-family: "Times New Roman", Times, serif;
+    font-size:1.3em;
+    text-align:center;
+    background:#333;
+    color:#fff;
+    display:block;
+    float:left;
+    width:14em;
+    margin: 6px;
+    margin-top: 16px;
+    
 }
 
-blockquote {
+blockquote {/*
     padding: .5em;
     background-color: #f6ebc1;
     margin: 0px;
-    /*font-family: "Times New Roman",Georgia,Serif;*/
     font-size: 110%;
-    font-weight: bold;
+    font-weight: bold;*/
 }
 
 
