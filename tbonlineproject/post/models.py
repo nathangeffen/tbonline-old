@@ -6,7 +6,6 @@ import datetime
 
 from django.db import models
 from django.contrib.contenttypes import generic
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import truncate_html_words
 from django.core.exceptions import ObjectDoesNotExist
