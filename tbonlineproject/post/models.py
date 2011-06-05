@@ -20,8 +20,8 @@ from credit.utils import credit_list
 from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
-from post.fields import EnhancedTextField
-from post import settings
+from fields import EnhancedTextField
+import settings
 
 class PostManager(InheritanceManager):
     def published(self):

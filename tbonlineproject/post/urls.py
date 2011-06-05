@@ -1,9 +1,9 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.decorators import permission_required
 
-from post.views import ListPostView, DateDetailPostView, DetailPostView, \
+from views import ListPostView, DateDetailPostView, DetailPostView, \
     PostsByTagView, DraftPostView, RedirectPostView
-from post.feeds import LatestEntriesFeed
+from feeds import LatestEntriesFeed
 
 urlpatterns = patterns('post.views',
                        

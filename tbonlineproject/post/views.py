@@ -13,9 +13,9 @@ from django.core.urlresolvers import reverse
 
 from tagging.models import TaggedItem
 
-from post.models import BasicPost, PostModerator
+from models import BasicPost, PostModerator
 
-from post import settings
+import settings
 
 
 class ListPostView(ListView):

@@ -4,7 +4,7 @@
 import datetime
 
 from django.contrib.sitemaps import Sitemap
-from post.models import BasicPost
+from models import BasicPost
 
 class PostSitemap(Sitemap):
     changefreq = "never"
