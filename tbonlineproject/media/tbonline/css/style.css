@@ -352,3 +352,8 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
     background: url(/static/post/icons/document.png) no-repeat center right;
 }
 
+
+.highlighted {
+    background: yellow; 
+}
+

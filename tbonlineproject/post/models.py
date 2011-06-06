@@ -91,12 +91,6 @@ class BasicPost(models.Model):
     def get_authors(self):
         return credit_list(self.authors)
         
-    def describe(self):
-        if self.introduction:
-            return self.introduction
-        else:
-            return self.teaser
-
     def get_teaser(self):
         if unicode(self.teaser):
             return self.teaser
@@ -112,6 +106,9 @@ class BasicPost(models.Model):
             return self.teaser
         return ""
 
+    def describe(self):
+        return self.get_introduction()
+
     def is_published(self):
         try: 
             if datetime.datetime.now() >= self.date_published:
@@ -120,6 +117,7 @@ class BasicPost(models.Model):
                 return False
         except:
             return False
+        
     is_published.short_description = _("published")
     is_published.boolean = True
     @staticmethod

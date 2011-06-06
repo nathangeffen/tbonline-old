@@ -24,8 +24,7 @@ class ListPostView(ListView):
     template_name='post/post_list.html'
     
     def get_queryset(self):
-        return BasicPost.objects.filter(
-                date_published__lte=datetime.datetime.now()).\
+        return BasicPost.objects.published().\
                 select_subclasses()
     
 
@@ -42,8 +41,7 @@ class PostsByTagView(ListPostView):
 class PublishedFrontPagePostsView(ListPostView):
 
     def get_queryset(self):
-        return BasicPost.objects.filter(
-                date_published__lte=datetime.datetime.now()).\
+        return BasicPost.objects.published().\
                 filter(homepage=True).\
                 select_subclasses()
 
@@ -54,8 +52,7 @@ class DetailPostViewMixin(object):
 
 
     def get_queryset(self):
-        return BasicPost.objects.filter(
-                date_published__lte=datetime.datetime.now()).\
+        return BasicPost.objects.published().\
                 select_subclasses()
     
     def get_context_data(self, **kwargs):
@@ -76,7 +73,7 @@ class DraftPostView(DetailPostView):
     def get_context_data(self, **kwargs):
         context = super(DraftPostView, self).get_context_data(**kwargs)
 
-        if context['post'].date_published is None or context['post'].date_published > datetime.datetime.now():
+        if not context['post'].is_published():
             messages.info(self.request, _('This post is not published. You have permission to view it .'))
 
         return context

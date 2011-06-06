@@ -98,7 +98,7 @@ class PostTest(unittest.TestCase):
         self.assertEqual(len(posts), 6)
         
     def testCountPublishedPosts(self):
-        posts = BasicPost.objects.filter(date_published__lte=datetime.datetime.now()).select_subclasses()
+        posts = BasicPost.objects.published().select_subclasses()
         self.assertEqual(len(posts), 2)
         self.assertEqual(type(posts[0]), PostWithImage)
         self.assertEqual(type(posts[1]), BasicPost)

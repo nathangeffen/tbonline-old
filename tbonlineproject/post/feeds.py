@@ -12,7 +12,7 @@ class LatestEntriesFeed(Feed):
     description = _('New posts on ') + current_site_name 
 
     def items(self):
-        return BasicPost.objects.order_by('-date_published').select_subclasses()[:5]
+        return BasicPost.objects.published().order_by('-date_published').select_subclasses()[:5]
 
     def item_title(self, item):
         return item.title

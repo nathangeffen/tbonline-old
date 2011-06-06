@@ -11,7 +11,7 @@ class PostSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return BasicPost.objects.select_subclasses().filter(date_published__lte=datetime.datetime.now())
+        return BasicPost.objects.published().select_subclasses()
 
     def lastmod(self, obj):
         return obj.date_published

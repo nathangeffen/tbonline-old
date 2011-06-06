@@ -12,7 +12,7 @@ class BasicPostIndex(SearchIndex):
 
     def get_queryset(self):
         """Used when the entire index for model is updated."""
-        return BasicPost.objects.filter(date_published__lte=datetime.datetime.now()).select_subclasses()
+        return BasicPost.objects.published()
 
 
 site.register(BasicPost, BasicPostIndex)
