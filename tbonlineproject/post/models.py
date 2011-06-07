@@ -26,7 +26,9 @@ import settings
 class PostManager(InheritanceManager):
     def published(self):
         return super(PostManager, self).get_query_set().filter(date_published__lte=datetime.datetime.now())        
-    
+
+    def unpublished(self):
+        return super(PostManager, self).get_query_set().exclude(date_published__lte=datetime.datetime.now())
 
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.

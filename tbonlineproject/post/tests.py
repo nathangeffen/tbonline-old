@@ -10,7 +10,10 @@ import datetime
 from django.utils import unittest
 from django.test.client import Client
 
+from tagging.models import TaggedItem, Tag
+
 from models import BasicPost, PostWithImage
+from credit.models import Credit, OrderedCredit
 from gallery.models import Image
 
 
@@ -77,9 +80,34 @@ def add_posts():
 
     return posts
 
+
 def delete_posts():
     Image.objects.all().delete()
     BasicPost.objects.all().delete()
+
+def add_tags():    
+    pub = Tag.objects.create(name='published')
+    unpub = Tag.objects.create(name='unpublished')
+    even = Tag.objects.create(name='even')
+    odd = Tag.objects.create(name='odd')
+
+    posts = BasicPost.objects.select_subclasses()
+    
+    for p in posts:
+        if p.is_published():
+            ti = TaggedItem(object=p, tag=pub)
+        else:
+            ti = TaggedItem(object=p, tag=unpub)
+        ti.save()
+        if p.pk % 2 == 0:
+            ti = TaggedItem(object=p, tag=even)
+        else: 
+            ti = TaggedItem(object=p, tag=odd)
+        ti.save()
+
+
+def delete_tags():
+    Tag.objects.all().delete()
 
 class PostTest(unittest.TestCase):
 
@@ -88,10 +116,11 @@ class PostTest(unittest.TestCase):
         Create some posts
         """
         self.test_posts = add_posts()
-        
+        add_tags()
 
     def tearDown(self):
         delete_posts()
+        delete_tags()
 
     def testCountAllPosts(self):
         posts = BasicPost.objects.select_subclasses()
@@ -104,6 +133,10 @@ class PostTest(unittest.TestCase):
         self.assertEqual(type(posts[1]), BasicPost)
         self.assertEqual(posts[0].pk, 6)
         self.assertEqual(posts[1].pk, 3)
+
+    def testCountUnpublishedPosts(self):
+        posts = BasicPost.objects.unpublished().select_subclasses()
+        self.assertEqual(len(posts), 4)
 
     def testPostPublishedListView(self):
         c = Client()
@@ -145,6 +178,67 @@ class PostTest(unittest.TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(response.context['post'].id, 1)
 
+    def testTags(self):
+        c = Client()
+        response = c.get('/posts/tag/even/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(len(response.context['posts']), 1)
+        self.assertEquals(response.context['posts'][0].id, 6)
+
+        response = c.get('/posts/tag/published/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(len(response.context['posts']), 2)
+        self.assertEquals(response.context['posts'][0].id, 6)
+        self.assertEquals(response.context['posts'][1].id, 3)
+
+        response = c.get('/posts/tag/unpublished/')
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(len(response.context['posts']), 0)
+
+    def testCredits(self):
+        jane = Credit.objects.create(first_names='Jane', last_name='Bloggs')
+        joe = Credit.objects.create(first_names='Joe', last_name='Smith')
+        lisa = Credit.objects.create(first_names='Lisa', last_name='Doe')
+        tom = Credit.objects.create(first_names='Tom', last_name='Thumb')
+                
+        p = BasicPost.objects.filter(pk=3).select_subclasses()[0]
+        o = OrderedCredit(content_object=p, credit=jane, position=3)
+        o.save()
+        o = OrderedCredit(content_object=p, credit=joe, position=2)
+        o.save()
+        o = OrderedCredit(content_object=p, credit=lisa, position=5)
+        o.save()
+        o = OrderedCredit(content_object=p, credit=tom, position=1)
+        o.save()
+                
+        authors = BasicPost.objects.select_subclasses().filter(pk=3)[0].get_authors() 
+        self.assertEquals(authors, "Tom Thumb, Joe Smith, Jane Bloggs and Lisa Doe")
+        
+        p.authors.all().delete()
+        o = OrderedCredit(content_object=p, credit=lisa, position=0)
+        o.save()
+        authors = BasicPost.objects.select_subclasses().filter(pk=3)[0].get_authors()       
+        self.assertEquals(authors, "Lisa Doe")
+
+        p.authors.all().delete()
+        o = OrderedCredit(content_object=p, credit=joe, position=1)
+        o.save()        
+        o = OrderedCredit(content_object=p, credit=jane, position=0)
+        o.save()
+        authors = BasicPost.objects.select_subclasses().filter(pk=3)[0].get_authors()        
+        self.assertEquals(authors, "Jane Bloggs and Joe Smith")
+        
+        p.authors.all().delete()
+        wikipedia = Credit.objects.create(is_person=False, 
+                                          first_names="First names should be ignored", 
+                                          last_name="Wikipedia")
+        o = OrderedCredit(content_object=p, credit=jane, position=0)
+        o.save()
+
+        o = OrderedCredit(content_object=p, credit=wikipedia, position=1)
+        o.save()
+        authors = BasicPost.objects.select_subclasses().filter(pk=3)[0].get_authors()        
+        self.assertEquals(authors, "Jane Bloggs and Wikipedia")
         
 from django.contrib.auth.models import User
 

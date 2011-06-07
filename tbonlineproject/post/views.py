@@ -35,6 +35,7 @@ class PostsByTagView(ListPostView):
         for cls in BasicPost.get_subclasses():
             posts += list(TaggedItem.objects.get_by_model(cls.model, self.kwargs['tag']))
 
+        posts = filter(lambda p: p.is_published(), posts)
         posts.sort(key=lambda p: p.date_published, reverse=True)    
         return posts
 
