@@ -12,7 +12,7 @@ from django.test.client import Client
 
 from tagging.models import TaggedItem, Tag
 
-from models import BasicPost, PostWithImage
+from post.models import BasicPost, PostWithImage
 from credit.models import Credit, OrderedCredit
 from gallery.models import Image
 

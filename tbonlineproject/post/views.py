@@ -13,9 +13,9 @@ from django.core.urlresolvers import reverse
 
 from tagging.models import TaggedItem
 
-from models import BasicPost, PostModerator
+from post.models import BasicPost, PostModerator
 
-import settings
+from post import settings
 
 
 class ListPostView(ListView):
@@ -83,11 +83,11 @@ class RedirectPostView(RedirectView):
     query_string = True
     
     def get_redirect_url(self, **kwargs):
-        post = get_object_or_404(BasicPost, pk=int(kwargs['pk']), date_published__lte=datetime.datetime.now())
-        return reverse('post_detail', args=[str(post.date_published.year),
-                               str(post.date_published.month),
-                               str(post.date_published.day), 
-                               post.slug 
+        p = get_object_or_404(BasicPost, pk=int(kwargs['pk']), date_published__lte=datetime.datetime.now())
+        return reverse('post_detail', args=[str(p.date_published.year),
+                               str(p.date_published.month),
+                               str(p.date_published.day), 
+                               p.slug 
                                ])
 
 

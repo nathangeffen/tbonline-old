@@ -20,8 +20,8 @@ from credit.utils import credit_list
 from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
-from fields import EnhancedTextField
-import settings
+from post.fields import EnhancedTextField
+from post import settings
 
 class PostManager(InheritanceManager):
     def published(self):
@@ -254,13 +254,13 @@ class PostModerator(CommentModerator):
         auto_moderate_field = None
 
     @staticmethod
-    def can_comment(post, user):
+    def can_comment(post_parm, user):
 
-        if not post.allow_comments:
+        if not post_parm.allow_comments:
             return 'disallowed'
 
         if settings.CLOSE_COMMENTS_AFTER:
-            if post.date_published + \
+            if post_parm.date_published + \
                  datetime.timedelta(days=settings.CLOSE_COMMENTS_AFTER) \
                  <= datetime.datetime.now():
                 return 'closed'
@@ -278,6 +278,6 @@ class PostModerator(CommentModerator):
             return super(PostModerator,self).allow(comment, content_object, request)  
     
 
-for Post in [BasicPost, PostWithImage, PostWithSlideshow, PostWithEmbeddedObject]:
-    if Post not in moderator._registry:
-        moderator.register(Post, PostModerator)
+for p in [BasicPost, PostWithImage, PostWithSlideshow, PostWithEmbeddedObject]:
+    if p not in moderator._registry:
+        moderator.register(p, PostModerator)

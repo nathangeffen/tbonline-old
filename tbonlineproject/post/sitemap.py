@@ -1,10 +1,8 @@
 '''Creates sitemap for BasicPost and its subclasses.
 '''
 
-import datetime
-
 from django.contrib.sitemaps import Sitemap
-from models import BasicPost
+from post.models import BasicPost
 
 class PostSitemap(Sitemap):
     changefreq = "never"
