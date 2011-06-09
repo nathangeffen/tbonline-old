@@ -8,7 +8,7 @@ from tagging.models import TaggedItem
 
 from credit.models import OrderedCredit
 from credit.utils import credit_list
-from post.fields import EnhancedTextField
+from enhancedtext.fields import EnhancedTextField
 
 from copyright.models import Copyright
 

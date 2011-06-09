@@ -20,8 +20,8 @@ from credit.utils import credit_list
 from copyright.models import Copyright
 from credit.models import OrderedCredit
 from gallery.models import Image 
-from post.fields import EnhancedTextField
-from post import settings
+from enhancedtext.fields import EnhancedTextField
+from post import app_settings
 
 class PostManager(InheritanceManager):
     def published(self):
@@ -99,7 +99,7 @@ class BasicPost(models.Model):
         if unicode(self.introduction):
             return self.introduction
 
-        return truncate_html_words(unicode(self.body), settings.TRUNCATE_WORDS)
+        return truncate_html_words(unicode(self.body), app_settings.TRUNCATE_WORDS)
         
     def get_introduction(self):
         if unicode(self.introduction):
@@ -238,18 +238,18 @@ class PostWithEmbeddedObject(models.Model):
         verbose_name_plural = _('posts with embedded objects')
 
 class PostModerator(CommentModerator):
-    email_notification = settings.EMAIL_COMMENTS
+    email_notification = app_settings.EMAIL_COMMENTS
     enable_field = 'allow_comments'
     
-    if settings.CLOSE_COMMENTS_AFTER:
+    if app_settings.CLOSE_COMMENTS_AFTER:
         auto_close_field = 'date_published'
-        close_after = settings.CLOSE_COMMENTS_AFTER
+        close_after = app_settings.CLOSE_COMMENTS_AFTER
     else:
         auto_close_field = None
     
-    if settings.COMMENTS_MODERATED:
+    if app_settings.COMMENTS_MODERATED:
         auto_moderate_field = 'date_published'
-        moderate_after = settings.MODERATION_FREE_DAYS
+        moderate_after = app_settings.MODERATION_FREE_DAYS
     else:
         auto_moderate_field = None
 
@@ -259,13 +259,13 @@ class PostModerator(CommentModerator):
         if not post_parm.allow_comments:
             return 'disallowed'
 
-        if settings.CLOSE_COMMENTS_AFTER:
+        if app_settings.CLOSE_COMMENTS_AFTER:
             if post_parm.date_published + \
-                 datetime.timedelta(days=settings.CLOSE_COMMENTS_AFTER) \
+                 datetime.timedelta(days=app_settings.CLOSE_COMMENTS_AFTER) \
                  <= datetime.datetime.now():
                 return 'closed'
     
-        if  settings.AUTHENTICATED_COMMENTS_ONLY and\
+        if  app_settings.AUTHENTICATED_COMMENTS_ONLY and\
              not user.is_authenticated():
             return 'authenticate'
     

@@ -7,14 +7,14 @@ from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
-from post import settings
+from post import app_settings
 from post.models import BasicPost
 
 from models import Story
 
 class StoryListView(ListView):
     context_object_name = 'stories'
-    paginate_by = settings.POSTS_PER_PAGE
+    paginate_by = app_settings.POSTS_PER_PAGE
 
     def get_queryset(self):
         return Story.objects.filter(date_published__lte=datetime.datetime.now())

@@ -15,12 +15,12 @@ from tagging.models import TaggedItem
 
 from post.models import BasicPost, PostModerator
 
-from post import settings
+from post import app_settings
 
 
 class ListPostView(ListView):
     context_object_name='posts'
-    paginate_by=settings.POSTS_PER_PAGE
+    paginate_by=app_settings.POSTS_PER_PAGE
     template_name='post/post_list.html'
     
     def get_queryset(self):
@@ -99,7 +99,7 @@ class DateDetailPostView(DetailPostViewMixin, DateDetailView):
 def markdownpreview(request):
     '''Used by Markitup! editor to render the markdown for the preview button.
     '''
-    data = markdown(request.POST.get('data', ''), settings.MARKDOWN_EXTENSIONS) 
+    data = markdown(request.POST.get('data', ''), app_settings.MARKDOWN_EXTENSIONS) 
 
     return render_to_response( 'enhancedtext/markdownpreview.html',
                               {'preview': data,},

@@ -154,6 +154,7 @@ INSTALLED_APPS = (
     'credit',
     'gallery',
     'feeder',
+    'enhancedtext',
     'post',
     'story',
 )
