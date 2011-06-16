@@ -82,11 +82,20 @@ class EnhancedText(object):
         if self.text_format == '\E':
             return linebreaks(urlize(escape(self.text)))
         elif self.text_format == '\T':
-            return textile(self.text)
+            try:
+                return textile(self.text)
+            except:
+                return mark_safe(_('There is an error in the Textile.'))
         elif self.text_format == '\M':
-            return markdown(self.text, MARKDOWN_EXTENSIONS)
+            try:
+                return markdown(self.text, MARKDOWN_EXTENSIONS)
+            except:
+                return mark_safe(_('There is an error in the Markdown.')) 
         elif self.text_format == '\R':
-            return restructuredtext(self.text)
+            try:
+                return restructuredtext(self.text)
+            except:
+                return mark_safe(_('There is an error in the reStructuredText.'))
         elif self.text_format == '\H' or self.text_format == '\W':
             return mark_safe(self.text)
         else:

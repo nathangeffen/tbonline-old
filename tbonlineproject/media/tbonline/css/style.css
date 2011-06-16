@@ -126,7 +126,6 @@ h1.title, h1.title a {
     margin-bottom: 15px;         
 }
 
-
 p.byline {
 	font-weight: bold;
 	font-size: 8pt;
@@ -142,23 +141,32 @@ span.last-updated {
 }
 
 
-.picture, .thumbprint { 
+.figure, .picture, .thumbprint { 
     background-color: #F9F9F9;
     border: 1px solid #CCCCCC; 
     padding: 3px;
     font: 11px/1.4em Arial, sans-serif;
 }
 
+.figure {
+    text-align: center;	
+}
+
 .picture {
     width: 302px;    	
 }
+
+.figure {
+    width: 635px;	
+}
+
 .thumbprint { 
     width: 142px; 
 }
 
-.picture img, .thumbprint img { 
+.figure img, .picture img, .thumbprint img { 
     border: 1px solid #CCCCCC;
-    vertical-align:middle; 
+    vertical-align: middle; 
     margin-bottom: 3px; 
 }
 
@@ -172,7 +180,6 @@ span.last-updated {
 	margin: 0.5em 0.8em 0.5em 0; 
 	float:left; 
 } 
-
 
 .teaser {
     padding-top: 5px;	
