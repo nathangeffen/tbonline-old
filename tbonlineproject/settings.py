@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'haystack',    
     'copyright',
     'credit',
+    'relatedcontent',
     'gallery',
     'feeder',
     'enhancedtext',

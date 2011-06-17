@@ -17,7 +17,7 @@ urlpatterns = patterns('post.views',
     
     # Detail view for post by id
     url(r'^id/(?P<pk>\d+)/$', 
-        RedirectPostView.as_view(), name='post_id_detail'),
+        RedirectPostView.as_view(), name='story_id_detail'),
     
     # Detail view for unpublished post 
     url(r'^draft/(?P<pk>\d+)/$',

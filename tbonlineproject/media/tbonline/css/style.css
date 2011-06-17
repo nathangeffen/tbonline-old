@@ -313,11 +313,13 @@ dl#comments dd {
     width: 290px;
 }
 
-.featured-block {
+#related-content, .featured-block {
     background: #F8F8F8;	
     padding: 5px;
     margin-bottom: 5px;
 }
+
+
 
 #footer {
 	margin-bottom: 5px;

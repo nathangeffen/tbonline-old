@@ -16,10 +16,42 @@ from post.models import BasicPost, PostWithImage
 
 from credit.admin import OrderedCreditInline
 
+from relatedcontent.admin import RelatedContentInline
+
+post_fieldsets = (
+        (_('Title'), {
+            'classes' : ['collapse open'],    
+            'fields': ('title', 'subtitle','slug','date_published'),
+        }),
+        
+        (_('Content'), {
+         'classes' : ['collapse open',],
+         'fields': ('body',)
+        }),
+
+        (_('Teaser. introduction and pullout text'), {
+         'classes' : ['collapse closed',],
+         'fields': ('teaser','introduction', 'pullout_text',)
+        }),
+
+        (_('Display features'), {
+         'classes' : ['collapse closed',],
+         'fields': ('homepage','sticky','allow_comments', 'copyright')
+        }),
+                 
+        (_('HTML templates'), {
+         'classes' : ['collapse closed',],
+         'fields': ('single_post_template','many_post_template')
+        }),
+        
+    )
+
+
+
 class TaggedItemInline(generic.GenericTabularInline):
     classes = ('collapse open')
     model = TaggedItem
-    extra = 0
+    extra = 0 
 
 class BasicPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'teaser', 'body')
@@ -28,8 +60,11 @@ class BasicPostAdmin(admin.ModelAdmin):
     list_filter = ('date_published',)
     date_hierarchy = 'date_published'
     prepopulated_fields = {"slug": ("title",)}
-    inlines = [OrderedCreditInline, TaggedItemInline]
+    inlines = [OrderedCreditInline, TaggedItemInline, RelatedContentInline]
     ordering = ('-last_modified',)
+
+    fieldsets = post_fieldsets
+
     
     class Media:
         css = {
@@ -53,40 +88,15 @@ class PostWithImageAdmin(BasicPostAdmin):
     }    
     
 
-    fieldsets = (
-        (_('Title'), {
-            'classes' : ['collapse open'],    
-            'fields': ('title', 'subtitle','slug','date_published'),
-        }),
-        
-        (_('Content'), {
-         'classes' : ['collapse open',],
-         'fields': ('body',)
-        }),
-
-        (_('Teaser. introduction and pullout text'), {
-         'classes' : ['collapse closed',],
-         'fields': ('teaser','introduction', 'pullout_text',)
-        }),
-
-
-        (_('Image'), {
+    fieldsets = post_fieldsets[0:3] + \
+        ((_('Image'), {
          'classes' : ['collapse open',],
          'fields': ('image', ('single_post_width','single_post_height',), 
                     ('many_post_width','many_post_height',),)
-        }),
-        
-        (_('Display features'), {
-         'classes' : ['collapse closed',],
-         'fields': ('homepage','sticky','allow_comments', 'copyright')
-        }),
-                 
-        (_('HTML templates'), {
-         'classes' : ['collapse closed',],
-         'fields': ('single_post_template','many_post_template')
-        }),
-        
-    )
+        }),) + \
+        post_fieldsets[3:]
+    
+
 
 class FlatPageForm(forms.ModelForm):
     model = FlatPage

@@ -11,3 +11,11 @@
 </div>
 
 {% endblock %}
+
+{% block sidebar-1 %}
+    {% with post as search_object %}
+        {% include 'relatedcontent/list_related_content_snippet.html' %}
+    {% endwith %}
+    {{block.super}}        
+{% endblock %}
+

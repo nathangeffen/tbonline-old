@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load relatedcontenttags %}
+
+<div id="related-content">
+
+
+{% get_related_content search_object as related_items %} 
+
+    {% if related_items %}
+        {% for item in related_items %}
+            {% ifchanged item.category %}{% if not forloop.first %}</ul>{% endif %}<h2>{{item.get_category_display}}</h2><ul>{% endifchanged %}
+
+            <li class="related-content-item">
+                <a href="{{item.webpage.url}}" {{item.webpage.html_A_tag_options}}>
+                {{item.webpage.title}}
+                </a>
+            </li>    
+        {% endfor %}
+        </ul>
+    {% endif %}
+</div>

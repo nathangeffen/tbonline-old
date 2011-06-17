@@ -15,8 +15,11 @@ from copyright.models import Copyright
 class Document(models.Model):
     title = models.CharField(max_length=200)
     file = FileBrowseField(max_length=200, directory="documents/", blank=True, null=True)
+    url = models.URLField(blank=True,
+            verbose_name='External URL',
+            help_text= _('Use this field as an alternative to uploading a file'))
     content = EnhancedTextField(blank=True,
-            help_text = _('Use this field as an alternative to uploading a file.'),
+            help_text = _('Use this field as an alternative to uploading a file or specifying a URL.'),
             default=("\W")) 
     description = EnhancedTextField(blank=True,
             help_text = _('Describe the document.'),
