@@ -14,9 +14,14 @@ from tagging.models import TaggedItem
 
 from post.models import BasicPost, PostWithImage
 
+from archive.admin import TaggedItemInline
+
 from credit.admin import OrderedCreditInline
 
 from relatedcontent.admin import RelatedContentInline
+
+from enhancedtext.admin import enhancedtextcss, enhancedtextjs
+
 
 post_fieldsets = (
         (_('Title'), {
@@ -47,12 +52,6 @@ post_fieldsets = (
     )
 
 
-
-class TaggedItemInline(generic.GenericTabularInline):
-    classes = ('collapse open')
-    model = TaggedItem
-    extra = 0 
-
 class BasicPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'teaser', 'body')
     list_display = ('render_admin_url', 'title', 'date_published', 'is_published', 'date_added', 'last_modified')
@@ -67,18 +66,8 @@ class BasicPostAdmin(admin.ModelAdmin):
 
     
     class Media:
-        css = {
-               'screen': ('markitup/skins/markitup/style.css',
-                          'markitup/sets/markdown/style.css',),
-               } 
-        
-        js = [
-              'markitup/jquery.min.js',
-              'markitup/jquery.markitup.js',
-              'markitup/sets/markdown/set.js',
-              'grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js',
-              'enhancedtext/js/enhancedtextareas.js',
-             ]
+        css = enhancedtextcss 
+        js = enhancedtextjs
 
 class PostWithImageAdmin(BasicPostAdmin):
     list_display = ('id', 'title', 'image_thumbnail', 'date_published', 'is_published', 'date_added', 'last_modified')

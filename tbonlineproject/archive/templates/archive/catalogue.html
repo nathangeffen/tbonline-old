@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load url from future %}
 
 {% block title %}{{block.super}} - {{catalogue.title}}{% endblock %}
 
 {% block content %}
 
-
-<h1>{{ catalogue.title }}</h1>
 <p id="document-links">
 <a href="{% url 'catalogue-list' %}">{% trans "View all catalogues" %}</a> 
 | 
 <a href="{% url 'document-list' %}">{% trans "View all documents" %}</a>
 </p>
 
+<h1>{{ catalogue.title }}</h1>
+
 {{catalogue.description}}
 
 {% with catalogue.documents.all as documents %}
 <div id="document-list">
-{% include 'list_documents_snippet.html' %}
+{% include 'archive/list_documents_snippet.html' %}
 </div>
+{% endwith %}
 {% endblock %}

@@ -240,6 +240,34 @@ class PostTest(unittest.TestCase):
         authors = BasicPost.objects.select_subclasses().filter(pk=3)[0].get_authors()        
         self.assertEquals(authors, "Jane Bloggs and Wikipedia")
         
+    def testEnhancedTextField(self):
+        p = BasicPost.objects.select_subclasses()[0]
+        p.teaser = "<h1>The quick brown fox jumps over the lazy dog</h1>"
+        self.assertEquals(unicode(p.teaser), "<h1>The quick brown fox jumps over the lazy dog</h1>")
+        p.teaser = '''
+On Foxes
+--------
+
+This is a footnote text.[^EGFOOT]
+
+[^EGFOOT]: Example footnote.
+\M'''
+        self.assertEquals(unicode(p.teaser), '<h2>On Foxes</h2>\n<p>This is a footnote text.<sup id="fnref:EGFOOT"><a href="#fn:EGFOOT" rel="footnote">1</a></sup></p>\n<div class="footnote">\n<hr />\n<ol>\n<li id="fn:EGFOOT">\n<p>Example footnote.\n&#160;<a href="#fnref:EGFOOT" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>\n</li>\n</ol>\n</div>')
+
+        p.teaser = '''
+TB in our ancestors
+-------------------
+
+Recent research shows that the disease probably originated at least several 
+hundred thousand years ago in hominids but perhaps even more than 2 million years 
+ago. [#Stone]_  
+
+.. [#Stone] Stone *et al.* 2009. Tuberculosis and leprosy in perspective. 
+
+\R'''
+        
+        self.assertEquals(unicode(p.teaser), '<p>Recent research shows that the disease probably originated at least several\nhundred thousand years ago in hominids but perhaps even more than 2 million years\nago. <a class="footnote-reference" href="#stone" id="id1">[1]</a></p>\n<table class="docutils footnote" frame="void" id="stone" rules="none">\n<colgroup><col class="label" /><col /></colgroup>\n<tbody valign="top">\n<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Stone <em>et al.</em> 2009. Tuberculosis and leprosy in perspective.</td></tr>\n</tbody>\n</table>\n')
+        
 from django.contrib.auth.models import User
 
 class AccountTest(unittest.TestCase):

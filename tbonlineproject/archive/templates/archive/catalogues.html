@@ -16,7 +16,7 @@
 
 {% for catalogue in catalogues %}
     <div class="catalogue-entry">
-        <h2><a href="{% url 'catalogue_detail' catalogue.pk %}">{{catalogue.title}}</a></h2>
+        <h2><a href="{% url 'catalogue-detail' catalogue.pk %}">{{catalogue.title}}</a></h2>
         {{catalogue.description|safe}}
     </div>
 {% endfor %}

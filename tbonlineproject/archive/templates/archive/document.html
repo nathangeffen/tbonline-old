@@ -9,13 +9,28 @@
 
 
 <h1>{{document.title}}</h1>
+
+<div id="document-description">
 {{document.description}}
+</div>
 
 {% if document.file %}
-    <p><a href="{{document.file}}>Download</a></p>
-{% else %}
-    <hr/>
-    {{document.content}}
+    <div id="document-file">
+    <p><a href="{{document.file}}">{% trans "Download the file" %}</a></p>
+    </div>    
 {% endif %}
+
+{% if document.url %}
+    <div id="document-url">
+    <p><a href="{{document.url}}">{% trans "URL for this document an another website" %}</a></p>
+    </div>
+{% endif %}
+    
+{% if document.content %}
+    <div id="document-content">
+    {{document.content}}
+    </div>    
+{% endif %}
+
 
 {% endblock %}

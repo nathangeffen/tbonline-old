@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'relatedcontent',
     'gallery',
     'feeder',
+    'archive',
     'enhancedtext',
     'post',
     'story',

@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from tagging.models import TaggedItem 
 from credit.models import OrderedCredit 
 from post.models import BasicPost
+from enhancedtext.fields import EnhancedTextField
 
 
 class Story(models.Model):
@@ -19,7 +20,7 @@ class Story(models.Model):
     
     title = models.CharField(max_length=200)
     slug = models.SlugField()
-    description = models.TextField(blank=True)
+    description = EnhancedTextField(blank=True, default="\W")
     posts = models.ManyToManyField(BasicPost, through='OrderedPost', 
                                    blank=True, 
                                    null=True)

@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', PublishedFrontPagePostsView.as_view(template_name = 'index.html'), 
         name='home'),
+    (r'^archive/', include('archive.urls')),
     (r'^posts/', include('post.urls')),
     (r'^galleries/', include('gallery.urls')),
     (r'^stories/', include('story.urls')),

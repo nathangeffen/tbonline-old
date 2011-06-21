@@ -338,6 +338,11 @@ dl#comments dd {
 }
 
 
+#document-content {
+    border: solid;
+    padding: 5px;	
+} 
+
 a[href^="http"] {
     padding-right: 12px;
     background: url(/static/post/icons/external_link.png) no-repeat center right;

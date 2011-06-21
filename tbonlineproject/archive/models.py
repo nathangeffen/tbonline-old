@@ -16,6 +16,7 @@ class Document(models.Model):
     title = models.CharField(max_length=200)
     file = FileBrowseField(max_length=200, directory="documents/", blank=True, null=True)
     url = models.URLField(blank=True,
+            verify_exists=False,
             verbose_name='External URL',
             help_text= _('Use this field as an alternative to uploading a file'))
     content = EnhancedTextField(blank=True,
@@ -37,7 +38,7 @@ class Document(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('document_view', [str(self.id)])
+        return ('document-detail', [str(self.id)])
     
     def __unicode__(self):
         return self.title
@@ -49,9 +50,9 @@ class Document(models.Model):
 
 class Catalogue(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    documents = models.ManyToManyField(blank=True, null=True,
-                help_text=_('Documents comprising this archive.'))
+    description = EnhancedTextField(blank=True, default="\W")
+    documents = models.ManyToManyField(Document, blank=True, null=True,
+                help_text=_('Documents in this archive.'))
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
                                       blank=True, null=True)
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
