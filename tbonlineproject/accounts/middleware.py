@@ -1,4 +1,6 @@
 '''AutologoutMiddleware class to logout users after AUTO_LOGOUT_DELAY minutes have elapsed.
+
+Taken from: http://djangosnippets.org/snippets/449/
 '''
 
 from django.conf import settings
