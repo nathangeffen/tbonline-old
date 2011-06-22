@@ -10,7 +10,7 @@ from django.contrib.comments.models import Comment, CommentFlag
 from django.contrib.comments.admin import CommentsAdmin
 from django import forms
 
-from tagging.models import TaggedItem  
+from tagging.models import Tag  
 
 from post.models import BasicPost, PostWithImage
 

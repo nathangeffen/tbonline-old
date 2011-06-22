@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
-from tagging.models import TaggedItem
+from tagging.models import TaggedItem, Tag
 
 from post.models import BasicPost, PostModerator
 
@@ -31,9 +31,14 @@ class ListPostView(ListView):
 class PostsByTagView(ListPostView):
     
     def get_queryset(self):
-        posts = list(TaggedItem.objects.get_by_model(BasicPost, self.kwargs['tag'])) 
+        try:
+            tag = Tag.objects.get(name=self.kwargs['tag'])
+        except Tag.DoesNotExist:
+            return []
+        
+        posts = list(TaggedItem.objects.get_by_model(BasicPost, tag)) 
         for cls in BasicPost.get_subclasses():
-            posts += list(TaggedItem.objects.get_by_model(cls.model, self.kwargs['tag']))
+            posts += list(TaggedItem.objects.get_by_model(cls.model, tag))
 
         posts = filter(lambda p: p.is_published(), posts)
         posts.sort(key=lambda p: p.date_published, reverse=True)    

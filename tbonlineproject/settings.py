@@ -116,6 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'accounts.middleware.AutoLogoutMiddleware',
+    'accounts.middleware.WebfactionFixMiddleware',    
     )  
 
 

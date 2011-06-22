@@ -1,9 +1,11 @@
 from django.contrib import admin
 from archive.models import Catalogue, Document
 from django.contrib.contenttypes import generic
-from tagging.models import TaggedItem  
+from tagging.models import TaggedItem, Tag  
 
 from enhancedtext.admin import enhancedtextcss, enhancedtextjs
+
+from archive.forms import TagAdminForm
 
 class TaggedItemInline(generic.GenericTabularInline):
     classes = ('collapse open')
@@ -20,7 +22,8 @@ class CatalogueInline(admin.TabularInline):
         'fk': ['catalogue'],
     }    
     
-    
+class TagAdmin(admin.ModelAdmin):
+    form = TagAdminForm    
 
 class CatalogueAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description', 'documents__title', )
@@ -51,3 +54,5 @@ class DocumentAdmin(admin.ModelAdmin):
 admin.site.register(Catalogue, CatalogueAdmin)
 admin.site.register(Document, DocumentAdmin)
 
+admin.site.unregister(Tag)
+admin.site.register(Tag, TagAdmin)

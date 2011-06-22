@@ -3,7 +3,8 @@
 
 {% trans "Tags" %}: 
 {% for taggeditem in post.tags.all %}
-    <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{taggeditem.tag}}</a>
+    <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{taggeditem.tag}}</a>{% if not forcounter.last %}, {% endif %}
+    
 {% empty %}
     {% trans "None" %}
 {% endfor %} 
