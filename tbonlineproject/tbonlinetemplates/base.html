@@ -18,6 +18,10 @@
     {% include 'google_analytics_script_snippet.html' %}
     {% endwith %}
 
+    {% block scripts %}
+    
+    {% endblock %}
+
     {% block stylesheets %}
         <link rel="stylesheet" type="text/css" 
         href="{{MEDIA_URL}}tbonline/css/style.css"/>
@@ -31,6 +35,7 @@
         
         
     {% endblock %}
+   
                      
     <title>{% block title %}{{site.name}}{% endblock %}</title>
 
