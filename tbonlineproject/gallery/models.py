@@ -14,29 +14,8 @@ from credit.utils import credit_list
 
 from copyright.models import Copyright
 
-class Gallery(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
-                                      blank=True, null=True)
-    copyright = models.ForeignKey(Copyright, blank=True, null=True)
-    last_modified = models.DateTimeField(auto_now=True, editable=False)
-    date_added = models.DateTimeField(auto_now_add=True, editable=False)
-
-    def describe(self):
-        return self.description
-    
-    def __unicode__(self):
-        return self.title
-    
-    class Meta:
-        verbose_name = _('gallery')
-        verbose_name_plural = _('galleries')
-        ordering = ['-last_modified',]
-
 class Image(models.Model):
     title = models.CharField(max_length=200)
-    gallery = models.ManyToManyField(Gallery, blank=True, null=True)
     slug = models.SlugField(unique=True)
     file = FileBrowseField(max_length=200, directory="images/", format='image', blank=True, null=True)
     caption = models.CharField(max_length=200, blank=True)
@@ -79,3 +58,30 @@ class Image(models.Model):
         verbose_name = _('image')
         verbose_name_plural = _('images')
         ordering = ['-last_modified']
+
+
+class Gallery(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
+                                      blank=True, null=True)
+    images = models.ManyToManyField(Image, blank=True, null=True, through="ImageOrder")
+    copyright = models.ForeignKey(Copyright, blank=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True, editable=False)
+    date_added = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def describe(self):
+        return self.description
+    
+    def __unicode__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = _('gallery')
+        verbose_name_plural = _('galleries')
+        ordering = ['-last_modified',]
+
+class ImageOrder(models.Model):
+    gallery = models.ForeignKey(Gallery)
+    image = models.ForeignKey(Image)
+    position = models.PositiveIntegerField(default=0)
