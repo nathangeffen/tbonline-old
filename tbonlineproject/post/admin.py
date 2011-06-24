@@ -12,7 +12,7 @@ from django import forms
 
 from tagging.models import Tag  
 
-from post.models import BasicPost, PostWithImage
+from post.models import BasicPost, PostWithImage, PostWithSlideshow
 
 from archive.admin import TaggedItemInline
 
@@ -84,6 +84,23 @@ class PostWithImageAdmin(BasicPostAdmin):
                     ('many_post_width','many_post_height',),)
         }),) + \
         post_fieldsets[3:]
+
+class PostWithSlideshowAdmin(BasicPostAdmin):
+    list_display = ('id', 'title', 'slideshow_thumbnail', 'date_published', 'is_published', 'date_added', 'last_modified')
+    raw_id_fields = ['gallery',]
+    related_lookup_fields = {
+        'fk': ['gallery'],
+    }    
+    
+
+    fieldsets = post_fieldsets[0:3] + \
+        ((_('Gallery to use for slideshow'), {
+         'classes' : ['collapse open',],
+         'fields': ('gallery', ('single_post_width','single_post_height',), 
+                    ('many_post_width','many_post_height',),)
+        }),) + \
+        post_fieldsets[3:]
+    
     
 
 
@@ -103,6 +120,7 @@ class CustomCommentAdmin(CommentsAdmin):
 
 admin.site.register(BasicPost, BasicPostAdmin)
 admin.site.register(PostWithImage, PostWithImageAdmin)
+admin.site.register(PostWithSlideshow, PostWithSlideshowAdmin)
 
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, CustomFlatPageAdmin)

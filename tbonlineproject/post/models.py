@@ -19,7 +19,7 @@ from credit.utils import credit_list
 
 from copyright.models import Copyright
 from credit.models import OrderedCredit
-from gallery.models import Image 
+from gallery.models import Gallery, Image 
 from enhancedtext.fields import EnhancedTextField
 from post import app_settings
 
@@ -183,7 +183,7 @@ class PostWithImage(BasicPost):
     image on single post pages. 
     '''
     
-    image = models.ForeignKey(Image)
+    image = models.ForeignKey(Image, blank=True, null=True)
     single_post_width = models.IntegerField(default=0,
                 help_text=_('Leave as zero for default to be used'))
     single_post_height = models.IntegerField(default=0,
@@ -205,7 +205,7 @@ class PostWithImage(BasicPost):
 class PostWithSlideshow(BasicPost):
     '''Post with multiple images which can then be displayed as a slideshow.
     '''
-    images = models.ManyToManyField(Image, through='OrderedImage') 
+    gallery = models.ForeignKey(Gallery, blank=True, null=True) 
     single_post_width = models.IntegerField(default=0,
                 help_text=_('Leave as zero for default to be used'))    
     single_post_height = models.IntegerField(default=0,
@@ -215,23 +215,23 @@ class PostWithSlideshow(BasicPost):
     many_post_height = models.IntegerField(default=0,
                 help_text=_('Leave as zero for default to be used'))    
 
+    def slideshow_thumbnail(self):
+        images = self.gallery.images.all()
+        if images:
+            return images[0].image_thumbnail() + '<p>' + unicode(self.gallery) + '</p>'
+         
+    slideshow_thumbnail.allow_tags = True
+    slideshow_thumbnail.short_description = _("gallery")
+    
     class Meta:
         verbose_name = _('post with slideshow')
         verbose_name_plural = _('posts with slideshows')
-
-class OrderedImage(models.Model):
-    '''Through table for ordering images for PostWithSlideShow.
-    '''
-    post_with_slideshow = models.ForeignKey(PostWithSlideshow)
-    image = models.ForeignKey(Image)
-    position = models.PositiveIntegerField()
-    
     
 class PostWithEmbeddedObject(models.Model):
     '''Post that can display embedded objects, e.g. Youtube.
     '''
-    single_post_embedded_html = EnhancedTextField()
-    many_post_embedded_html = EnhancedTextField()
+    single_post_embedded_html = EnhancedTextField(blank=True, default="\W")
+    many_post_embedded_html = EnhancedTextField(blank=True, default="\W")
 
     class Meta:
         verbose_name = _('post with embedded object')

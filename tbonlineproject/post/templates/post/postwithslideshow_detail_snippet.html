@@ -2,51 +2,47 @@
 {% load url from future %}
 {% load fb_versions %}
 
-{% block scripts %}
-
-{{block.super}}
-
-<!-- jQuery (required) -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
-
-<!-- Optional plugins -->
-<script type="text/javascript" src="{{STATIC_URL}}post/anythingslider/js/jquery.easing.1.2.js"></script>
-<script type="text/javascript" src="js/swfobject.js"></script>
-
-{% endblock %}
-
-{% block stylesheets %}
-
-{{block.super}}
-
-<!-- Anything Slider -->
-<link rel="stylesheet" href="{{STATIC_URL}}post/anythingslider/js/css/anythingslider.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="{{STATIC_URL}}post/anythingslider/js/css/print.css" type="text/css" media="print" />
-<script type="text/javascript" src="js/jquery.anythingslider.js"></script>
-
-<!-- Add the stylesheet(s) you are going to use here. All stylesheets are included below, remove the ones you don't use. -->
-<link rel="stylesheet" href="{{STATIC_URL}}post/anythingslider/js/css/theme-metallic.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="{{STATIC_URL}}post/anythingslider/js/css/theme-minimalist-round.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="{{STATIC_URL}}post/anythingslider/js/css/theme-minimalist-square.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="{{STATIC_URL}}post/anythingslider/js/css/theme-construction.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="{{STATIC_URL}}post/anythingslider/js/css/theme-cs-portfolio.css" type="text/css" media="screen" />
-
-{% endblock %}
 
 {% block media %}
 
+    <link rel="stylesheet" href="{{STATIC_URL}}anythingslider/css/page.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{STATIC_URL}}anythingslider/css/anythingslider.css" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="{{STATIC_URL}}jquery/jquery.min.js"></script>
+
+    <script type="text/javascript" src="{{STATIC_URL}}anythingslider/js/jquery.easing.1.2.js"></script>
+    <script src="{{STATIC_URL}}anythingslider/js/jquery.anythingslider.js" type="text/javascript" charset="utf-8"></script>
+
     <script type="text/javascript">
     $(function(){
-    $('#slider').anythingSlider(); // add any non-default options here
+        $('#slider').anythingSlider({
+        resizeContents : false,         
+        delay: 10000,
+        animationTime: 600,
+        easing: "linear"          
+        }); // add any non-default options here
     });
     </script>
 
     <ul id="slider">
-        {% for image in post.images %}
+        {% for image in post.gallery.images.all %}
     
-            <li></li>
+            <li>
+                <div id="textSlide">                
+                    <img src=
+                    "{% version_object image.file 'small' as theimage %}
+                    {% if theimage.width %}
+                        {{theimage}}
+                     {% else %}
+                        {{image.file}}
+                    {% endif %}" 
+                    alt={{image.title}}
+                    width="550px"/>
+                    <p class="slide-caption">{{image.caption}}</p>                    
+                </div> 
+           </li>
     
         {% endfor %}
     </ul>
-    
+            
 {% endblock %}

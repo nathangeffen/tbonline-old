@@ -65,7 +65,7 @@ class Gallery(models.Model):
     description = models.TextField(blank=True)
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
                                       blank=True, null=True)
-    images = models.ManyToManyField(Image, blank=True, null=True, through="ImageOrder")
+    images = models.ManyToManyField(Image, blank=True, null=True, through="OrderedImage")
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
     last_modified = models.DateTimeField(auto_now=True, editable=False)
     date_added = models.DateTimeField(auto_now_add=True, editable=False)
@@ -81,7 +81,13 @@ class Gallery(models.Model):
         verbose_name_plural = _('galleries')
         ordering = ['-last_modified',]
 
-class ImageOrder(models.Model):
+class OrderedImage(models.Model):
     gallery = models.ForeignKey(Gallery)
     image = models.ForeignKey(Image)
     position = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = _('ordered image')
+        verbose_name_plural = _('ordered images')
+        ordering = ['gallery', 'position']
+        unique_together = ('gallery', 'image',)
