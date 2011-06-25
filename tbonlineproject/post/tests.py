@@ -9,6 +9,7 @@ import datetime
 
 from django.utils import unittest
 from django.test.client import Client
+from django.contrib.sites.models import Site
 
 from tagging.models import TaggedItem, Tag
 
@@ -18,6 +19,8 @@ from gallery.models import Image
 
 
 def add_posts():
+    Site.objects.create(domain="tbonline.info", name="TB Online")
+    Site.objects.create(domain="www.quackdown.info", name="Quackdown")
     posts = []
     posts.append(   BasicPost.objects.create(title='The title',
                                            slug='basicpost-1',                                                   
@@ -77,6 +80,9 @@ def add_posts():
                                            date_published=datetime.datetime.now(),
                                            image=image1
                                            ))
+
+    for p in posts:
+        p.sites.add(Site.objects.get_current())
 
     return posts
 
@@ -267,6 +273,48 @@ ago. [#Stone]_
 \R'''
         
         self.assertEquals(unicode(p.teaser), '<p>Recent research shows that the disease probably originated at least several\nhundred thousand years ago in hominids but perhaps even more than 2 million years\nago. <a class="footnote-reference" href="#stone" id="id1">[1]</a></p>\n<table class="docutils footnote" frame="void" id="stone" rules="none">\n<colgroup><col class="label" /><col /></colgroup>\n<tbody valign="top">\n<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Stone <em>et al.</em> 2009. Tuberculosis and leprosy in perspective.</td></tr>\n</tbody>\n</table>\n')
+
+    def testSites(self):
+        
+        
+        posts = BasicPost.objects.select_subclasses()
+        for p in posts:
+            p.sites.clear()
+        
+        posts = BasicPost.objects.published().select_subclasses()
+        self.assertEquals(posts.count(), 0)
+        posts = BasicPost.objects.unpublished().select_subclasses()
+        self.assertEquals(posts.count(), 0)
+        
+        posts = BasicPost.objects.select_subclasses()
+        for p in posts:
+            p.sites.add(Site.objects.all()[1])
+                
+        posts = BasicPost.objects.published().select_subclasses()
+        self.assertEquals(posts.count(), 0)
+        posts = BasicPost.objects.unpublished().select_subclasses()
+        self.assertEquals(posts.count(), 0)
+        
+        posts = BasicPost.objects.select_subclasses()
+        for p in posts:
+            p.sites.clear()
+            p.sites.add(Site.objects.get_current())
+        
+        posts = BasicPost.objects.published().select_subclasses()
+        self.assertEquals(posts.count(), 2)
+        posts = BasicPost.objects.unpublished().select_subclasses()
+        self.assertEquals(posts.count(), 4)
+
+        posts = BasicPost.objects.select_subclasses()
+        for p in posts:
+            p.sites.clear()
+            p.sites.add(Site.objects.all()[1])
+            p.sites.add(Site.objects.get_current())
+
+        posts = BasicPost.objects.published().select_subclasses()
+        self.assertEquals(posts.count(), 2)
+        posts = BasicPost.objects.unpublished().select_subclasses()
+        self.assertEquals(posts.count(), 4)
         
 from django.contrib.auth.models import User
 

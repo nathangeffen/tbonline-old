@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 from contact_form.forms import ContactForm 
 from stopspam.forms.fields import HoneypotField
 
+
 class EnhancedContactForm(ContactForm):
     error_css_class = 'error'
     required_css_class = 'required'

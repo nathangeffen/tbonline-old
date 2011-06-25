@@ -10,8 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import truncate_html_words
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.comments.moderation import CommentModerator, moderator
-from model_utils.managers import InheritanceManager 
+from django.contrib.sites.models import Site
 
+from model_utils.managers import InheritanceManager 
 
 from tagging.models import TaggedItem
 
@@ -25,10 +26,12 @@ from post import app_settings
 
 class PostManager(InheritanceManager):
     def published(self):
-        return super(PostManager, self).get_query_set().filter(date_published__lte=datetime.datetime.now())        
+        return super(PostManager, self).get_query_set().filter(
+                date_published__lte=datetime.datetime.now(), sites__id=Site.objects.get_current().id)        
 
     def unpublished(self):
-        return super(PostManager, self).get_query_set().exclude(date_published__lte=datetime.datetime.now())
+        return super(PostManager, self).get_query_set().filter(sites__id=Site.objects.get_current().id).exclude(
+                date_published__lte=datetime.datetime.now())
 
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.
@@ -71,6 +74,7 @@ class BasicPost(models.Model):
                         'for multi-post pages. It is safe to leave this blank.'))    
 
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
+    sites = models.ManyToManyField(Site) 
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
                                       blank=True, null=True)
     objects = PostManager()
@@ -206,15 +210,9 @@ class PostWithSlideshow(BasicPost):
     '''Post with multiple images which can then be displayed as a slideshow.
     '''
     gallery = models.ForeignKey(Gallery, blank=True, null=True) 
-    single_post_width = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))    
-    single_post_height = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))   
-    many_post_width = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))    
-    many_post_height = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))    
-
+    slideshow_options = models.TextField(blank=True, 
+                help_text=_('Use this to set slideshow options in JSON format. ' 
+                            'Leave blank for defaults.'))    
     def slideshow_thumbnail(self):
         images = self.gallery.images.all()
         if images:

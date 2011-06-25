@@ -5,10 +5,12 @@
 
 {% block media %}
 
-    <div class="thumbprint left">    
-       <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
-       <img src="{% version post.image.file 'thumbnail' %}" alt={{post.image.title}}/> 
-       </a>
+    <div class="thumbprint left">  
+       {% if post.image %}  
+            <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
+            <img src="{% version post.image.file 'thumbnail' %}" alt={{post.image.title}}/> 
+            </a>
+       {% endif %}
     </div>
 
 {% endblock %}    

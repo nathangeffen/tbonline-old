@@ -2,7 +2,6 @@
 '''
 
 from django.contrib import admin
-from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext as _
 from django.contrib.flatpages.admin import FlatPageAdmin
 from django.contrib.flatpages.models import FlatPage
@@ -10,7 +9,7 @@ from django.contrib.comments.models import Comment, CommentFlag
 from django.contrib.comments.admin import CommentsAdmin
 from django import forms
 
-from tagging.models import Tag  
+from django.contrib.sites.models import Site
 
 from post.models import BasicPost, PostWithImage, PostWithSlideshow
 
@@ -48,7 +47,10 @@ post_fieldsets = (
          'classes' : ['collapse closed',],
          'fields': ('single_post_template','many_post_template')
         }),
-        
+        (_('Sites on which this post is published'), {
+         'classes' : ['collapse closed',],
+         'fields' : ('sites',)
+        })        
     )
 
 
@@ -63,6 +65,12 @@ class BasicPostAdmin(admin.ModelAdmin):
     ordering = ('-last_modified',)
 
     fieldsets = post_fieldsets
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs): 
+        if db_field.name == 'sites':
+            kwargs["initial"]  = [Site.objects.get_current()]             
+        return super(BasicPostAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
 
     
     class Media:
@@ -96,8 +104,7 @@ class PostWithSlideshowAdmin(BasicPostAdmin):
     fieldsets = post_fieldsets[0:3] + \
         ((_('Gallery to use for slideshow'), {
          'classes' : ['collapse open',],
-         'fields': ('gallery', ('single_post_width','single_post_height',), 
-                    ('many_post_width','many_post_height',),)
+         'fields': ('gallery', 'slideshow_options')
         }),) + \
         post_fieldsets[3:]
     

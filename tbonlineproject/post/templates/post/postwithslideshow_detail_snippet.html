@@ -13,22 +13,32 @@
     <script type="text/javascript" src="{{STATIC_URL}}anythingslider/js/jquery.easing.1.2.js"></script>
     <script src="{{STATIC_URL}}anythingslider/js/jquery.anythingslider.js" type="text/javascript" charset="utf-8"></script>
 
+             
     <script type="text/javascript">
-    $(function(){
-        $('#slider').anythingSlider({
-        resizeContents : false,         
-        delay: 10000,
-        animationTime: 600,
-        easing: "linear"          
-        }); // add any non-default options here
-    });
-    </script>
+        
+        $(function(){
+            $('#slider').anythingSlider({
+            
+            resizeContents : false,          
+            delay: 10000,   
+            animationTime: 600,
+            easing: "linear",
+                      
+            {{post.slideshow_options}}
+            
+            }); // add any non-default options here
+        });
+
+   </script>
+
+            
 
     <ul id="slider">
         {% for image in post.gallery.images.all %}
     
             <li>
-                <div id="textSlide">                
+                <div id="textSlide">
+                    <a href="{% url "image_view" image.id %}">                 
                     <img src=
                     "{% version_object image.file 'small' as theimage %}
                     {% if theimage.width %}
@@ -36,9 +46,9 @@
                      {% else %}
                         {{image.file}}
                     {% endif %}" 
-                    alt={{image.title}}
-                    width="550px"/>
-                    <p class="slide-caption">{{image.caption}}</p>                    
+                    alt={{image.title}}/>
+                    </a>
+                    <p class="slide-caption">{{image.caption|safe}}</p>                    
                 </div> 
            </li>
     

@@ -1,0 +1,18 @@
+{% extends "post/basicpost_list_snippet.html" %}
+
+{% load url from future %}
+{% load fb_versions %}
+
+{% block media %}
+
+    <div class="thumbprint left">
+       {% with post.gallery.images.all.0 as first_image %}    
+       {% if first_image %}
+            <a href="{% url "image_view" first_image.id %}" title="{{first_image.title}}">
+            <img src="{% version first_image.file 'thumbnail' %}" alt={{first_image.title}}/> 
+            </a>
+       {% endif %}
+       {% endwith %}
+    </div>
+
+{% endblock %}    
