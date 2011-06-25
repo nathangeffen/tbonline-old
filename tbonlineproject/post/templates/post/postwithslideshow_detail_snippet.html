@@ -5,7 +5,6 @@
 
 {% block media %}
 
-    <link rel="stylesheet" href="{{STATIC_URL}}anythingslider/css/page.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="{{STATIC_URL}}anythingslider/css/anythingslider.css" type="text/css" media="screen" />
 
     <script type="text/javascript" src="{{STATIC_URL}}jquery/jquery.min.js"></script>
@@ -13,13 +12,16 @@
     <script type="text/javascript" src="{{STATIC_URL}}anythingslider/js/jquery.easing.1.2.js"></script>
     <script src="{{STATIC_URL}}anythingslider/js/jquery.anythingslider.js" type="text/javascript" charset="utf-8"></script>
 
+
+
              
     <script type="text/javascript">
         
         $(function(){
             $('#slider').anythingSlider({
             
-            resizeContents : false,          
+            resizeContents : true,
+            width: 560,          
             delay: 10000,   
             animationTime: 600,
             easing: "linear",
