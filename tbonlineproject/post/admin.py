@@ -11,7 +11,7 @@ from django import forms
 
 from django.contrib.sites.models import Site
 
-from post.models import BasicPost, PostWithImage, PostWithSlideshow
+from post.models import BasicPost, PostWithImage, PostWithSlideshow, PostWithEmbeddedObject
 
 from archive.admin import TaggedItemInline
 
@@ -45,7 +45,8 @@ post_fieldsets = (
                  
         (_('HTML templates'), {
          'classes' : ['collapse closed',],
-         'fields': ('single_post_template','many_post_template')
+         'fields': (('detail_post_template','list_post_template',),
+                    ('detail_post_css_classes','list_post_css_classes',))
         }),
         (_('Sites on which this post is published'), {
          'classes' : ['collapse closed',],
@@ -88,8 +89,7 @@ class PostWithImageAdmin(BasicPostAdmin):
     fieldsets = post_fieldsets[0:3] + \
         ((_('Image'), {
          'classes' : ['collapse open',],
-         'fields': ('image', ('single_post_width','single_post_height',), 
-                    ('many_post_width','many_post_height',),)
+         'fields': ('image',)
         }),) + \
         post_fieldsets[3:]
 
@@ -108,6 +108,16 @@ class PostWithSlideshowAdmin(BasicPostAdmin):
         }),) + \
         post_fieldsets[3:]
     
+class PostWithEmbeddedObjectAdmin(BasicPostAdmin):
+    
+    fieldsets = post_fieldsets[0:3] + \
+        ((_('Embedded object'), {
+         'classes' : ['collapse open',],
+         'fields': ('list_post_embedded_html', 'detail_post_embedded_html')
+        }),) + \
+        post_fieldsets[3:]
+    
+
     
 
 
@@ -128,6 +138,7 @@ class CustomCommentAdmin(CommentsAdmin):
 admin.site.register(BasicPost, BasicPostAdmin)
 admin.site.register(PostWithImage, PostWithImageAdmin)
 admin.site.register(PostWithSlideshow, PostWithSlideshowAdmin)
+admin.site.register(PostWithEmbeddedObject, PostWithEmbeddedObjectAdmin)
 
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, CustomFlatPageAdmin)

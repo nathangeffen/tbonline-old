@@ -1,0 +1,9 @@
+{% extends "post/basicpost_list_snippet.html" %}
+
+{% block media %}
+
+    <div class="embedded-object-many left">  
+        {{post.list_post_embedded_html|safe}}
+    </div>
+
+{% endblock %}   

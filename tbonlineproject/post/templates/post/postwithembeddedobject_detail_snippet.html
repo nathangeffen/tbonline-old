@@ -1,0 +1,9 @@
+{% extends "post/basicpost_detail_snippet.html" %}
+
+{% block media %}
+
+    <div id="embedded-object-detail">    
+        {{post.detail_post_embedded_html|safe}}
+    </div>
+    
+{% endblock %}

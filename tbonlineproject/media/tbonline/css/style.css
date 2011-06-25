@@ -160,11 +160,11 @@ span.last-updated {
     width: 635px;	
 }
 
-.thumbprint { 
+.thumbprint, .embedded-object-list iframe { 
     width: 142px; 
 }
 
-.figure img, .picture img, .thumbprint img { 
+.figure img, .picture img, .thumbprint img, .embedded-object-list iframe { 
     border: 1px solid #CCCCCC;
     vertical-align: middle; 
     margin-bottom: 3px; 
@@ -181,9 +181,10 @@ span.last-updated {
 	float:left; 
 } 
 
-/*#textSlide img {
-	width: 530px;
-}*/
+#embedded-object-detail iframe {
+    width: 580px;
+    height: 355px;	
+}
 
 .teaser {
     padding-top: 5px;	

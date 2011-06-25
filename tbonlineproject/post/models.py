@@ -44,7 +44,7 @@ class BasicPost(models.Model):
             help_text=_('For display on multi-post pages.'),
             default=("\W"))
     introduction = EnhancedTextField(blank=True,
-            help_text = _('Displayed on single post page separately from the body'),
+            help_text = _('Displayed on detail post page separately from the body'),
             default=("\W"))
     body = EnhancedTextField(blank=True,
             default=("\W"))
@@ -66,12 +66,20 @@ class BasicPost(models.Model):
     
     allow_comments = models.BooleanField(default=True)
            
-    single_post_template = models.CharField(max_length=200, blank=True,
+    detail_post_template = models.CharField(max_length=200, blank=True,
             help_text=_('Use this field to indicate an alternate html template '
-                        'for single post pages. It is safe to leave this blank.'))
-    many_post_template = models.CharField(max_length=200, blank=True, 
+                        'for detail post pages. It is safe to leave this blank.'))
+    list_post_template = models.CharField(max_length=200, blank=True, 
             help_text=_('Use this field to indicate an alternate html template '
-                        'for multi-post pages. It is safe to leave this blank.'))    
+                        'for list post pages. It is safe to leave this blank.'))
+    detail_post_css_classes = models.CharField(max_length=200, blank=True,
+            help_text=_('Use this field to indicate additional css classes for '
+                        'detail post pages. Separate classes with a space. It is ' 
+                        'safe to leave this blank.'))    
+    list_post_css_classes = models.CharField(max_length=200, blank=True,
+            help_text=_('Use this field to indicate additional css classes for '
+                        'list post pages. Separate classes with a space. '
+                        'It is safe to leave this blank.'))    
 
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
     sites = models.ManyToManyField(Site) 
@@ -89,10 +97,10 @@ class BasicPost(models.Model):
 
             
     def get_post_list_template(self):
-        return self.__get_template__(self.many_post_template, '_list_snippet')
+        return self.__get_template__(self.list_post_template, '_list_snippet')
     
     def get_post_detail_template(self):
-        return self.__get_template__(self.single_post_template, '_detail_snippet')
+        return self.__get_template__(self.detail_post_template, '_detail_snippet')
 
     def get_authors(self):
         return credit_list(self.authors)
@@ -184,18 +192,10 @@ class BasicPost(models.Model):
 class PostWithImage(BasicPost):
     '''All the attributes of BasicPost but also contains an image, presumably 
     for showing as a thumbprint on multi-post pages and as a full blown 
-    image on single post pages. 
+    image on detail post pages. 
     '''
     
     image = models.ForeignKey(Image, blank=True, null=True)
-    single_post_width = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))
-    single_post_height = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))
-    many_post_width = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))
-    many_post_height = models.IntegerField(default=0,
-                help_text=_('Leave as zero for default to be used'))
 
     def image_thumbnail(self):
         return self.image.image_thumbnail()
@@ -225,11 +225,11 @@ class PostWithSlideshow(BasicPost):
         verbose_name = _('post with slideshow')
         verbose_name_plural = _('posts with slideshows')
     
-class PostWithEmbeddedObject(models.Model):
+class PostWithEmbeddedObject(BasicPost):
     '''Post that can display embedded objects, e.g. Youtube.
     '''
-    single_post_embedded_html = EnhancedTextField(blank=True, default="\W")
-    many_post_embedded_html = EnhancedTextField(blank=True, default="\W")
+    detail_post_embedded_html = EnhancedTextField(blank=True, default="\H")
+    list_post_embedded_html = EnhancedTextField(blank=True, default="\H")
 
     class Meta:
         verbose_name = _('post with embedded object')

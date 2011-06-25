@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="post-entry">
+<div class="post-entry {{post.detail_post_css_classes}}">
 {% include 'post/messages_snippet.html' %}
 {% include 'post/post_edit_snippet.html' %}
 {% include post.get_post_detail_template %}
