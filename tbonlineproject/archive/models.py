@@ -1,6 +1,10 @@
+import datetime
+
 from django.db import models
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 
 from filebrowser.fields import FileBrowseField
 
@@ -11,6 +15,25 @@ from credit.utils import credit_list
 from enhancedtext.fields import EnhancedTextField
 
 from copyright.models import Copyright
+
+MONTH_CHOICES = (
+    ('01', _('January'),),
+    ('02', _('February'),),
+    ('03', _('March'),),
+    ('04', _('April'),),
+    ('05', _('May'),),    
+    ('06', _('June'),),
+    ('07', _('July'),),
+    ('08', _('August'),),    
+    ('09', _('September'),),    
+    ('10', _('October'),),    
+    ('11', _('November'),),
+    ('12', _('December'),),        
+)
+
+CITATION_FORMATS = (
+    ('DEF', _('Default'),),
+)
 
 class Document(models.Model):
     title = models.CharField(max_length=200)
@@ -25,6 +48,19 @@ class Document(models.Model):
     description = EnhancedTextField(blank=True,
             help_text = _('Describe the document.'),
             default=("\W"))
+    
+    source = models.CharField(max_length=200, blank=True)
+    publisher = models.CharField(max_length=200, blank=True)
+    
+    year_published = models.PositiveSmallIntegerField(blank=True, null=True)
+    month_published = models.CharField(blank=True, max_length=2, choices=MONTH_CHOICES)
+    day_published = models.PositiveSmallIntegerField(blank=True, null=True)
+    
+    recommended_citation = models.CharField(max_length=300, blank=True,
+            help_text=_("Leave blank for system to automatically generate a citation."))
+    citation_format = models.CharField(max_length=3, choices=CITATION_FORMATS,
+                                       default='DEF')
+    
     credits = generic.GenericRelation(OrderedCredit, verbose_name=_('credit',), 
                                       blank=True, null=True) 
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
@@ -35,7 +71,69 @@ class Document(models.Model):
 
     def describe(self):
         return self.description
+
+    def get_authors(self):
+        return credit_list(self.authors)
     
+    def get_citation(self):
+        if self.recommended_citation:
+            return self.recommended_citation
+        
+        citation = ""
+        
+        if self.citation_format == 'DEF':
+            citation += self.get_authors() + u'. ' 
+            if self.year:
+                citation += unicode(abs(self.year)) 
+                if self.year < 0:
+                    citation += 'BC'
+                if self.month:
+                    citation += ' (' + self.get_month_display()      
+                    if self.day:
+                        citation += ' ' + unicode(self.day) 
+                    citation +=')'
+                citation += '. '
+            citation += self.title + u'. '
+            if self.source:
+                citation += self.source + u'. '
+            if self.publisher:
+                citation += self.publisher + u'. '
+    
+            if self.url: 
+                citation += self.url + u'. '
+            elif self.file: 
+                citation += "http://" + unicode(Site.objects.get_current()) + unicode(self.file) + u'.'
+            else:
+                citation += "http://" + unicode(Site.objects.get_current()) + self.get_absolute_url() + u'.'
+
+        return citation
+             
+    def clean(self):
+        '''Validates the year/month/day combination is valid. Users can omit all 
+        three, but if they enter a month, they must enter a year and if they 
+        enter a day, they must enter a month.  
+        '''
+        
+        # Don't allow draft entries to have a pub_date.
+        if self.year_published: 
+            year = self.year_published             
+            if self.month_published:
+                month = int(self.month_published)
+            elif self.day_published:
+                raise ValidationError(_('You must enter a month if you enter a day'))
+            else:
+                month = 1 # For purposes of validating the year
+            if self.day_published:
+                day = self.day_published
+            else:
+                day = 1 # For purposes of validating the year/month combination
+            try:
+                datetime.date(year,month,day)
+            except (TypeError, ValueError):
+                raise ValidationError(_('The date is invalid')) 
+        elif self.month_published or self.day_published:
+            raise ValidationError(_('You must enter a year if you enter a month or day'))
+                          
     @models.permalink
     def get_absolute_url(self):
         return ('document-detail', [str(self.id)])
@@ -46,7 +144,7 @@ class Document(models.Model):
     class Meta:
         verbose_name = _('document')
         verbose_name_plural = _('documents')
-        ordering = ['title',]
+        ordering = ['-year_published','-month_published', '-day_published']
 
 class Catalogue(models.Model):
     title = models.CharField(max_length=200)
