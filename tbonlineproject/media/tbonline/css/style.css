@@ -136,6 +136,7 @@ p.dateline {
 	font-style: italic;
 	font-size: 8pt;
 }
+
 span.last-updated {
 	font-weight: normal;
 }
@@ -319,11 +320,15 @@ dl#comments dd {
 }
 
 #related-content, .featured-block {
-    background: #F8F8F8;	
+    background: #E6E6E6;	
     padding: 5px;
     margin-bottom: 5px;
 }
 
+.featured-block ul {
+    padding: 0 0 5px 0;
+    margin: 0 0 0 12px;
+}
 
 
 #footer {
@@ -376,3 +381,13 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
     background: yellow; 
 }
 
+.featured-block li .show-on-hover {
+    padding: 0;
+    margin: 0;
+    display: none;
+    font-size: 70%;
+}
+
+.featured-block li:hover .show-on-hover {
+	display: block;
+}

@@ -31,18 +31,8 @@ class ListPostView(ListView):
 class PostsByTagView(ListPostView):
     
     def get_queryset(self):
-        try:
-            tag = Tag.objects.get(name=self.kwargs['tag'])
-        except Tag.DoesNotExist:
-            return []
-        
-        posts = list(TaggedItem.objects.get_by_model(BasicPost, tag)) 
-        for cls in BasicPost.get_subclasses():
-            posts += list(TaggedItem.objects.get_by_model(cls.model, tag))
-
-        posts = filter(lambda p: p.is_published(), posts)
-        posts.sort(key=lambda p: p.date_published, reverse=True)    
-        return posts
+        return sorted(BasicPost.get_posts_by_tags_union(self.kwargs['tag']), 
+                      key=lambda p: p.date_published, reverse=True)
 
 class PublishedFrontPagePostsView(ListPostView):
 

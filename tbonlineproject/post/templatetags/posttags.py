@@ -2,41 +2,46 @@ import re
 
 from django import template
 
-from models import BasicPost
+from post.models import BasicPost
+from feeder.models import Feed 
 
 register = template.Library()
 
-class RelatedPostsRetriever(template.Node):
+
+class PostsByTagsUnion(template.Node):
     
-    def __init__(self, pk, var_name):
-        self.id = int(pk)
+    def __init__(self, tags, var_name):
+        self.tags = tags
         self.var_name = var_name
 
     def render(self, context):
         try:
-            post = BasicPost.objects.filter(pk=self.pk).select_subclasses()[0]
-            context[self.var_name] = TaggedItem.objects.get_by_model(BasicPost, t).select_subclasses()
+            print self.tags
+            context[self.var_name] =  sorted(BasicPost.get_posts_by_tags_union(self.tags), 
+                      key=lambda p: p.date_published, reverse=True)
         except:
-            return ""
+            pass
+        return ""
+        
     
 
-def do_get_related_posts(parser, token):
+def do_get_posts_by_tags_union(parser, token):
     
     try:
         # split_contents() knows not to split quoted strings.
-        tag_name, arg = token.contents.split(None, 1)
+        template_tag_name, arg = token.contents.split(None, 1)
     except ValueError:
         raise template.TemplateSyntaxError("%r tag requires arguments" % token.contents.split()[0])
     
     m = re.search(r'(\"\w+\") as (\w+)', arg)
     
     if not m:
-        raise template.TemplateSyntaxError("%r tag had invalid arguments" % tag_name)
+        raise template.TemplateSyntaxError("%r tag had invalid arguments" % template_tag_name)
     
-    pk, var_name = m.groups()
-    return RelatedPostsRetriever(pk[1:-1], var_name)
+    tags, var_name = m.groups()
+    return PostsByTagsUnion(tags[1:-1], var_name)
 
-register.tag('get_related_posts', do_get_related_posts)
+register.tag('get_posts_by_tags_union', do_get_posts_by_tags_union)
 
 
 class AllFeedRetriever(template.Node):

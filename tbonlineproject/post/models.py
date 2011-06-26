@@ -14,7 +14,7 @@ from django.contrib.sites.models import Site
 
 from model_utils.managers import InheritanceManager 
 
-from tagging.models import TaggedItem
+from tagging.models import TaggedItem, Tag
 
 from credit.utils import credit_list
 
@@ -166,6 +166,63 @@ class BasicPost(models.Model):
     render_admin_url.short_description = _('ID')
     render_admin_url.allow_tags = True
     render_admin_url.admin_order_field = 'id' 
+
+    @staticmethod
+    def get_posts_by_tags_union(tags):
+        
+        if type(tags) == str or type(tags) == unicode:
+            tags = tags.rsplit(",")
+        
+        if type(tags) != list:
+            raise TypeError("Tags is a %s. Expected tags to be a list, string or unicode object."  % unicode(type(tags)))
+
+        posts = []
+        
+        for t in tags:
+            try:
+                tag = Tag.objects.get(name=t)
+            except Tag.DoesNotExist:    
+                continue
+                
+            posts_for_this_tag = list(TaggedItem.objects.get_by_model(BasicPost, tag)) 
+            for cls in BasicPost.get_subclasses():
+                posts_for_this_tag += list(TaggedItem.objects.get_by_model(cls.model, tag))
+                
+
+            posts += filter(lambda p: p.is_published() and \
+                Site.objects.get_current() in p.sites.all(), posts_for_this_tag)                
+        
+        return list(set(posts)) # Remove duplicates 
+
+    @staticmethod
+    def get_posts_by_tags_intersection(tags):
+        
+        
+        if type(tags) == str or type(tags) == unicode:
+            tags = tags.rsplit(",")
+        if type(tags) != list:
+            raise TypeError("Tags is a %s. Expected tags to be a list, string or unicode object."  % unicode(type(tags)))
+        
+        posts = set([])
+        for i, t in enumerate(tags):
+            try:
+                tag = Tag.objects.get(name=t)
+            except Tag.DoesNotExist:    
+                continue
+
+            posts_for_this_tag = list(TaggedItem.objects.get_by_model(BasicPost, tag)) 
+            for cls in BasicPost.get_subclasses():
+                posts_for_this_tag += list(TaggedItem.objects.get_by_model(cls.model, tag))
+                
+            posts_for_this_tag = set(filter(lambda p: p.is_published() and \
+                        Site.objects.get_current() in p.sites.all(), posts_for_this_tag))
+            
+            if i > 0: 
+                posts = posts & posts_for_this_tag                
+            else:
+                posts = posts_for_this_tag
+            
+        return list(posts)
 
 
     @models.permalink
