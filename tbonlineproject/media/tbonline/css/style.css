@@ -377,6 +377,10 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
 }
 
 
+#footer a[href^="http"] {
+    background: none;
+}
+
 .highlighted {
     background: yellow; 
 }
