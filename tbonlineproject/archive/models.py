@@ -73,7 +73,24 @@ class Document(models.Model):
         return self.description
 
     def get_authors(self):
-        return credit_list(self.authors)
+        return credit_list(self.credits)
+    
+    def get_date_published(self):
+        if not self.year_published:
+            return ""
+    
+            
+        date_published= unicode(abs(self.year_published)) 
+        
+        if self.month_published:
+            date_published += u' ' + self.get_month_published_display()      
+        
+            if self.day_published:
+                date_published += u' ' + unicode(self.day_published) 
+
+        return date_published
+
+
     
     def get_citation(self):
         if self.recommended_citation:
@@ -82,18 +99,16 @@ class Document(models.Model):
         citation = ""
         
         if self.citation_format == 'DEF':
-            citation += self.get_authors() + u'. ' 
-            if self.year:
-                citation += unicode(abs(self.year)) 
-                if self.year < 0:
-                    citation += 'BC'
-                if self.month:
-                    citation += ' (' + self.get_month_display()      
-                    if self.day:
-                        citation += ' ' + unicode(self.day) 
-                    citation +=')'
-                citation += '. '
+            authors = self.get_authors()
+            if authors:
+                citation += self.get_authors() + u'. ' 
             citation += self.title + u'. '
+            
+            date_published = self.get_date_published()
+            
+            if date_published:
+                citation += date_published + u'. '
+                
             if self.source:
                 citation += self.source + u'. '
             if self.publisher:
@@ -102,9 +117,9 @@ class Document(models.Model):
             if self.url: 
                 citation += self.url + u'. '
             elif self.file: 
-                citation += "http://" + unicode(Site.objects.get_current()) + unicode(self.file) + u'.'
+                citation += "http://" + unicode(Site.objects.get_current()) + unicode(self.file)
             else:
-                citation += "http://" + unicode(Site.objects.get_current()) + self.get_absolute_url() + u'.'
+                citation += "http://" + unicode(Site.objects.get_current()) + self.get_absolute_url()
 
         return citation
              
@@ -132,7 +147,7 @@ class Document(models.Model):
             except (TypeError, ValueError):
                 raise ValidationError(_('The date is invalid')) 
         elif self.month_published or self.day_published:
-            raise ValidationError(_('You must enter a year if you enter a month or day'))
+            raise ValidationError(_('You must enter a year if you enter a month or day'))        
                           
     @models.permalink
     def get_absolute_url(self):

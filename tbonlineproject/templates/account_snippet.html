@@ -15,7 +15,7 @@
           {% trans "Logout" %}
           </a>
       {% else %}
-          {% trans "Welcome. Please feel free to" %}
+          {% trans "Welcome. Please " %}
           <a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">
           {% trans "register" %}</a>
           {% trans "or" %} 

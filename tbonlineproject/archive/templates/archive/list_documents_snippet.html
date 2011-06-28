@@ -2,6 +2,7 @@
 
 {% for document in documents %}
 <div class="document-entry">
-<p><a href="{% url 'document-detail' document.pk %}">{{document.title}}</a></p>
+<p><a href="{% url 'document-detail' document.pk %}">{{document.title}} 
+{% with document.get_date_published as date_published %}{% if date_published %}- {{document.get_date_published}}{% endif %}{% endwith %}</a></p>
 </div>
 {% endfor %}

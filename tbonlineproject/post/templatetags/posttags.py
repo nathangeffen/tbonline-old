@@ -16,7 +16,6 @@ class PostsByTagsUnion(template.Node):
 
     def render(self, context):
         try:
-            print self.tags
             context[self.var_name] =  sorted(BasicPost.get_posts_by_tags_union(self.tags), 
                       key=lambda p: p.date_published, reverse=True)
         except:

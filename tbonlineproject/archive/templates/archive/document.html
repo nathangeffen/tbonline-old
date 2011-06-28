@@ -7,12 +7,61 @@
 
 {% block content %}
 
+<h1>{% trans "Document" %}</h1>
 
-<h1>{{document.title}}</h1>
+<h2>{{document.title}}</h2>
+
+
+{% if document.source %}
+    <div id="document-source">
+        <p>Source: {{document.source}}</p>
+    </div>
+{% endif %}    
+
+{% if document.get_authors %} 
+    <div id="document-authors">
+        Authors: {{document.get_authors}}
+    </div>
+{% endif %}    
+
+<div id="document-citation">
+    {% trans "Recommended citation" %}: <span class="citation">{{document.get_citation}}</span>
+</div>
+
+{% if document.year_published %}
+    <div id="document-published">
+        
+        <p>{% trans "Published: " %} 
+
+        {% if document.month_published %} 
+            {{document.get_month_published_display}}
+        {% endif %}
+
+        {% if document.day_published %}
+            {{document.day_published}}
+        {% endif %}
+    
+        {{document.year_published}} 
+    
+        </p>
+    </div>
+{% endif %}
 
 <div id="document-description">
 {{document.description}}
 </div>
+
+<div id="document-tags">
+{% trans "Tags" %}: 
+{% for tag in document.tags.all %}
+
+    {{tag.tag}}{% if not forloop.last %}, {% endif %}
+
+{% empty %}
+    {% trans "None" %}    
+{% endfor %}
+</div>
+
 
 {% if document.file %}
     <div id="document-file">
@@ -22,11 +71,11 @@
 
 {% if document.url %}
     <div id="document-url">
-    <p><a href="{{document.url}}">{% trans "URL for this document an another website" %}</a></p>
+    <p><a href="{{document.url}}">{% trans "URL for this document on another website" %}</a></p>
     </div>
 {% endif %}
     
-{% if document.content %}
+{% if document.content.output %}
     <div id="document-content">
     {{document.content}}
     </div>    

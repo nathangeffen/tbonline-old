@@ -21,16 +21,24 @@
         </a>            
     </li>        
     <li>
+        <a href="/guidelines/" {% if request.path == "/guidelines/" %}class="current"{% endif %}>
+        {% trans "Guidelines" %} 
+        </a>            
+    </li>        
+
+    <li>
         <a href="/learn/" {% if request.path == "/learn/" %}class="current"{% endif %}>
         {% trans "Learn" %} 
         </a>            
     </li>
+    
     <li>
         {% url 'contact' as contact_url  %}
         <a href="{{contact_url}}"{% if request.path == contact_url %}class="current"{% endif %}>
         {% trans "Contact" %} 
         </a>            
     </li>
+    
     <li>
         <a href="/about/" {% if request.path == "/about/" %}class="current"{% endif %}>
         {% trans "About" %} 

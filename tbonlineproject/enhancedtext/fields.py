@@ -6,6 +6,8 @@ It can also render the EnhancedTextField in the appropriate format or in HTML.
 """
        
 from django.db import models
+from django.utils.encoding import force_unicode
+
 
 """FIX ME!!!
 Currently Python gettext instead of Django ugettext is used in this module with
@@ -75,10 +77,13 @@ class EnhancedText(object):
         """
         self.text, self.text_format = self.separate_text(value, initial_format)
         
-    def __unicode__(self):
+    def _output(self):   
         """It is this method that is responsible for rendering the 
         object in HTML.
         """ 
+        if self.text is None or self.text == "":
+            return u""
+        
         if self.text_format == '\E':
             return linebreaks(urlize(escape(self.text)))
         elif self.text_format == '\T':
@@ -100,6 +105,14 @@ class EnhancedText(object):
             return mark_safe(self.text)
         else:
             return mark_safe(escape(self.text))
+
+    output = property(_output)
+    
+    def __unicode__(self):
+        return self.output
+    
+    def __repr__(self):
+        return force_unicode(self.output)
 
 class EnhancedTextWidget(forms.MultiWidget):
     """A multi-widget for the EnhancedTextFormField that renders a Textarea and
@@ -209,7 +222,12 @@ class EnhancedTextField(models.Field):
     def get_prep_value(self, value):
         """Converts an EnhancedText instance to plain text for the database.
         """
-        return value.to_string()
+        return unicode(value)
+
+    def get_db_prep_value(self, value, connection, prepared=False):
+        if value is None:
+            return None
+        return unicode(value)
 
     def formfield(self, **kwargs):
         """Specify the form and widget for the EnhancedTextField.
@@ -219,6 +237,8 @@ class EnhancedTextField(models.Field):
                     }
         defaults.update(kwargs)
         return super(EnhancedTextField, self).formfield(**defaults)
+
+
 
 
 
