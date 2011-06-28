@@ -15,11 +15,19 @@
         {% trans "Medicines" %} 
         </a>            
     </li>    
+
     <li>
         <a href="/diagnostics/" {% if request.path == "/diagnostics/" %}class="current"{% endif %}>
         {% trans "Diagnostics" %} 
         </a>            
     </li>        
+
+    <li>
+        <a href="/vaccines/" {% if request.path == "/vaccines/" %}class="current"{% endif %}>
+        {% trans "Vaccines" %} 
+        </a>            
+    </li>        
+
     <li>
         <a href="/guidelines/" {% if request.path == "/guidelines/" %}class="current"{% endif %}>
         {% trans "Guidelines" %} 
