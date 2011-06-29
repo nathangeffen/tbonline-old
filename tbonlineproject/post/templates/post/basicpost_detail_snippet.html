@@ -1,5 +1,12 @@
 {% load i18n %}
 {% load comments %}
+{% load url from future %}
+
+{% if post.category %}
+    <div class="post-category">
+    <a href="{% url 'post_category_list' post.category %}">{{post.category}}</a>
+    </div>
+{% endif %}
 
 <h1 class="title">{{post.title}}</h1>
 

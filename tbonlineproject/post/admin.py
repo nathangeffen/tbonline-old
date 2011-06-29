@@ -40,7 +40,7 @@ post_fieldsets = (
 
         (_('Display features'), {
          'classes' : ['collapse closed',],
-         'fields': ('homepage','sticky','allow_comments', 'copyright')
+         'fields': ('homepage','sticky', 'category', 'allow_comments', 'copyright')
         }),
                  
         (_('HTML templates'), {
@@ -57,8 +57,8 @@ post_fieldsets = (
 
 class BasicPostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'teaser', 'body')
-    list_display = ('render_admin_url', 'title', 'date_published', 'is_published', 'date_added', 'last_modified')
-    list_editable = ('title', 'date_published')
+    list_display = ('render_admin_url', 'title', 'date_published', 'category', 'homepage','is_published', 'date_added', 'last_modified')
+    list_editable = ('title', 'date_published','category', 'homepage', )
     list_filter = ('date_published',)
     date_hierarchy = 'date_published'
     prepopulated_fields = {"slug": ("title",)}
@@ -79,7 +79,7 @@ class BasicPostAdmin(admin.ModelAdmin):
         js = enhancedtextjs
 
 class PostWithImageAdmin(BasicPostAdmin):
-    list_display = ('id', 'title', 'image_thumbnail', 'date_published', 'is_published', 'date_added', 'last_modified')
+    list_display = ('id', 'title', 'image_thumbnail', 'date_published', 'category', 'homepage','is_published', 'date_added', 'last_modified')
     raw_id_fields = ['image',]
     related_lookup_fields = {
         'fk': ['image'],
@@ -94,7 +94,7 @@ class PostWithImageAdmin(BasicPostAdmin):
         post_fieldsets[3:]
 
 class PostWithSlideshowAdmin(BasicPostAdmin):
-    list_display = ('id', 'title', 'slideshow_thumbnail', 'date_published', 'is_published', 'date_added', 'last_modified')
+    list_display = ('id', 'title', 'slideshow_thumbnail', 'date_published', 'category', 'homepage','is_published', 'date_added', 'last_modified')
     raw_id_fields = ['gallery',]
     related_lookup_fields = {
         'fk': ['gallery'],

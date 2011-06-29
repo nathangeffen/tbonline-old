@@ -75,6 +75,19 @@
     </div>
 {% endif %}
     
+{% if document.pmid %}
+    <div id="document-pmid">
+    <p>{% trans "Public Library of Medicine: " %}<a href="http://www.ncbi.nlm.nih.gov/pubmed/{{document.pmid}}>{{document.pmid}}</a></p>    
+    </div>
+{% endif %}
+
+{% if document.doi %}
+    <div id="document-pmid">
+    <p>DOI:<a href="http://dx.doi.org/{{document.doi}}></a>{{document.doi}}</p>    
+    </div>
+{% endif %}
+
+    
 {% if document.content.output %}
     <div id="document-content">
     {{document.content}}

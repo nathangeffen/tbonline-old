@@ -13,9 +13,12 @@ from django.core.urlresolvers import reverse
 
 from tagging.models import TaggedItem, Tag
 
+from categories.models import Category
+
 from post.models import BasicPost, PostModerator
 
 from post import app_settings
+
 
 
 class ListPostView(ListView):
@@ -33,6 +36,21 @@ class PostsByTagView(ListPostView):
     def get_queryset(self):
         return sorted(BasicPost.get_posts_by_tags_union(self.kwargs['tag']), 
                       key=lambda p: p.date_published, reverse=True)
+
+class PostsByCategoryView(ListPostView):
+    
+    template_name = 'post/post_category_list.html'
+    
+    def get_queryset(self):
+        return sorted(BasicPost.get_posts_by_categories(self.kwargs['category']), 
+                      key=lambda p: p.date_published, reverse=True)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostsByCategoryView, self).get_context_data(**kwargs)
+        context['category'] = get_object_or_404(Category, name=self.kwargs['category'])
+        return context
+
+
 
 class PublishedFrontPagePostsView(ListPostView):
 

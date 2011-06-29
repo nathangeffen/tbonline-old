@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.contrib.auth.decorators import permission_required
 
 from post.views import ListPostView, DateDetailPostView, \
-    PostsByTagView, DraftPostView, RedirectPostView
+    PostsByTagView, DraftPostView, RedirectPostView, PostsByCategoryView
 from post.feeds import LatestEntriesFeed
 
 urlpatterns = patterns('post.views',
@@ -30,6 +30,7 @@ urlpatterns = patterns('post.views',
     # List view by tag
     url(r'^tag/(?P<tag>[\"\w\" \-]+)/$', PostsByTagView.as_view(), name='post_tag_list'),
 
+    url(r'^category/(?P<category>[\"\w\" \-]+)/$', PostsByCategoryView.as_view(), name='post_category_list'),
 
     # Preview for Markdown for enhanced text fields
     (r'^markdownpreview/$', 'markdownpreview'),

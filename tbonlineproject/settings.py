@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'feeder',
     'archive',
     'enhancedtext',
+    'categories',
     'post',
     'story',
 )

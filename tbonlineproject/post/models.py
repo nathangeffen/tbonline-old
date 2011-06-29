@@ -20,7 +20,8 @@ from credit.utils import credit_list
 
 from copyright.models import Copyright
 from credit.models import OrderedCredit
-from gallery.models import Gallery, Image 
+from gallery.models import Gallery, Image
+from categories.models import Category 
 from enhancedtext.fields import EnhancedTextField
 from post import app_settings
 
@@ -33,6 +34,7 @@ class PostManager(InheritanceManager):
         return super(PostManager, self).get_query_set().filter(sites__id=Site.objects.get_current().id).exclude(
                 date_published__lte=datetime.datetime.now())
 
+    
 class BasicPost(models.Model):
     '''Basic post that more complex posts should inherit from.
     '''
@@ -58,6 +60,9 @@ class BasicPost(models.Model):
     sticky = models.BooleanField(default=False,
             help_text=_('Check to display at top of home page even when newer '
                         'posts are published.'))
+    category = models.ForeignKey(Category, blank=True, null=True,
+            help_text=_('Assign this post to a category. '
+                        'Posts can only have one category, but multiple tags'))
     
     date_published = models.DateTimeField(blank=True, null=True,
             help_text=_('Leave blank while this is a draft.'))
@@ -224,7 +229,20 @@ class BasicPost(models.Model):
             
         return list(posts)
 
-
+    @staticmethod
+    def get_posts_by_categories(categories):
+        '''Returns all posts which are in the given categories.
+        
+        Note category is a foreign key, so a post only belongs to one category. Therefore
+        there is no union or intersection operation as there is for tags.  
+        '''
+        if type(categories) == str or type(categories) == unicode:
+            categories = categories.rsplit(",")
+        if type(categories) != list:
+            raise TypeError("Categories is a %s. Expected tags to be a list, string or unicode object."  % unicode(type(categories)))
+        
+        return BasicPost.objects.filter(category__name__in=categories).select_subclasses().distinct()
+        
     @models.permalink
     def get_absolute_url(self):
         if self.is_published():

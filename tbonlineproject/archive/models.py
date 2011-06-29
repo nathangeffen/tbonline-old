@@ -61,6 +61,10 @@ class Document(models.Model):
     citation_format = models.CharField(max_length=3, choices=CITATION_FORMATS,
                                        default='DEF')
     
+    pmid = models.IntegerField(blank=True, null=True,
+            help_text=_("Enter a Public Library of Medicine identifier if there is one."))
+    doi = models.CharField(max_length=50, blank=True,
+            help_text=_("Enter a Digital Object Identifier if there is one. E.g. 10.1021/ac0354342"))    
     credits = generic.GenericRelation(OrderedCredit, verbose_name=_('credit',), 
                                       blank=True, null=True) 
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
@@ -93,17 +97,24 @@ class Document(models.Model):
 
     
     def get_citation(self):
+        """Generates a citation for the document. 
+        
+        Currently only default citation is implemented.
+        """
         if self.recommended_citation:
             return self.recommended_citation
         
         citation = ""
         
         if self.citation_format == 'DEF':
+            
+            # Authors, title, date, source, PMID, DOI, URL
             authors = self.get_authors()
             if authors:
-                citation += self.get_authors() + u'. ' 
+                citation += self.get_authors() + u'. '
+                
             citation += self.title + u'. '
-            
+             
             date_published = self.get_date_published()
             
             if date_published:
@@ -113,6 +124,12 @@ class Document(models.Model):
                 citation += self.source + u'. '
             if self.publisher:
                 citation += self.publisher + u'. '
+    
+            if self.pmid:
+                citation += 'PMID: ' + unicode(self.pmid) + '. '
+                
+            if self.doi:
+                citation += 'DOI:' + self.doi + '. '
     
             if self.url: 
                 citation += self.url + u'. '
