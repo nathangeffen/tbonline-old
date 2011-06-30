@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load url from future %}
+{% load i18n %}
+
+{% block title %}{{block.super}} - {{ questioncategory.name }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ questioncategory.name }}</h1>
+
+<ol class="questions">
+{% for question in questioncategory.questionandanswer_set.all %}
+    <li><a name="question_{{forloop.counter}}" href="#answer_{{question.pk}}">{{question.question|safe}}</a></li>
+{% empty %}
+    <p>{% trans "There are no questions in this category yet." %}</p>
+{% endfor %} 
+</ol>
+
+<div class="questions-and-answers">
+{% for question in questioncategory.questionandanswer_set.all %}
+
+    <div class="question"><a href="#question_{{forloop.counter}}" name="answer_{{question.pk}}">{{forloop.counter}}.</a> {{question.question|safe}}</div>
+    
+    <div class="answer">{{question.answer|safe|linebreaks|urlize}}</div>    
+    
+{% empty %}
+    <p>{% trans "There are no questions in this category yet." %}</p>
+{% endfor %} 
+</div>
+
+{% endblock %}
+

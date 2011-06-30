@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load url from future %}
+{% load i18n %}
+
+{% block title %}{{block.super}} - {% trans "Question and answer categories" %}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Question and answer categories" %}</h1>
+
+<ul class="question-category">
+{% for category in questioncategory_list %}
+    <li><a href="{% url 'detail_faq_category' category.pk %}">{{category.name}}</a></li>
+{% empty %}
+    <p>{% trans "There are no question and answer categories yet." %}</p>
+{% endfor %} 
+</ul>
+{% endblock %}
+

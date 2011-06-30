@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load url from future %}
+{% load i18n %}
+{% load faqtags %}
+
+{% block title %}{{block.super}} - {% trans "Questions and answers for patients"%}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Questions and answers for people with TB or at risk of getting TB" %}.</h1>
+
+{% url 'contact' as contact_url  %}
+
+{% blocktrans %}
+Please feel free to send us questions via the <a href="{{contact_url}}">contact page</a> 
+of the site.
+We might add your question and an answer to the site. We always treat personal 
+patient information confidentially.
+{% endblocktrans %}
+
+{% get_question_categories "1,2" as questioncategories %}
+
+<div class="question-categories">
+
+    {% for questioncategory in questioncategories %}
+
+        <h2>{{questioncategory.name}}</h2>
+    
+        {% if questioncategory.description %}
+            {{questioncategory.description|safe}}
+        {% endif %}    
+    
+        <ol class="questions">
+        {% for question in questioncategory.questionandanswer_set.all %}
+            <li><a name="question_{{questioncategory.pk}}_{{forloop.counter}}" href="#answer_{{questioncategory.pk}}_{{question.pk}}">{{question.question|safe}}</a></li>
+        {% empty %}
+            <p>{% trans "There are no questions in this category yet." %}</p>
+        {% endfor %} 
+        </ol>
+    {% endfor %}
+</div>
+
+<div class="questions-and-answers">
+
+    {% for questioncategory in questioncategories %}
+        
+        <h3>{{questioncategory.name}}</h3>
+
+        {% for question in questioncategory.questionandanswer_set.all %}
+
+            <div class="question"><a href="#question_{{questioncategory.pk}}_{{forloop.counter}}" name="answer_{{questioncategory.pk}}_{{question.pk}}">{{forloop.counter}}.</a> {{question.question|safe}}</div>
+    
+            <div class="answer">{{question.answer|safe|linebreaks|urlize}}</div>    
+    
+        {% empty %}
+            <p>{% trans "There are no questions in this category yet." %}</p>
+        {% endfor %} 
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+

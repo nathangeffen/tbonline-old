@@ -7,7 +7,8 @@
         {% endif %}
 
         <span class="current">
-            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}&nbsp;
+            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}&nbsp;|&nbsp;
+            {% trans "Total posts" %}: {{posts|length}}
         </span>
 
         {% if page_obj.has_next %}

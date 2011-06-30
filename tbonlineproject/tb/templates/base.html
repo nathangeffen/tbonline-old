@@ -12,7 +12,7 @@
 
     <link rel="alternate" type="application/rss+xml"  title="TB Online" href="/posts/feed/">
     
-    <link rel="shortcut icon" href="{{MEDIA_URL}}tbonline/images/favicon.ico" />
+    <link rel="shortcut icon" href="{{STATIC_URL}}tb/images/favicon.ico" />
     
     {% with google_code="UA-22851877-1" %}
     {% include 'google_analytics_script_snippet.html' %}
@@ -24,7 +24,7 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" type="text/css" 
-        href="{{MEDIA_URL}}tbonline/css/style.css"/>
+        href="{{STATIC_URL}}tb/css/style.css"/>
         
         {% comment %}
         Inline styles can be used if the style depends on context data.
@@ -47,7 +47,7 @@
 
     <div id="header">
     
-        {% with logo_file="tbonline/images/tbonlinelogo.png" %}
+        {% with logo_file="tb/images/tbonlinelogo.png" %}
         {% include 'logo_snippet.html' %}        
         {% endwith %}
         {% block account %}{% include 'account_snippet.html' %}{% endblock %}        

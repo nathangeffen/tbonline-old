@@ -1,0 +1,5 @@
+{% load url from future %}
+
+{% if post.category %}
+    <span class="post-category"><a href="{% url 'post_category_list' post.category %}">{{post.category}}</a></span>
+{% endif %}
