@@ -111,19 +111,52 @@ class BasicPost(models.Model):
         return credit_list(self.authors)
         
     def get_teaser(self):
+        body = unicode(self.body)
+        
         if unicode(self.teaser):
             return self.teaser
+        
+        contents = body.partition('<!--endteaser-->')
+        if contents[1]:
+            return contents[0]
+        
         if unicode(self.introduction):
             return self.introduction
 
-        return truncate_html_words(unicode(self.body), app_settings.TRUNCATE_WORDS)
+        return truncate_html_words(body, app_settings.TRUNCATE_WORDS)
         
     def get_introduction(self):
         if unicode(self.introduction):
             return self.introduction
-        if unicode(self.teaser):
-            return self.teaser
-        return ""
+        
+        body = unicode(self.body)
+        
+        contents = body.partition('<!--endteaser-->')
+        
+        if contents[1]:
+            contents = contents[2].partition('<!--endintro-->')
+        else:
+            contents = body.partition('<!--endintro-->')
+                        
+        if contents[1]:
+            return contents[0]
+
+        return self.get_teaser()
+
+    def get_body(self):
+        body = unicode(self.body)
+        
+        contents = body.partition('<!--endteaser-->')
+        
+        if contents[1]:
+            contents = contents[2].partition('<!--endintro-->')
+        else:
+            contents = body.partition('<!--endintro-->')
+            
+        if contents[1]:
+            return contents[2]
+        else:
+            return contents[0]
 
     def describe(self):
         return self.get_introduction()
@@ -135,13 +168,15 @@ class BasicPost(models.Model):
             else:
                 return False
         except:
-            return False
-        
+            return False    
     is_published.short_description = _("published")
     is_published.boolean = True
+
     @staticmethod
     def get_subclasses():
-        return [rel for rel in BasicPost._meta.get_all_related_objects() if isinstance(rel.field, models.OneToOneField) and issubclass(rel.field.model, BasicPost)]
+        return [rel for rel in BasicPost._meta.get_all_related_objects() 
+                if isinstance(rel.field, models.OneToOneField) and 
+                    issubclass(rel.field.model, BasicPost)]
     
     def get_class(self):
         '''Will return the type of self unless this is a BasicPost in which case 

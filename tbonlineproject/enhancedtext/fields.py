@@ -222,12 +222,12 @@ class EnhancedTextField(models.Field):
     def get_prep_value(self, value):
         """Converts an EnhancedText instance to plain text for the database.
         """
-        return unicode(value)
+        return value.to_string()
 
     def get_db_prep_value(self, value, connection, prepared=False):
         if value is None:
             return None
-        return unicode(value)
+        return value.to_string()
 
     def formfield(self, **kwargs):
         """Specify the form and widget for the EnhancedTextField.
