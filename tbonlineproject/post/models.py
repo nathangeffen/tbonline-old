@@ -160,6 +160,11 @@ class BasicPost(models.Model):
         else:
             return type(self)
 
+    def describe_for_admin(self):
+        return self.get_class()._meta.verbose_name
+    describe_for_admin.short_description = "Type"
+    describe_for_admin.allow_tags = True
+
     @models.permalink
     def get_admin_url(self):
         cls = self.get_class() 
@@ -274,8 +279,11 @@ class PostWithImage(BasicPost):
 
     def image_thumbnail(self):
         return self.image.image_thumbnail()
-    image_thumbnail.allow_tags = True
-    image_thumbnail.short_description = _("image")
+
+    def describe_for_admin(self):
+        return self.image_thumbnail()
+    describe_for_admin.short_description = "Type"
+    describe_for_admin.allow_tags = True
 
     class Meta:
         verbose_name = _('post with image')
@@ -292,6 +300,11 @@ class PostWithSlideshow(BasicPost):
         images = self.gallery.images.all()
         if images:
             return images[0].image_thumbnail() + '<p>' + unicode(self.gallery) + '</p>'
+
+    def describe_for_admin(self):
+        return self.slideshow_thumbnail()
+    describe_for_admin.short_description = "Type"
+    describe_for_admin.allow_tags = True
          
     slideshow_thumbnail.allow_tags = True
     slideshow_thumbnail.short_description = _("gallery")

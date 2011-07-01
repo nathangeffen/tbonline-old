@@ -1,22 +1,19 @@
 {% extends "post/basicpost_detail_snippet.html" %}
 {% load url from future %}
-{% load fb_versions %}
 
 {% block media %}
 
     <div class="picture left">    
         <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
-        <img src=
-        "{% version_object post.image.file 'small' as theimage %}
-        {% if theimage.width %}
-            {{theimage}}
-        {% else %}
-            {{post.image.file}}
-        {% endif %}" 
+        {% with post.image as image %}
+        {% with 'small' as preferred_size %}
+        <img src="{% include 'gallery/image_snippet.html' %}" 
         alt={{post.image.title}}/> 
         </a>
         <br/>
         {{post.image.caption|safe}}
+        {% endwith %}
+        {% endwith %}
     </div>
     
 {% endblock %}

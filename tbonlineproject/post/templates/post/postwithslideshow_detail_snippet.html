@@ -41,15 +41,11 @@
     
             <li>
                 <div id="textSlide">
-                    <a href="{% url "image_view" image.id %}">                 
-                    <img src=
-                    "{% version_object image.file 'big' as theimage %}
-                    {% if theimage.width %}
-                        {{theimage}}
-                     {% else %}
-                        {{image.file}}
-                    {% endif %}" 
+                    <a href="{% url "image_view" image.id %}">                             
+                    {% with 'medium' as preferred_size %}
+                    <img src="{% include 'gallery/image_snippet.html' %}" 
                     alt={{image.title}}/>
+                    {% endwith %}
                     </a>
                     <p class="slide-caption">{{image.caption|safe}}</p>
                     <p class="slide-caption">{% trans "Credits: " %}{{image.get_credits}}</p>

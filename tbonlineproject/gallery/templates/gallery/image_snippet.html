@@ -1,0 +1,20 @@
+{% load fb_versions %}
+
+{% if preferred_size_override %}
+    {% version_object image.file preferred_size_override as theimage %}
+{% else %}
+    {% if image.preferred_size %}
+        {% version_object image.file image.get_preferred_size_display as theimage %}
+    {% else %} 
+        {% if preferred_size %}
+            {% version_object image.file preferred_size as theimage %} 
+        {% endif %}
+     {% endif %}
+{% endif %}
+
+{% if theimage.width %}
+    {{theimage}}
+{% else %}
+    {{image.file}}
+{% endif %}
+ 

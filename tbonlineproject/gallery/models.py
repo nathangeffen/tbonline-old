@@ -15,12 +15,25 @@ from credit.utils import credit_list
 from enhancedtext.fields import EnhancedTextField
 from copyright.models import Copyright
 
+SIZES = (
+    ('s', _('Small')),
+    ('m', _('Medium')),
+    ('l', _('Large'))
+)
+
 class Image(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
-    file = FileBrowseField(max_length=200, directory="images/", format='image', blank=True, null=True)
+    file = FileBrowseField(max_length=200, directory="images/", format='image', 
+                           blank=True, null=True)
+    preferred_size = models.CharField(max_length=1, choices=SIZES,
+                        blank=True,
+                        help_text=_('In some cases setting this can help HTML '
+                                    'writers display the image display.'))
     caption = models.CharField(max_length=200, blank=True)
-    url = models.URLField(blank=True, verify_exists=False)
+    url = models.URLField(blank=True, verify_exists=False,
+                verbose_name=('URL'),
+                help_text=_('URL for image to link to, usually the source.'))
     description = EnhancedTextField(blank=True, default="\W")
     credits = generic.GenericRelation(OrderedCredit, verbose_name=_('Credit',), 
                                       blank=True, null=True)
