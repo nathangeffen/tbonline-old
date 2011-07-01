@@ -12,6 +12,7 @@ from tagging.models import TaggedItem
 from credit.models import OrderedCredit
 from credit.utils import credit_list
 
+from enhancedtext.fields import EnhancedTextField
 from copyright.models import Copyright
 
 class Image(models.Model):
@@ -20,7 +21,7 @@ class Image(models.Model):
     file = FileBrowseField(max_length=200, directory="images/", format='image', blank=True, null=True)
     caption = models.CharField(max_length=200, blank=True)
     url = models.URLField(blank=True, verify_exists=False)
-    description = models.TextField(blank=True)
+    description = EnhancedTextField(blank=True, default="\W")
     credits = generic.GenericRelation(OrderedCredit, verbose_name=_('Credit',), 
                                       blank=True, null=True)
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
@@ -62,7 +63,7 @@ class Image(models.Model):
 
 class Gallery(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
+    description = EnhancedTextField(blank=True, default="\W")
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'), 
                                       blank=True, null=True)
     images = models.ManyToManyField(Image, blank=True, null=True, through="OrderedImage")
@@ -72,6 +73,9 @@ class Gallery(models.Model):
 
     def describe(self):
         return self.description
+    
+    def get_images(self):
+        return self.images.order_by('orderedimage__position')
     
     def __unicode__(self):
         return self.title

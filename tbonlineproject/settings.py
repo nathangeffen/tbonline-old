@@ -16,6 +16,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+APP_NAME = 'tb'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -126,13 +128,14 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(SITE_ROOT, 'tb/templates'),
+    os.path.join(os.path.join(SITE_ROOT, APP_NAME),'templates'),
     os.path.join(SITE_ROOT, 'templates'),
     os.path.join(SITE_ROOT, 'post/templates'),
     os.path.join(SITE_ROOT, 'gallery/templates'),
     os.path.join(SITE_ROOT, 'feeder/templates'),
     os.path.join(SITE_ROOT, 'copyright/templates'),
 )
+                 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -164,7 +167,7 @@ INSTALLED_APPS = (
     'categories',
     'post',
     'story',
-    'tb',
+    APP_NAME,
 )
 
 AUTHENTICATION_BACKENDS = (

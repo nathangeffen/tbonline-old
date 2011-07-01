@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% for entry in feed.get_rss_items %}
+    <div class="feed">
+    <h2><a href="{{entry.link}}">{{entry.title}}</a></h2>
+    <span class="feed-description">{{entry.description|safe}}</span>
+    </div>
+{% empty %}
+
+    {% trans "There are currently no entries for this feed" %}.
+
+{% endfor %}

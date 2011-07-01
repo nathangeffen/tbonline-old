@@ -1,6 +1,7 @@
 {% load url from future %}
 {% load posttags %}
 {% load i18n %}
+{% load feed %}
 
 <div class="featured-block">
     <h2>{% trans "Quick Information" %}</h2>
@@ -53,4 +54,18 @@
 <li><a title="TAG&rsquo;s 2010 Report on Tuberculosis research funding trends" href="http://www.treatmentactiongroup.org/publication.aspx?id=4450">Tuberculosis funding trends: A report by the Treatment Action Group</a></li>
 <li><a title="WHO recommendations on the implementation of the Gene Xpert TB diagnostic, March 2011" href="http://www.tbonline.info/wp-content/uploads/2011/03/who_xpert_implementation_document_final_draft_6_march.pdf">WHO Recommendations on the Implementation of the Gene Xpert</a></li>
 </ul>
+</div>
+
+<div class="featured-block">
+	<h2>{% trans "Latest TB on Pubmed" %}</h2>
+	{% get_feeder "latest-tb-public-library-medicine" as feed %}
+	<ul>
+	{% for entry in feed.get_rss_items|slice:"15" %}
+	    <li><a href="{{entry.link}}">{{entry.title}}</a>
+	    <div class="show-on-hover">{{entry.description|safe}}</div>
+	    </li>
+	{% empty %}
+	    {% trans "There are currently no entries for this feed" %}.
+	{% endfor %}
+	</ul>
 </div>

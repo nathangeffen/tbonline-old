@@ -1,6 +1,7 @@
 {% extends "post/basicpost_detail_snippet.html" %}
 {% load url from future %}
 {% load fb_versions %}
+{% load i18n %}
 
 
 {% block media %}
@@ -22,13 +23,13 @@
             
             resizeContents : true,
             width: 560,          
-            delay: 10000,   
+            delay: 15000,   
             animationTime: 600,
             easing: "linear",
                       
             {{post.slideshow_options}}
             
-            }); // add any non-default options here
+            });
         });
 
    </script>
@@ -36,13 +37,13 @@
             
 
     <ul id="slider">
-        {% for image in post.gallery.images.all %}
+        {% for image in post.gallery.get_images %}
     
             <li>
                 <div id="textSlide">
                     <a href="{% url "image_view" image.id %}">                 
                     <img src=
-                    "{% version_object image.file 'small' as theimage %}
+                    "{% version_object image.file 'big' as theimage %}
                     {% if theimage.width %}
                         {{theimage}}
                      {% else %}
@@ -50,7 +51,9 @@
                     {% endif %}" 
                     alt={{image.title}}/>
                     </a>
-                    <p class="slide-caption">{{image.caption|safe}}</p>                    
+                    <p class="slide-caption">{{image.caption|safe}}</p>
+                    <p class="slide-caption">{% trans "Credits: " %}{{image.get_credits}}</p>
+                    </p>                    
                 </div> 
            </li>
     

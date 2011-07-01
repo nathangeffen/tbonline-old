@@ -16,8 +16,8 @@ class SingleFeedRetriever(template.Node):
         try:
             context[self.var_name] = Feed.objects.get(slug=self.slug) 
         except Feed.DoesNotExist:
-            return ""
-    
+            pass
+        return ""
 
 
 def do_get_feeder(parser, token):
@@ -28,7 +28,7 @@ def do_get_feeder(parser, token):
     except ValueError:
         raise template.TemplateSyntaxError("%r tag requires arguments" % token.contents.split()[0])
     
-    m = re.search(r'(\"\w+\") as (\w+)', arg)
+    m = re.search(r'(\"[a-zA-Z0-9_-]+\") as (\w+)', arg)
     
     if not m:
         raise template.TemplateSyntaxError("%r tag had invalid arguments" % tag_name)

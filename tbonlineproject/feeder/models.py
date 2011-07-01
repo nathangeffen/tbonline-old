@@ -49,8 +49,8 @@ class Feed(models.Model):
                 
         if len(entries) == 0:
             return None
-        else:                
-            for i in range(min(len(entries)-1,self.number_of_items),-1,-1):
+        else:       
+            for i in range(min(len(entries)-1,self.number_of_items-1),-1,-1):
                 try:
                     Entry.objects.get(link=entries[i].link)
                 except Entry.DoesNotExist:
