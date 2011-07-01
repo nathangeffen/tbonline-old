@@ -13,6 +13,17 @@
 {% endblock %}
 
 {% block sidebar-1 %}
+
+    {% include 'post/category_snippet.html' %}
+    
+    <div id="article-info">
+    {% include 'post/byline_snippet.html' %}
+    {% include 'post/dateline_snippet.html' %}
+    {% include 'post/last_updated_snippet.html' %}
+    {% include 'post/list_tags_snippet.html' %}    
+    {% include 'post/addtoany_snippet.html' %}
+    </div>
+
     {% with post as search_object %}
         {% include 'relatedcontent/list_related_content_snippet.html' %}
     {% endwith %}

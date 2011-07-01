@@ -3,17 +3,21 @@
 
 {% block media %}
 
-    <div class="picture left">    
-        <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
-        {% with post.image as image %}
-        {% with 'small' as preferred_size %}
-        <img src="{% include 'gallery/image_snippet.html' %}" 
-        alt={{post.image.title}}/> 
-        </a>
-        <br/>
-        {{post.image.caption|safe}}
-        {% endwith %}
-        {% endwith %}
-    </div>
+    {% if post.image.id %}
+
+	    <div class="picture left">    
+	        <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
+	        {% with post.image as image %}
+	        {% with 'small' as preferred_size %}
+	        <img src="{% include 'gallery/image_snippet.html' %}" 
+	        alt={{post.image.title}}/> 
+	        </a>
+	        <br/>
+	        {{post.image.caption|safe}}
+	        {% endwith %}
+	        {% endwith %}
+	    </div>
+    
+    {% endif %}
     
 {% endblock %}

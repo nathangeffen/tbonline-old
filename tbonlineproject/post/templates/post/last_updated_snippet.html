@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% if post.date_published < post.last_modified %} 
+    <p class="last-updated">
+    <span class="updated">{% trans "Last updated:" %} </span>{{post.last_modified}}
+    </p>
+{% endif %}

@@ -1,12 +1,13 @@
 {% load i18n %}
 {% load relatedcontenttags %}
 
-<div id="related-content">
+
 
 
 {% get_related_content search_object as related_items %} 
 
     {% if related_items %}
+        <div id="related-content">
         {% for item in related_items %}
             {% ifchanged item.category %}{% if not forloop.first %}</ul>{% endif %}<h2>{{item.get_category_display}}</h2><ul>{% endifchanged %}
 
@@ -17,5 +18,6 @@
             </li>    
         {% endfor %}
         </ul>
+        </div>
     {% endif %}
-</div>
+

@@ -281,7 +281,7 @@ class BasicPost(models.Model):
         if type(categories) != list:
             raise TypeError("Categories is a %s. Expected tags to be a list, string or unicode object."  % unicode(type(categories)))
         
-        return BasicPost.objects.filter(category__name__in=categories).select_subclasses().distinct()
+        return BasicPost.objects.published().filter(category__name__in=categories).select_subclasses().distinct()
         
     @models.permalink
     def get_absolute_url(self):

@@ -1,17 +1,12 @@
 {% load i18n %}
 {% load comments %}
 
-{% include 'post/category_snippet.html' %}
-
 <h1 class="title">{{post.title}}</h1>
 
 {% if post.subtitle %}
     <h2 class="title">{{post.subtitle}}</h2>
 {% endif %}
     
-{% include 'post/byline_snippet.html' %}
-{% include 'post/dateline_snippet.html' %}
-
 {% block media %}{% endblock %}
 
 <div class="introduction">{{post.get_introduction|safe}}</div>
@@ -30,10 +25,7 @@
 
 <div class="post-information">
 
-    {% include 'post/post_information_snippet.html' %} | 
-    <span>
-    {% include 'post/addtoany_snippet.html' %}
-    </span>
+    {% include 'post/comment_count_snippet.html' %} 
 
 </div>
 

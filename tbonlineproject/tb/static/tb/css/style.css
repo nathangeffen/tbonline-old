@@ -91,7 +91,16 @@ body, html {
 
 
 .post-category {
-    background: gray;
+	background: purple;
+	font-family: arial-black;
+	font-size: 16pt;
+	font-weight: 900;
+	padding: 20px;
+	text-align: center;
+}
+
+.post-category a {
+    color: black;	
 }
 
 #columns {
@@ -122,6 +131,12 @@ h1.title, h1.title a {
 	padding-top: 5px;
 }
 
+#article-info {
+    border: solid;
+    margin-bottom: 5px;
+    text-align: center; 
+}
+
 .post-entry {
     border-bottom: 3px solid #DDDDDD;
     border-width: 1px;
@@ -134,7 +149,7 @@ p.byline {
 	font-size: 8pt;
 }
 
-p.dateline {
+.post-information, p.dateline, p.last-updated, #article-info span.tag-list {
 	font-weight: bold;
 	font-style: italic;
 	font-size: 8pt;
@@ -328,8 +343,8 @@ dl#comments dd {
     margin-bottom: 5px;
 }
 
-.featured-block ul {
-    padding: 0 0 5px 0;
+#related-content ul, .featured-block ul {
+    padding: 0 0 5px 5px;
     margin: 0 0 0 12px;
 }
 
@@ -380,7 +395,7 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
 }
 
 
-#footer a[href^="http"] {
+#footer a[href^="http"], .addtoany a[href^="http"] {
     background: none;
 }
 

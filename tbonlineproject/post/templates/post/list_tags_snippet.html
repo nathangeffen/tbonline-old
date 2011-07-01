@@ -1,10 +1,12 @@
 {% load url from future %}
 {% load i18n %}
 
+<span class="tag-list">
 {% trans "Tags" %}: 
 {% for taggeditem in post.tags.all %}
-    <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{taggeditem.tag}}</a>{% if not forcounter.last %}, {% endif %}
+    <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{taggeditem.tag}}</a>{% if not forloop.last %}, {% endif %}
     
 {% empty %}
     {% trans "None" %}
 {% endfor %} 
+</span>
