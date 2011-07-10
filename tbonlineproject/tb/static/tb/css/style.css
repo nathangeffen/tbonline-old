@@ -399,6 +399,7 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
 
 
 #footer a[href^="http"], .addtoany a[href^="http"] {
+	padding-right: 0px;
     background: none;
 }
 
