@@ -110,53 +110,98 @@ class BasicPost(models.Model):
     def get_authors(self):
         return credit_list(self.authors)
         
-    def get_teaser(self):
+    def get_teaser_intro_body(self):
+        '''Calculates the teaser, intro and body for this post
+        
+        The following possibilities exist:
+        Key - 0: Field not set
+              t: teaser field set
+              i: intro field set
+              x: teaser tag set
+              y: intro tag set
+              
+              01. 0000: No fields set - return first paragraph as intro and teaser, remainder as body
+              02. t000: teaser field set - return teaser and intro as teaser, full body as body
+              03. ti00: Simplest case - teaser and intro fields set. Return full body as body  
+              04. tix0: Both teaser field and tag set. Teaser field overrides teaser tag.  
+              05. ti0y: Both intro field and intro tag set. Intro field overrides intro tag    
+              06. 0i00: Intro field set. Teaser set to intro. Body to remainder. 
+              07. 0ix0: Intro field and teaser tag set. (Madness!) Body set to remainder. 
+              08. 0ixy: Same as above, but intro field overrides intro tag.
+              09. 00x0: Teaser tag test. Set intro to teaser and body to remainder.
+              10. 00xy: Teaser and intro tags set. Body to remainder
+              11. 000y: Intro tag set. Set teaser to intro and body to remainder. 
+              
+        '''
+                
+        # Simplest case - they've all been set by the user
+        
+        teaser = unicode(self.teaser)
+        intro = unicode(self.introduction)
         body = unicode(self.body)
         
-        if unicode(self.teaser):
-            return self.teaser
         
-        contents = body.partition('<!--endteaser-->')
-        if contents[1]:
-            return contents[0]
-        
-        if unicode(self.introduction):
-            return self.introduction
+        if not teaser:
+            # Next simplest case: They've all been set in the body using tags
+            contents = body.partition('<!--endteaser-->')
+            
+            if contents[1]: # The <!--endteaser--> tag is used
+                teaser = contents[0]
+                body = contents[2] # Body comes from remainder of text
 
-        return truncate_html_words(body, app_settings.TRUNCATE_WORDS)
+                if not intro: # Intro field not set 
+                    contents = body.partition('<!--endintro-->')
+                    
+                    if contents[1]: # The <!--endintro--> tag has been used
+                        intro = contents[0]
+                        body = contents[2] # Body is remainder of text
+                    else: # <!--endintro--> tag not used, so set intro to teaser
+                        intro = teaser
+                        
+            else: # <!--endteaser--> tag not used
+                if intro: # intro field has been set
+                    teaser = intro
+                else: # intro field has not been set - look for <!--endintro-->
+                    contents = body.partition('<!--endintro-->')
+                    
+                    if contents[1]: # <!--endintro--> tag used
+                        teaser = intro = contents[0]
+                        body = contents[2] # body is remainder of text
+                    else: # No intro or teaser field set and no tags - get 1st para
+                        contents = body.partition('</p>')
+                        
+                        if not contents[1]: # Maybe it's a capital P? 
+                            contents = body.partition('</P>')
+                            
+                        if not contents[1]: # No paragraphs! 
+                            teaser = intro = contents[0]
+                            body = ""
+                        else:
+                            teaser = intro = contents[0] + contents[1]
+                            body = contents[2]    
+
+        else: # The teaser exists
+        
+            if not intro: # But the intro doesn't
+                contents = body.partition('<!--endintro-->')                 
+
+                if contents[1]: # <!--endintro--> tag used
+                    intro = contents[0]
+                    body = contents[2]
+                else: # <!--endintro--> tag not used
+                    intro = teaser
+                    body = contents[0]
+        
+        return (teaser, intro, body)
+        
+    def get_teaser(self):
+        return self.get_teaser_intro_body()[0]
         
     def get_introduction(self):
-        if unicode(self.introduction):
-            return self.introduction
-        
-        body = unicode(self.body)
-        
-        contents = body.partition('<!--endteaser-->')
-        
-        if contents[1]:
-            contents = contents[2].partition('<!--endintro-->')
-        else:
-            contents = body.partition('<!--endintro-->')
-                        
-        if contents[1]:
-            return contents[0]
-
-        return self.get_teaser()
+        return self.get_teaser_intro_body()[1]
 
     def get_body(self):
-        body = unicode(self.body)
-        
-        contents = body.partition('<!--endteaser-->')
-        
-        if contents[1]:
-            contents = contents[2].partition('<!--endintro-->')
-        else:
-            contents = body.partition('<!--endintro-->')
-            
-        if contents[1]:
-            return contents[2]
-        else:
-            return contents[0]
+        return self.get_teaser_intro_body()[2]
 
     def describe(self):
         return self.get_introduction()

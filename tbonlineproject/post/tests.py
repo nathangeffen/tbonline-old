@@ -274,6 +274,131 @@ ago. [#Stone]_
         
         self.assertEquals(unicode(p.teaser), '<p>Recent research shows that the disease probably originated at least several\nhundred thousand years ago in hominids but perhaps even more than 2 million years\nago. <a class="footnote-reference" href="#stone" id="id1">[1]</a></p>\n<table class="docutils footnote" frame="void" id="stone" rules="none">\n<colgroup><col class="label" /><col /></colgroup>\n<tbody valign="top">\n<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Stone <em>et al.</em> 2009. Tuberculosis and leprosy in perspective.</td></tr>\n</tbody>\n</table>\n')
 
+    def testTeaserIntroBody(self):
+        """This tests that the teaser, introduction and body extraction methods work properly.
+        
+        Key - 0: Field not set
+              t: teaser field set
+              i: intro field set
+              x: teaser tag set
+              y: intro tag set
+              
+              01. 0000: No fields set - return first paragraph as intro and teaser, remainder as body
+              02. t000: teaser field set - return teaser and intro as teaser, full body as body
+              03. ti00: Simplest case - teaser and intro fields set. Return full body as body  
+              04. tix0: Both teaser field and tag set. Teaser field overrides teaser tag.  
+              05. ti0y: Both intro field and intro tag set. Intro field overrides intro tag    
+              06. 0i00: Intro field set. Teaser set to intro. Body to remainder. 
+              07. 0ix0: Intro field and teaser tag set. (Madness!) Body set to remainder. 
+              08. 0ixy: Same as above, but intro field overrides intro tag.
+              09. 00x0: Teaser tag test. Set intro to teaser and body to remainder.
+              10. 00xy: Teaser and intro tags set. Body to remainder
+              11. 000y: Intro tag set. Set teaser to intro and body to remainder. 
+        
+        """
+
+        p = BasicPost.objects.select_subclasses()[0]
+        p.teaser = ""
+        p.introduction = ""
+        
+        # 01 
+        p.body = """
+The quick brown fox jumps over the lazy dog.
+        
+This is the second paragraph. 
+        
+This is the third paragraph.\M"""
+
+        self.assertEquals(p.get_teaser(), """<p>The quick brown fox jumps over the lazy dog.</p>""")
+        self.assertEquals(p.get_introduction(), """<p>The quick brown fox jumps over the lazy dog.</p>""")
+        self.assertEquals(p.get_body(), """\n<p>This is the second paragraph. </p>\n<p>This is the third paragraph.</p>""")
+
+        # 02
+        
+        p = BasicPost.objects.select_subclasses()[0]
+        
+        p.teaser = """
+The quick brown fox jumps over the lazy dog.\M"""
+        p.introduction = ""        
+        p.body = """
+This is the second paragraph. 
+        
+This is the third paragraph.\M"""
+
+        self.assertEquals(p.get_teaser(), """<p>The quick brown fox jumps over the lazy dog.</p>""")
+        self.assertEquals(p.get_introduction(), """<p>The quick brown fox jumps over the lazy dog.</p>""")
+        self.assertEquals(p.get_body(), """<p>This is the second paragraph. </p>\n<p>This is the third paragraph.</p>""")        
+
+        # 03
+
+        p = BasicPost.objects.select_subclasses()[0]
+        p.teaser = "The quick brown fox jumps over the lazy dog.\M"
+        p.introduction = "This is the second paragraph.\M"
+        p.body = "This is the third paragraph.\M"
+
+        self.assertEquals(p.get_teaser(), """<p>The quick brown fox jumps over the lazy dog.</p>""")
+        self.assertEquals(p.get_introduction(), """<p>This is the second paragraph.</p>""")
+        self.assertEquals(p.get_body(), """<p>This is the third paragraph.</p>""")        
+                
+        # 04
+
+        p = BasicPost.objects.select_subclasses()[0]
+        p.teaser = ""
+        p.introduction = ""
+        p.body = """This is the first paragraph.
+
+<!--endteaser-->
+
+This is the second paragraph.
+
+<!--endintro-->
+
+This is the third paragraph.\M"""
+
+        self.assertEquals(p.get_teaser(), """<p>This is the first paragraph.</p>\n""")
+        self.assertEquals(p.get_introduction(), """\n\n<p>This is the second paragraph.</p>\n""")
+        self.assertEquals(p.get_body(), """\n\n<p>This is the third paragraph.</p>""")        
+
+        # 09
+
+        p = BasicPost.objects.select_subclasses()[0]
+        p.teaser = ""
+        p.introduction = ""        
+        p.body = """
+The quick brown fox jumps over the lazy dog.
+
+<!--endteaser-->        
+
+This is the second paragraph. 
+        
+This is the third paragraph.\M"""
+
+        self.assertEquals(p.get_teaser(), """<p>The quick brown fox jumps over the lazy dog.</p>\n""")
+        self.assertEquals(p.get_introduction(), """<p>The quick brown fox jumps over the lazy dog.</p>\n""")
+        self.assertEquals(p.get_body(), """\n\n<p>This is the second paragraph. </p>\n<p>This is the third paragraph.</p>""")
+        
+        # 10
+
+        p = BasicPost.objects.select_subclasses()[0]        
+        p.teaser = ""
+        p.introduction = ""
+        p.body = """
+The quick brown fox jumps over the lazy dog.
+
+<!--endteaser-->        
+
+This is the second paragraph. 
+
+<!--endintro-->
+        
+This is the third paragraph.\M"""
+
+        self.assertEquals(p.get_teaser(), """<p>The quick brown fox jumps over the lazy dog.</p>\n""")
+        self.assertEquals(p.get_introduction(), """\n\n<p>This is the second paragraph. </p>\n""")
+        self.assertEquals(p.get_body(), """\n\n<p>This is the third paragraph.</p>""")
+        
+
+
     def testSites(self):
         
         
