@@ -7,9 +7,17 @@
 
     <div class="thumbprint left">  
        {% if post.image %}  
+
             <a href="{% url "image_view" post.image.id %}" title="{{post.image.title}}">
-            <img src="{% version post.image.file 'thumbnail' %}" alt={{post.image.title}}/> 
+            {% with post.image as image %}
+            {% with 'thumbnail' as preferred_size %}
+            <img src="{% include 'gallery/image_snippet.html' %}" 
+            alt={{post.image.title}}/> 
             </a>
+            {% endwith %}
+            {% endwith %}
+
+
        {% endif %}
     </div>
 
