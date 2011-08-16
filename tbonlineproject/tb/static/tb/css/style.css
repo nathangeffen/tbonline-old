@@ -427,3 +427,15 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
     height: 200px;
     overflow:scroll;
 }
+
+.hidden { display: none; }
+
+ .unhidden { display: block; }
+ 
+.more:after, .less:after {
+    color: black;
+    border: 1px dotted;   
+}
+ 
+.more:after {content: '+';}
+.less:after {content: '-';}

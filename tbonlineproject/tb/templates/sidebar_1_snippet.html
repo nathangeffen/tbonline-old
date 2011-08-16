@@ -3,6 +3,25 @@
 {% load i18n %}
 {% load feed %}
 
+<script type="text/javascript">
+
+ function unhide(divID, moreLessID) {
+    var item = document.getElementById(divID);
+    
+    if (item) {
+        item.className=(item.className=='hidden')?'unhidden':'hidden';
+    }
+     
+    item = document.getElementById(moreLessID);
+    
+    if (item) {
+        item.className=(item.className=='more')?'less':'more';
+    }
+   
+ }
+ 
+ </script>
+
 <div class="featured-block">
     <h2>{% trans "Quick Information" %}</h2>
     <ul>
@@ -18,7 +37,8 @@
     <ul>
     {% for post in news_posts|slice:":25" %}
         <li>{{post.date_published|date:"d N"}}: <a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">{{post.title}}</a>
-        <div class="show-on-hover">{{post.get_teaser|safe|truncatewords_html:50}}</div>        
+        <a id="news-more-{{forloop.counter}}" href="javascript:unhide('news-text-{{forloop.counter}}', 'news-more-{{forloop.counter}}');" class="more"></a>
+        <div id="news-text-{{forloop.counter}}" class="hidden">{{post.get_teaser|safe}}</div>        
         </li>    
     {% endfor %} 
     </ul> 
@@ -62,7 +82,9 @@
 	<ul>
 	{% for entry in feed.get_rss_items|slice:"15" %}
 	    <li><a href="{{entry.link}}">{{entry.title}}</a>
-	    <div class="show-on-hover">{{entry.description|safe}}</div>
+        <a id="pubmed-more-{{forloop.counter}}" href="javascript:unhide('pubmed-text-{{forloop.counter}}', 'pubmed-more-{{forloop.counter}}');" class="more"></a>
+	    
+	    <div id="pubmed-text-{{forloop.counter}}" class="hidden">{{entry.description|safe}}</div>
 	    </li>
 	{% empty %}
 	    {% trans "There are currently no entries for this feed" %}.
