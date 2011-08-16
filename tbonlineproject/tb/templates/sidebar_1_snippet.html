@@ -11,12 +11,12 @@
     </ul>
 </div>
 
-<div class="featured-block">
+<div class="featured-block vertical-scroller">
     <h2>{% trans "Latest TB news" %}</h2>
     {% get_posts_by_categories "News" as news_posts  %}
 
     <ul>
-    {% for post in news_posts|slice:":5" %}
+    {% for post in news_posts|slice:":25" %}
         <li>{{post.date_published|date:"d N"}}: <a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">{{post.title}}</a>
         <div class="show-on-hover">{{post.get_teaser|safe|truncatewords_html:50}}</div>        
         </li>    
@@ -56,7 +56,7 @@
 </ul>
 </div>
 
-<div class="featured-block">
+<div class="featured-block vertical-scroller">
 	<h2>{% trans "Latest TB on Pubmed" %}</h2>
 	{% get_feeder "latest-tb-public-library-medicine" as feed %}
 	<ul>
