@@ -12,7 +12,7 @@
 </div>
 
 <div class="featured-block vertical-scroller">
-    <h2>{% trans "Latest TB news" %}</h2>
+    <h2><a href="{% url 'post_category_list' 'News'%}">{% trans "Latest TB news" %}</a></h2>
     {% get_posts_by_categories "News" as news_posts  %}
 
     <ul>
