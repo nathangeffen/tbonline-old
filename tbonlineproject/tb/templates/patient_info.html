@@ -3,28 +3,28 @@
 {% load i18n %}
 {% load faqtags %}
 
-{% block title %}{{block.super}} - {% trans "Questions and answers for patients"%}{% endblock %}
+{% block title %}{{block.super}} - {% trans "Questions and answers about TB"%}{% endblock %}
 
 {% block content %}
 
-<h1>{% trans "Questions and answers for people with TB or at risk of getting TB" %}.</h1>
+<h1>{% trans "Questions and answers for people with TB or at risk of getting TB" %}</h1>
 
 {% url 'contact' as contact_url  %}
 
 {% blocktrans %}
-Please send us questions via the <a href="{{contact_url}}">contact page</a> 
-of the site.
-We might add your question and our answer to the site. We always treat personal 
-patient information confidentially.
+<p>Please send us questions via the <a href="{{contact_url}}">contact page</a> 
+of the site.</p>
+<p>We might add your question and our answer to the site. We always treat personal 
+patient information confidentially.</p>
 {% endblocktrans %}
 
-{% get_question_categories "1,2" as questioncategories %}
+{% get_question_categories "1,2,4" as questioncategories %}
 
 <div class="question-categories">
 
     {% for questioncategory in questioncategories %}
 
-        <h2>{{questioncategory.name}}</h2>
+        <h3>{{questioncategory.name}}</h3>
     
         {% if questioncategory.description %}
             {{questioncategory.description|safe}}
@@ -39,6 +39,8 @@ patient information confidentially.
         </ol>
     {% endfor %}
 </div>
+
+<hr/>
 
 <div class="questions-and-answers">
 

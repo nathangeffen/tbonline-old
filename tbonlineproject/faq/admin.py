@@ -15,8 +15,8 @@ class QuestionAndAnswerInline(admin.StackedInline):
     
 class QuestionAndAnswerAdmin(admin.ModelAdmin):
     search_fields = ('category__name', 'question', 'answer',)
-    list_display = ('id', 'question', 'answer',)
-    list_editable = ('question', 'answer',)
+    list_display = ('id', 'category', 'question', 'answer', 'position',)
+    list_editable = ('category', 'question', 'answer', 'position',)
     list_filter = ('category',)
 
 class QuestionCategoryAdmin(admin.ModelAdmin):
