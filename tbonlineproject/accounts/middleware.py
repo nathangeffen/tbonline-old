@@ -13,15 +13,21 @@ from django.conf import settings
 from django.contrib import auth
 from datetime import datetime, timedelta
 
-AUTO_LOGOUT_DELAY = getattr(settings, "AUTO_LOGOUT_DELAY", 60)
+# Default AUTO_LOGOUT_DELAY TO 4 hours
+AUTO_LOGOUT_DELAY = getattr(settings, "AUTO_LOGOUT_DELAY", 240)
 
 class AutoLogoutMiddleware:
     
     def process_request(self, request):
+        
         if not request.user.is_authenticated() :
             #Can't log out if not logged in
+            try:
+                del request.session['last_touch']
+            except KeyError:
+                pass
             return
-
+        
         try:
             if datetime.now() - request.session['last_touch'] > timedelta( 0, AUTO_LOGOUT_DELAY * 60, 0):
                 auth.logout(request)
