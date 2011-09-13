@@ -432,10 +432,10 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
 
  .unhidden { display: block; }
  
-.more:after, .less:after {
+.more, .less {
     color: black;
     border: 1px dotted;   
 }
  
-.more:after {content: '+';}
-.less:after {content: '-';}
+.more {content: '+';}
+.less {content: '-';}
