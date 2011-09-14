@@ -11,7 +11,7 @@ from filebrowser.fields import FileBrowseField
 from tagging.models import TaggedItem
 
 from credit.models import OrderedCredit
-from credit.utils import credit_list
+from credit.utils import credit_list, credit_length
 from enhancedtext.fields import EnhancedTextField
 
 from copyright.models import Copyright
@@ -75,7 +75,10 @@ class Document(models.Model):
 
     def describe(self):
         return self.description
-
+    
+    def get_count_authors(self):
+        return credit_length(self.credits)
+    
     def get_authors(self):
         return credit_list(self.credits)
     

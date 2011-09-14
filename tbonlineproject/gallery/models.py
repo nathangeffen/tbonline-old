@@ -56,7 +56,8 @@ class Image(models.Model):
         return credit_list(self.credits)
 
     def describe(self):
-        if self.description:
+        if unicode(self.description).strip():
+            print "DESCRIPTION: ", self.description
             return self.description
         else:
             return self.caption

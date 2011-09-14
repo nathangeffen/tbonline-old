@@ -167,6 +167,7 @@ INSTALLED_APPS = (
     'categories',
     'post',
     'story',
+    'tagviews',
     APP_NAME,
 )
 

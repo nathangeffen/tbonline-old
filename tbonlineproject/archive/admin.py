@@ -3,6 +3,8 @@ from archive.models import Catalogue, Document
 from django.contrib.contenttypes import generic
 from tagging.models import TaggedItem, Tag  
 
+from credit.admin import OrderedCreditInline
+
 from enhancedtext.admin import enhancedtextcss, enhancedtextjs
 
 from archive.forms import TagAdminForm
@@ -42,7 +44,7 @@ class DocumentAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'date_added', 'last_modified',)
     list_editable = ('title',)
     date_hierarchy = 'date_added'
-    inlines = [CatalogueInline, TaggedItemInline, ]
+    inlines = [OrderedCreditInline, CatalogueInline, TaggedItemInline, ]
     ordering = ('-last_modified',)
 
     

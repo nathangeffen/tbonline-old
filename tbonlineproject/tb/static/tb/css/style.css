@@ -368,6 +368,15 @@ dl#comments dd {
     padding-right: 10px;
 }
 
+#document-links, #document-published, #document-source, #document-authors, 
+#document-citation, #document-tags, #document-catalogues {
+    font-size: 75%;
+    padding-bottom: 3pt;	
+}
+
+.document-attribute {
+    font-weight: bold;	
+}
 
 #document-content {
     border: solid;
@@ -439,3 +448,11 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
  
 .more {content: '+';}
 .less {content: '-';}
+
+#tagged-item-list h2, #tagged-item-list p {
+	font-size: 75%;
+}
+
+.tagged-item {
+    border-bottom: 1px solid;
+}

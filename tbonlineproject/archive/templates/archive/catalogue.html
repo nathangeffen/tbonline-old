@@ -12,7 +12,7 @@
 <a href="{% url 'document-list' %}">{% trans "View all documents" %}</a>
 </p>
 
-<h1>{{ catalogue.title }}</h1>
+<h1 class="title">{{ catalogue.title }} {% trans "documents" %}</h1>
 
 {{catalogue.description}}
 

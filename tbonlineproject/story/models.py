@@ -49,6 +49,9 @@ class Story(models.Model):
             if orderedpost.post.is_published()]
         return posts
     
+    def describe(self):
+        return self.description
+    
     @models.permalink
     def get_absolute_url(self):
         if self.is_published():

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block title %}{{block.super}} - {% trans "Items tagged with " %}{{tag}}{% endblock %}
+
+{% block content %}
+
+
+<h1 class="title">{% trans "Items tagged with " %}<em>{{tag}}</em></h1>
+
+<div id="tagged-item-list">
+    {% for item in items %}
+        
+        <div class="tagged-item">
+        <h2><a href="{{item.object.get_absolute_url}}">{{item.object.title}}</a> ({{item.content_type.name}})</h2>
+        <p>{{item.object.describe|safe}}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<p>
+{% include "post/paginator_snippet.html" %}
+</p>
+{% endblock %}

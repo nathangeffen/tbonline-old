@@ -7,31 +7,54 @@
 
 {% block content %}
 
-<h1>{% trans "Document" %}</h1>
+<h1 class="title">{% trans "Document" %}</h1>
 
-<h2>{{document.title}}</h2>
+<h2 class="document-title">{{document.title}}</h2>
 
+<div id="document-links"> 
+
+    <span class="document-attribute">{% trans "Get document: " %}</span>
+    
+    {% if document.file %}
+        <a href="{{document.file}}">{% trans "Download from this site" %}</a> |    
+    {% endif %}
+    
+    
+    {% if document.url %}
+        <a href="{{document.url}}">{% trans "Download from publication site" %}</a> |
+    {% endif %}
+    
+    {% if document.pmid %}        
+        <a href="http://www.ncbi.nlm.nih.gov/pubmed/{{document.pmid}}">{% trans "Public Library of Medicine: " %} {{document.pmid}}</a> |    
+    {% endif %}
+
+
+    {% if document.pmid %}
+        <a href="http://dx.doi.org/{{document.doi}}">{% trans "DOI" %}: {{document.doi}}</a> |    
+    {% endif %}
+    
+</div>
 
 {% if document.source %}
     <div id="document-source">
-        <p>Source: {{document.source}}</p>
+        <span class="document-attribute">{% trans "Source" %}: </span>{{document.source}}
     </div>
 {% endif %}    
 
 {% if document.get_authors %} 
     <div id="document-authors">
-        Authors: {{document.get_authors}}
+        <span class="document-attribute">{% trans "Author" %}{{ document.count_authors|pluralize }}: </span>{{document.get_authors}}
     </div>
 {% endif %}    
 
 <div id="document-citation">
-    {% trans "Recommended citation" %}: <span class="citation">{{document.get_citation}}</span>
+    <span class="document-attribute">{% trans "Recommended citation" %}: </span><span class="citation">{{document.get_citation|urlize}}</span>
 </div>
 
 {% if document.year_published %}
     <div id="document-published">
         
-        <p>{% trans "Published: " %} 
+        <span class="document-attribute">{% trans "Published: " %}</span> 
 
         {% if document.month_published %} 
             {{document.get_month_published_display}}
@@ -43,50 +66,43 @@
     
         {{document.year_published}} 
     
-        </p>
     </div>
 {% endif %}
 
-<div id="document-description">
-{{document.description}}
-</div>
 
+
+
+{% if document.description %}
+    <div id="document-description">
+    <h4>{% trans "Description" %}</h4>
+    {{document.description}}
+    </div>
+{% endif %}
+
+
+<div id="document-catalogues">
+{% with document.catalogue_set.all as catalogues %}
+    {% trans "Catalogue" %}{{catalogues.length|pluralize}}: 
+    {% for catalogue in catalogues %}
+
+        <a href="{% url "catalogue-detail" catalogue.pk %}">{{catalogue.title}}</a>{% if not forloop.last %}, {% endif %}
+
+    {% empty %}
+        {% trans "None" %}    
+    {% endfor %}
+{% endwith %}
+</div>
+    
 <div id="document-tags">
 {% trans "Tags" %}: 
 {% for tag in document.tags.all %}
 
-    {{tag.tag}}{% if not forloop.last %}, {% endif %}
+    <a href="{% url 'tag_view' tag.tag %}">{{tag.tag}}</a>{% if not forloop.last %}, {% endif %}
 
 {% empty %}
     {% trans "None" %}    
 {% endfor %}
 </div>
-
-
-{% if document.file %}
-    <div id="document-file">
-    <p><a href="{{document.file}}">{% trans "Download the file" %}</a></p>
-    </div>    
-{% endif %}
-
-{% if document.url %}
-    <div id="document-url">
-    <p><a href="{{document.url}}">{% trans "URL for this document on another website" %}</a></p>
-    </div>
-{% endif %}
-    
-{% if document.pmid %}
-    <div id="document-pmid">
-    <p>{% trans "Public Library of Medicine: " %}<a href="http://www.ncbi.nlm.nih.gov/pubmed/{{document.pmid}}>{{document.pmid}}</a></p>    
-    </div>
-{% endif %}
-
-{% if document.doi %}
-    <div id="document-pmid">
-    <p>DOI:<a href="http://dx.doi.org/{{document.doi}}></a>{{document.doi}}</p>    
-    </div>
-{% endif %}
-
     
 {% if document.content.output %}
     <div id="document-content">

@@ -3,6 +3,9 @@
 
 from django.utils.translation import ugettext as _
 
+def credit_length(obj): 
+    return len(obj)
+
 def credit_list(obj, number_to_print=0):
     """Returns formatted list of people for bylines.
     
