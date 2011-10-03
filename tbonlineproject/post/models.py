@@ -240,6 +240,9 @@ class BasicPost(models.Model):
         else:
             return type(self)
 
+    def get_class_name(self):
+        return self.get_class().__name__
+
     def describe_for_admin(self):
         return self.get_class()._meta.verbose_name
     describe_for_admin.short_description = "Type"

@@ -1,6 +1,13 @@
 # Django settings for testdjango project.
 
+
 import os
+
+try:
+    from local_settings import APP_NAME          
+except ImportError:
+    APP_NAME = "tb"
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -15,8 +22,6 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
-APP_NAME = 'tb'
 
 DATABASES = {
     'default': {
@@ -134,6 +139,7 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'gallery/templates'),
     os.path.join(SITE_ROOT, 'feeder/templates'),
     os.path.join(SITE_ROOT, 'copyright/templates'),
+    os.path.join(SITE_ROOT, 'notifications/templates'),    
 )
                  
 INSTALLED_APPS = (
@@ -168,6 +174,7 @@ INSTALLED_APPS = (
     'post',
     'story',
     'tagviews',
+    'notifications',
     APP_NAME,
 )
 
@@ -194,8 +201,7 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.request",
                                "django.contrib.messages.context_processors.messages",
                                "post.context_processors.current_site")
-
-
+ 
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

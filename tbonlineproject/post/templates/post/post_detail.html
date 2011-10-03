@@ -21,8 +21,15 @@
     {% include 'post/dateline_snippet.html' %}
     {% include 'post/last_updated_snippet.html' %}
     {% include 'post/list_tags_snippet.html' %}    
-    {% include 'post/addtoany_snippet.html' %}
+    {% include 'post/addtoany_snippet.html' %}    
     </div>
+    
+    {% if comments_allowed != 'closed' %}
+        {% with post as notification_object %}
+            {% include 'notifications/notify_comments_snippet.html' %}
+        {% endwith %} 
+    {% endif %}
+    
 
     {% with post as search_object %}
         {% include 'relatedcontent/list_related_content_snippet.html' %}

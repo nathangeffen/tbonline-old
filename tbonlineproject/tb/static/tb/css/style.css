@@ -456,3 +456,7 @@ a[href$=".txt"], a[href$=".ods"], a[href$=".ppt"], a[href$=".odp"], a[href$=".do
 .tagged-item {
     border-bottom: 1px solid;
 }
+
+#notification-message form {
+    border: none;
+}

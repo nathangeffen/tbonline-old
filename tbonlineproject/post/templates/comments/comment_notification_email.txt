@@ -2,8 +2,16 @@
 {% load url from future %}
 
 {% trans "A comment has been posted" %}.
+
+{% if comment.is_public %}
+    {% trans "This comment passed spam protection and is public." %}
+{% else %}
+    {% trans "This comment FAILED Spam protection and is not public." %}
+{% endif %}   
+
 {% trans "Title of article to which it was posted" %}: {{ content_object }}
-{% trans "URL" %}: {% url 'post_detail' content_object.date_published.year content_object.date_published.month content_object.date_published.day content_object.slug %}
+
+{% trans "URL" %}: {{comment.get_absolute_url}}
 
 {% trans "User" %}: {{comment.user}}
 

@@ -31,6 +31,10 @@
  </script>
 
 <div class="featured-block">
+{% include "notifications/notify_posts_snippet.html" %}
+</div>
+
+<div class="featured-block">
     <h2>{% trans "Learn about TB" %}</h2>
     <ul>
     <li><a href="{% url 'tb_patient_info'%}">{% trans "Questions and answers about TB" %}</a></li>
@@ -99,3 +103,5 @@
 	{% endfor %}
 	</ul>
 </div>
+
+ 

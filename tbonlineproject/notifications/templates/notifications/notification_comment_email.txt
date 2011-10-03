@@ -1,0 +1,28 @@
+{% load url from future %}
+{% load i18n %}
+
+Dear {% if user.get_full_name %}{{user.get_full_name}}{% else %}{{user}}{% endif %}
+
+{% trans "You have requested to be notified of new comments on" %}:
+{{notification.linked_content_object}}
+
+{% trans "Link" %}:   
+http://{{site.domain}}{{notification.linked_content_object.get_absolute_url}}
+
+***************************************************************
+
+{% for comment in objects %}
+
+{% trans "Comment by" %}: {{comment.user_name}}.
+    
+{{comment.comment|truncatewords:50}}
+
+{% trans "Link" %}:
+http://{{site.domain}}{{comment.get_absolute_url}}
+
+***************************************************************
+    
+s{% endfor %}
+
+{% trans "Brought to you by" %}: {{site.name}}
+http://{{site.domain}}

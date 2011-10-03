@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>{% trans "Register as a user of" %} {{settings.SITE_NAME}}</h1>
+<h1>{% trans "Register as a user of" %} {{site.name}}</h1>
 <form method="post" action=".">{% csrf_token %}
 
         {{form.username.errors}}
