@@ -4,17 +4,25 @@
 
 <div id="notification-message">
 {% if user.is_authenticated %}
-    {% is_comment_notified "comment" user post as notified %}
+    {% is_comment_notified "comment" post as notified %}
     {% if not notified %} 
-        <form name="notify" action="{% url 'notify_comment'  %}?user={{user}}&app_label=post&model={{post.get_class_name|lower}}&pk={{post.pk}}&next={{request.path}}" method="post">{% csrf_token %}
+        <form name="notify" action="{% url 'notify_comment'  %}?next={{request.path}}" method="post">{% csrf_token %}
+        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />
+        <input type="hidden" name="app_label" value="{{notification_app_label}}" id="id_app_label" />
+        <input type="hidden" name="model" value="{{notification_model}}" id="id_model" />
+        <input type="hidden" name="pk" value="{{notification_pk}}" id="id_pk" />
         <input type="submit" value="{% trans "Email" %}"/>
         {% trans "me notice of new comments on this article." %}
         </form>
     {% else %}
-        <form name="notify" action="{% url 'remove_comment_notification'  %}?user={{user}}&app_label=post&model={{post.get_class_name|lower}}&pk={{post.pk}}&next={{request.path}}" method="post">{% csrf_token %}
+        <form name="notify" action="{% url 'remove_comment_notification'  %}?next={{request.path}}" method="post">{% csrf_token %}
+        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />
+        <input type="hidden" name="app_label" value="{{notification_app_label}}" id="id_app_label" />
+        <input type="hidden" name="model" value="{{notification_model}}" id="id_model" />        
+        <input type="hidden" name="pk" value="{{notification_pk}}" id="id_pk" />                
         {% trans "Please " %} 
-        <input type="submit" value="{% trans "stop" %}"/>
-        {% trans "emailing me new comments on this article." %}
+        <input type="submit" value="{% trans "stop" %}"/>                
+        {% trans "emailing me new comments on this article." %}        
         </form>    
     {% endif %}    
 {% else %} 

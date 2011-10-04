@@ -4,14 +4,16 @@
 
 <div id="notification-message">
 {% if user.is_authenticated %}
-    {% is_notified "post" user as notified %}
+    {% is_notified "post" as notified %}
     {% if not notified %}  
-        <form name="notify" action="{% url 'notify_post'  %}?user={{user}}&next={{request.path}}" method="post">{% csrf_token %}
+        <form name="notify" action="{% url 'notify_post'  %}?next={{request.path}}" method="post">{% csrf_token %}
+        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />        
         <input type="submit" value="{% trans "Email" %}"/>
         {% trans "me weekly about new articles." %}
         </form>
     {% else %}
-        <form name="notify" action="{% url 'remove_post_notification'  %}?user={{user}}&next={{request.path}}" method="post">{% csrf_token %}
+        <form name="notify" action="{% url 'remove_post_notification'  %}?next={{request.path}}" method="post">{% csrf_token %}
+        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />        
         {% trans "Please" %} 
         <input type="submit" value="{% trans "stop" %}"/>
         {% trans "emailing me about new articles." %}

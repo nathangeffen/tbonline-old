@@ -27,7 +27,6 @@ def do_get_question_categories(parser, token):
     except ValueError:
         raise template.TemplateSyntaxError("%r tag requires arguments" % token.contents.split()[0])
 
-    print 'arg: ', arg    
     m = re.search(r'(\"[0-9,]+\") as (\w+)', arg)
     
     if not m:

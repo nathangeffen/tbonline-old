@@ -118,7 +118,7 @@ class PostNotification(Notification):
     
     def querydef(self):
         return BasicPost.objects.published().\
-            filter(date_published__gt=self.last_executed).select_subclasses()
+            filter(date_published__gte=self.last_executed).select_subclasses()
 
 class CommentNotification(Notification):
     linked_content_type = models.ForeignKey(ContentType)

@@ -1,4 +1,6 @@
+import sys
 from datetime import datetime
+
 from django.core.management.base import BaseCommand
 from django.core.mail import send_mail
 from django.contrib.sites.models import Site 
@@ -34,6 +36,8 @@ class Command(BaseCommand):
         
         self.email_list = {}
     
+        total_emails_processed = 0
+    
         for notification in notifications:
             execution_time = datetime.now()
             objects = notification.querydef()
@@ -63,12 +67,20 @@ class Command(BaseCommand):
                         self.email_list[r.user.email+notification.name+unicode(i)] = context.copy()
          
             self.send_mails()
+            total_emails_processed += len(self.email_list)
+            
+            sys.stdout.write('Processed %d emails for notification: %s.\n' 
+                            % (len(self.email_list), unicode(notification)))
                     
             if len(objects):
                 notification.last_executed = execution_time
                 notification.save()
-                
-
+                sys.stdout.write('Notification %s execution time %s written to database\n'
+                                  % (unicode(notification), unicode(execution_time)))
+            
+        sys.stdout.write("Total emails processed: %d\n" % total_emails_processed)
+        
+        return total_emails_processed    
 
     def handle(self, *args, **options):
         

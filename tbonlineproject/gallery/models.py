@@ -57,7 +57,6 @@ class Image(models.Model):
 
     def describe(self):
         if unicode(self.description).strip():
-            print "DESCRIPTION: ", self.description
             return self.description
         else:
             return self.caption

@@ -25,7 +25,7 @@
     </div>
     
     {% if comments_allowed != 'closed' %}
-        {% with post as notification_object %}
+        {% with notification_name="comment" notification_app_label='post' notification_model=post.get_class_name.lower notification_pk=post.pk %}
             {% include 'notifications/notify_comments_snippet.html' %}
         {% endwith %} 
     {% endif %}

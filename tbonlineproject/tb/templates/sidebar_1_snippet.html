@@ -31,7 +31,9 @@
  </script>
 
 <div class="featured-block">
+{% with notification_name="post" %}
 {% include "notifications/notify_posts_snippet.html" %}
+{% endwith %}
 </div>
 
 <div class="featured-block">

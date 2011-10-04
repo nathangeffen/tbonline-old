@@ -440,6 +440,110 @@ This is the third paragraph.\M"""
         self.assertEquals(posts.count(), 2)
         posts = BasicPost.objects.unpublished().select_subclasses()
         self.assertEquals(posts.count(), 4)
+
+    def testPostNotifications(self):
+        c = Client()
+        u = User.objects.create(username="maryjane", email="maryjane@example.com", 
+                                is_superuser=False, is_staff=False)
+        u.set_password('abcde')
+        u.save()
+        self.assertEquals(c.login(username='maryjane@example.com', 
+                                  password='abcde'), True)
+
+        
+        response = c.post('/notifications/notify_post/?next=/', {}, follow=True)
+        self.assertEquals(response.status_code, 200)
+        
+        from notifications.models import Notification, PostNotification, Recipient
+        
+        notifications = Notification.objects.select_subclasses()
+        self.assertEquals(len(notifications), 2)
+        self.assertEquals(type(notifications[1]), PostNotification)
+        
+        recipients = Recipient.objects.all()
+        self.assertEquals(len(recipients), 1)
+        
+        p = PostWithImage(title='Notification post',
+                          slug='notification-post-1',
+                          subtitle='The subtitle',
+                          teaser='<p>The teaser</p>',
+                          introduction='<p>The introduction</p>',
+                          body='<p>The body</p>',
+                          date_published=datetime.datetime.now())
+        p.save()
+        p.sites.add(Site.objects.get_current())
+        
+        p = BasicPost.objects.get(slug="notification-post-1")
+        
+        from notifications.management.commands.processnotifications import Command
+        
+        cmd = Command()
+        self.assertEquals(cmd.execute_notifications(['post']), 1)
+
+        response = c.post('/notifications/remove_post_notification/?next=/', {}, 
+                          follow=True)
+        self.assertEquals(response.status_code, 200)
+        
+        recipients = Recipient.objects.all()
+        self.assertEquals(len(recipients), 0)
+        
+    def testCommentNotifications(self):
+        c = Client()
+
+        u = User.objects.create(username="peterpiper", email="peterpiper@example.com", 
+                                is_superuser=False, is_staff=False)
+        u.set_password('abcde')
+        u.save()
+        self.assertEquals(c.login(username='peterpiper@example.com', 
+                                  password='abcde'), True)        
+        
+        p = BasicPost.objects.published()[0]
+        
+        response = c.post('/notifications/notify_comment/?next=/', 
+                          {'name' : 'comment',
+                           'app_label': 'post',
+                           'model': p.get_class_name().lower(),
+                           'pk': p.pk}, 
+                          follow=True)
+        self.assertEquals(response.status_code, 200)
+        
+        from notifications.models import Notification, CommentNotification, Recipient
+        
+        notifications = Notification.objects.select_subclasses()
+        self.assertEquals(len(notifications), 1)
+        self.assertEquals(type(notifications[0]), CommentNotification)
+        
+        recipients = Recipient.objects.all()
+        self.assertEquals(len(recipients), 1)
+
+        from django.contrib.comments.models import Comment
+        from django.contrib.contenttypes.models import ContentType
+        
+        ct = ContentType.objects.get(app_label='post', 
+                                     model=p.get_class_name().lower()) 
+        cmt = Comment(content_type=ct, 
+                    object_pk=p.pk, 
+                    site=Site.objects.get_current(), 
+                    user_name="joe", 
+                    user_email='joebloggs@example.com', 
+                    comment="Test comment")        
+        cmt.save()
+        
+        from notifications.management.commands.processnotifications import Command
+        
+        cmd = Command()
+        self.assertEquals(cmd.execute_notifications(['comment']), 1)
+        
+        response = c.post('/notifications/remove_comment_notification/?next=/', 
+                           {'name' : 'comment',
+                           'app_label': 'post',
+                           'model': p.get_class_name().lower(),
+                           'pk': p.pk}, 
+                          follow=True)
+        self.assertEquals(response.status_code, 200)
+
+        recipients = Recipient.objects.all()
+        self.assertEquals(len(recipients), 0)
         
 from django.contrib.auth.models import User
 
