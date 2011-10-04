@@ -7,11 +7,14 @@ from django.contrib import admin
 from django.contrib.contenttypes import generic
 from django.forms.widgets import HiddenInput
 from django.db.models import PositiveIntegerField
+from django.utils.translation import ugettext as _
 
 from models import Credit, OrderedCredit
 
 class OrderedCreditInline(generic.GenericTabularInline):
-    classes = ('collapse open',)
+    verbose_name = _('author or source')
+    verbose_name_plural = _('authors or sources')    
+    classes = ('collapse open',)    
     model = OrderedCredit
     raw_id_fields = ('credit',)
     related_lookup_fields = {

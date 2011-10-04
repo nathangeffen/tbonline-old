@@ -32,15 +32,14 @@ post_fieldsets = (
          'classes' : ['collapse open',],
          'fields': ('body',)
         }),
-
+        (_('Display features'), {
+         'classes' : ['collapse open',],
+         'fields': ('homepage','sticky', 'category', 'allow_comments', 'copyright')
+        }),
+                  
         (_('Teaser. introduction and pullout text'), {
          'classes' : ['collapse closed',],
          'fields': ('teaser','introduction', 'pullout_text',)
-        }),
-
-        (_('Display features'), {
-         'classes' : ['collapse closed',],
-         'fields': ('homepage','sticky', 'category', 'allow_comments', 'copyright')
         }),
                  
         (_('HTML templates'), {

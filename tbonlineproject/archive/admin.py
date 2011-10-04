@@ -1,15 +1,18 @@
 from django.contrib import admin
 from archive.models import Catalogue, Document
+
 from django.contrib.contenttypes import generic
+from django.utils.translation import ugettext as _
+
 from tagging.models import TaggedItem, Tag  
 
 from credit.admin import OrderedCreditInline
-
 from enhancedtext.admin import enhancedtextcss, enhancedtextjs
-
 from archive.forms import TagAdminForm
 
 class TaggedItemInline(generic.GenericTabularInline):
+    verbose_name = _('tag')
+    verbose_name_plural = _('tags')
     classes = ('collapse open')
     model = TaggedItem
     extra = 0 
