@@ -428,6 +428,9 @@ class PostModerator(CommentModerator):
         if not post_parm.allow_comments:
             return 'disallowed'
 
+        if not post_parm.date_published:
+            return 'disallowed'
+
         if app_settings.CLOSE_COMMENTS_AFTER:
             if post_parm.date_published + \
                  datetime.timedelta(days=app_settings.CLOSE_COMMENTS_AFTER) \
