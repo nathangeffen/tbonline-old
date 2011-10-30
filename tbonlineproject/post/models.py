@@ -1,5 +1,37 @@
 ''' Model definitions for content posts. 
 
+The main content type is a BasicPost. Posts with images, slideshows and 
+embedded objects inherit from BasicPost and are implemented in PostWithImage,
+PostWithSlideShow and PostWithEmbeddedObject respectively.  
+
+The 3rd party library model_utils handles getting inherited models from the 
+database. A manager for BasicPost, using model_utils, is implemented in the 
+PostManager class.
+
+The query syntax for obtaining posts using this structure is quite simple: 
+
+To get all posts, but with all their types as BasicPost (you'd seldom want to 
+do this), just use the standard Django:
+    BasicPost.objects.all()
+    
+To get all posts as their correct inherited types:
+    BasicPost.objects.select_subclasses()
+    
+    e.g.
+    posts = BasicPost.objects.select_subclasses()
+    print (type(posts[0])==PostWithImage)
+    
+    would print True, if posts[0] happens to be a PostWithImage.
+    
+To get all published posts as their correct inherited types:
+    BasicPost.objects.published().select_subclasses()
+
+And to get all unpublished posts with their correct inherited types:
+    BasicPost.objects.unpublished().select_subclasses()
+
+A post is published when its date_published field is non-null and <= the 
+current datetime.
+
 '''
 
 import datetime
@@ -7,14 +39,13 @@ import datetime
 from django.db import models
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
-from django.utils.text import truncate_html_words
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.contrib.sites.models import Site
 
-from model_utils.managers import InheritanceManager 
+from external.model_utils.managers import InheritanceManager 
 
-from tagging.models import TaggedItem, Tag
+from external.tagging.models import TaggedItem, Tag
 
 from credit.utils import credit_list
 
@@ -26,6 +57,10 @@ from enhancedtext.fields import EnhancedTextField
 from post import app_settings
 
 class PostManager(InheritanceManager):
+    '''Uses model_utils 3rd party Django library to implement methods to get
+    published or unpublished posts. 
+    '''
+    
     def published(self):
         return super(PostManager, self).get_query_set().filter(
                 date_published__lte=datetime.datetime.now(), sites__id=Site.objects.get_current().id)        
@@ -36,8 +71,13 @@ class PostManager(InheritanceManager):
 
     
 class BasicPost(models.Model):
-    '''Basic post that more complex posts should inherit from.
+    '''This is the standard post. Complex post types requiring more 
+    sophisticated content should inherit from this one. 
+    
+    This is really the most important class in the system. Most of the system's
+    functionality is built around this model.
     '''
+    
     title = models.CharField(max_length=200)  
     subtitle = models.CharField(max_length=200, blank=True)
     authors = generic.GenericRelation(OrderedCredit, verbose_name=_('authors'), 
@@ -93,6 +133,12 @@ class BasicPost(models.Model):
     objects = PostManager()
 
     def __get_template__(self, template_name, list_or_detail):
+        '''Determines the template name for rendering a post and returns it as 
+        a string.  
+        
+        The default template name is the class name + list_or_detail + html 
+        extension.  
+        '''
         if template_name:
             return template_name
         else:
@@ -102,12 +148,23 @@ class BasicPost(models.Model):
 
             
     def get_post_list_template(self):
+        '''Determines the post list template name and returns it as a string.
+        
+        A list post template renders a bunch of posts on a webpage.  
+        '''
         return self.__get_template__(self.list_post_template, '_list_snippet')
     
     def get_post_detail_template(self):
+        '''Determines the post detail template name and returns it as a string.
+        
+        A detail post template renders one post on a webpage.  
+        '''
         return self.__get_template__(self.detail_post_template, '_detail_snippet')
 
     def get_authors(self):
+        '''Uses the credit_list utility function to generate a list of authors
+        as a printable string.
+        '''
         return credit_list(self.authors)
         
     def get_teaser_intro_body(self):
@@ -120,17 +177,25 @@ class BasicPost(models.Model):
               x: teaser tag set
               y: intro tag set
               
-              01. 0000: No fields set - return first paragraph as intro and teaser, remainder as body
-              02. t000: teaser field set - return teaser and intro as teaser, full body as body
-              03. ti00: Simplest case - teaser and intro fields set. Return full body as body  
-              04. tix0: Both teaser field and tag set. Teaser field overrides teaser tag.  
-              05. ti0y: Both intro field and intro tag set. Intro field overrides intro tag    
+              01. 0000: No fields set - return first paragraph as intro and 
+                        teaser, remainder as body
+              02. t000: teaser field set - return teaser and intro as teaser, 
+                        full body as body
+              03. ti00: Simplest case - teaser and intro fields set. Return 
+                        full body as body  
+              04. tix0: Both teaser field and tag set. Teaser field overrides 
+                        teaser tag.  
+              05. ti0y: Both intro field and intro tag set. Intro field 
+                        overrides intro tag    
               06. 0i00: Intro field set. Teaser set to intro. Body to remainder. 
-              07. 0ix0: Intro field and teaser tag set. (Madness!) Body set to remainder. 
+              07. 0ix0: Intro field and teaser tag set. (Madness!) Body set to 
+                        remainder. 
               08. 0ixy: Same as above, but intro field overrides intro tag.
-              09. 00x0: Teaser tag test. Set intro to teaser and body to remainder.
+              09. 00x0: Teaser tag test. Set intro to teaser and body to 
+                        remainder.
               10. 00xy: Teaser and intro tags set. Body to remainder
-              11. 000y: Intro tag set. Set teaser to intro and body to remainder. 
+              11. 000y: Intro tag set. Set teaser to intro and body to 
+                        remainder. 
               
         '''
                 
@@ -204,9 +269,21 @@ class BasicPost(models.Model):
         return self.get_teaser_intro_body()[2]
 
     def describe(self):
+        '''Describe methods are used by several apps in the system to return a
+        description of themselves. 
+        
+        Some templates depend on this method existing to produce sensible
+        output.   
+        '''
         return self.get_introduction()
 
     def is_published(self):
+        '''A post is published if the date-time is > date_published. 
+        
+        This method together with the Object Manager's published() method
+        violates DRY to some extent. It is critical that they stay logically in
+        sync.
+        '''
         try: 
             if datetime.datetime.now() >= self.date_published:
                 return True
@@ -219,14 +296,18 @@ class BasicPost(models.Model):
 
     @staticmethod
     def get_subclasses():
+        '''Determines all the subclasses of BasicPost, even new user defined 
+        ones. 
+        '''
         return [rel for rel in BasicPost._meta.get_all_related_objects() 
                 if isinstance(rel.field, models.OneToOneField) and 
                     issubclass(rel.field.model, BasicPost)]
     
     def get_class(self):
         '''Will return the type of self unless this is a BasicPost in which case 
-        it will try to see if there's a subclass and return that. If that fails. return
-        BasicPost.
+        it will try to see if there's a subclass and return that. 
+        
+        If that fails. return BasicPost.
         '''
         if isinstance(self, BasicPost):
             for cls in BasicPost.get_subclasses():
@@ -244,17 +325,33 @@ class BasicPost(models.Model):
         return self.get_class().__name__
 
     def describe_for_admin(self):
+        '''Returns a string description of the type of this Post for the admin
+        interface.
+        '''
         return self.get_class()._meta.verbose_name
     describe_for_admin.short_description = "Type"
     describe_for_admin.allow_tags = True
 
     @models.permalink
     def get_admin_url(self):
+        '''Ensures that if the user clicks on a Post in the admin interface,
+        the correct change screen is opened for this type of Post. 
+        
+        For example, if the Post is a PostWithImage, then the PostWithImage
+        admin change screen must open, not the BasicPost change screen. 
+        '''
         cls = self.get_class() 
-        return ('admin:post_'+ self.get_class().__name__.lower() +'_change', [str(self.pk)])
+        return ('admin:post_'+ self.get_class().__name__.lower() +'_change', 
+                    [str(self.pk)])
 
     def render_admin_url(self):
-        return u'<a href="'+ self.get_admin_url() + u'">'+ unicode(self.pk) + u'</a>'
+        '''Called from the Admin interface to generates the html to link a post
+        to its correct change screen. 
+        
+        Works in conjunction with get_admin_url() 
+        '''
+        return u'<a href="'+ self.get_admin_url() + u'">'+ unicode(self.pk) + \
+                u'</a>'
     
     render_admin_url.short_description = _('ID')
     render_admin_url.allow_tags = True
@@ -262,12 +359,16 @@ class BasicPost(models.Model):
 
     @staticmethod
     def get_posts_by_tags_union(tags):
+        '''Returns all posts which contain any of the tags in the list of tags
+        passed as an argument to this method.
+        '''
         
         if type(tags) == str or type(tags) == unicode:
             tags = tags.rsplit(",")
         
         if type(tags) != list:
-            raise TypeError("Tags is a %s. Expected tags to be a list, string or unicode object."  % unicode(type(tags)))
+            raise TypeError("Tags is a %s. Expected tags to be a list, string"
+                            " or unicode object."  % unicode(type(tags)))
 
         posts = []
         
@@ -277,9 +378,11 @@ class BasicPost(models.Model):
             except Tag.DoesNotExist:    
                 continue
                 
-            posts_for_this_tag = list(TaggedItem.objects.get_by_model(BasicPost, tag)) 
+            posts_for_this_tag = list(TaggedItem.objects.\
+                                      get_by_model(BasicPost, tag)) 
             for cls in BasicPost.get_subclasses():
-                posts_for_this_tag += list(TaggedItem.objects.get_by_model(cls.model, tag))
+                posts_for_this_tag += list(TaggedItem.objects.\
+                                           get_by_model(cls.model, tag))
                 
 
             posts += filter(lambda p: p.is_published() and \
@@ -289,12 +392,15 @@ class BasicPost(models.Model):
 
     @staticmethod
     def get_posts_by_tags_intersection(tags):
-        
+        '''Returns all posts that have all the tags in the list of tags passed
+        in the argument to this method. 
+        '''
         
         if type(tags) == str or type(tags) == unicode:
             tags = tags.rsplit(",")
         if type(tags) != list:
-            raise TypeError("Tags is a %s. Expected tags to be a list, string or unicode object."  % unicode(type(tags)))
+            raise TypeError("Tags is a %s. Expected tags to be a list, string"
+                            " or unicode object."  % unicode(type(tags)))
         
         posts = set([])
         for i, t in enumerate(tags):
@@ -303,12 +409,15 @@ class BasicPost(models.Model):
             except Tag.DoesNotExist:    
                 continue
 
-            posts_for_this_tag = list(TaggedItem.objects.get_by_model(BasicPost, tag)) 
+            posts_for_this_tag = list(TaggedItem.objects.\
+                                      get_by_model(BasicPost, tag)) 
             for cls in BasicPost.get_subclasses():
-                posts_for_this_tag += list(TaggedItem.objects.get_by_model(cls.model, tag))
+                posts_for_this_tag += list(TaggedItem.objects.\
+                                           get_by_model(cls.model, tag))
                 
             posts_for_this_tag = set(filter(lambda p: p.is_published() and \
-                        Site.objects.get_current() in p.sites.all(), posts_for_this_tag))
+                        Site.objects.get_current() in \
+                            p.sites.all(), posts_for_this_tag))
             
             if i > 0: 
                 posts = posts & posts_for_this_tag                
@@ -321,15 +430,20 @@ class BasicPost(models.Model):
     def get_posts_by_categories(categories):
         '''Returns all posts which are in the given categories.
         
-        Note category is a foreign key, so a post only belongs to one category. Therefore
-        there is no union or intersection operation as there is for tags.  
+        Note category is a foreign key, so a post only belongs to one category. 
+        Therefore there is no union or intersection operation as there is 
+        for tags.  
         '''
         if type(categories) == str or type(categories) == unicode:
             categories = categories.rsplit(",")
         if type(categories) != list:
-            raise TypeError("Categories is a %s. Expected tags to be a list, string or unicode object."  % unicode(type(categories)))
+            raise TypeError("Categories is a %s. Expected tags to be a list, "
+                            "string or unicode object."  % 
+                            unicode(type(categories)))
         
-        return BasicPost.objects.published().filter(category__name__in=categories).select_subclasses().distinct()
+        return BasicPost.objects.published().\
+                    filter(category__name__in=categories).\
+                        select_subclasses().distinct()
         
     @models.permalink
     def get_absolute_url(self):
