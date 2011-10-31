@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 from contact_form.forms import ContactForm 
-from external.stopspam.forms.fields import HoneypotField
+from stopspam.forms.fields import HoneypotField
 
 
 class EnhancedContactForm(ContactForm):
