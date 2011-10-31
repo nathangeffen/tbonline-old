@@ -17,14 +17,21 @@ edit to the settings file switches off this dependency.
 Installation
 ------------
 
-Installation is manual at present and not properly tested. 
+Installation is manual at present, not properly tested and non-trivial. 
 
 #. Download the zip file from Github, or fork it.
 
 #. All 3rd-party Django dependencies, for example Haystack, Grappelli and 
    Filebrowser, are included with it and are kept in the directory called 
    *external*. So you should not have to download anything else to get the 
-   system running.
+   system running. Copy the contents of *external* to a folder on your Python 
+   path. Note if any of the third-party libraries are already in a folder in the
+   path, make sure to either use a utility like *virtualenv* or fiddle with your
+   paths to ensure the the ones supplied with the project are found first. 
+   Otherwise you might find you've got different versions running and get 
+   strange errors.
+   Alternatively you can experiment with different versions of the 3rd-party
+   dependencies.   
 
 Once installed, check that it's working (or at least not totally broken) 
 by running::

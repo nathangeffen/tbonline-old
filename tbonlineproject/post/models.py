@@ -43,9 +43,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.contrib.sites.models import Site
 
-from external.model_utils.managers import InheritanceManager 
+from model_utils.managers import InheritanceManager 
 
-from external.tagging.models import TaggedItem, Tag
+from tagging.models import TaggedItem, Tag
 
 from credit.utils import credit_list
 
