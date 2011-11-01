@@ -43,6 +43,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.contrib.sites.models import Site
 
+from sorl.thumbnail import ImageField
+from sorl.thumbnail import get_thumbnail
 from model_utils.managers import InheritanceManager 
 
 from tagging.models import TaggedItem, Tag
@@ -63,11 +65,13 @@ class PostManager(InheritanceManager):
     
     def published(self):
         return super(PostManager, self).get_query_set().filter(
-                date_published__lte=datetime.datetime.now(), sites__id=Site.objects.get_current().id)        
+                date_published__lte=datetime.datetime.now(), 
+                    sites__id=Site.objects.get_current().id)        
 
     def unpublished(self):
-        return super(PostManager, self).get_query_set().filter(sites__id=Site.objects.get_current().id).exclude(
-                date_published__lte=datetime.datetime.now())
+        return super(PostManager, self).get_query_set().\
+                filter(sites__id=Site.objects.get_current().id). \
+                    exclude(date_published__lte=datetime.datetime.now())
 
     
 class BasicPost(models.Model):
@@ -78,8 +82,17 @@ class BasicPost(models.Model):
     functionality is built around this model.
     '''
     
-    title = models.CharField(max_length=200)  
-    subtitle = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=200, 
+                    help_text=_("The article title should be short, no more "
+                                "than seven words. It should convey the "
+                                "article's essence."))  
+    subtitle = models.CharField(max_length=200, blank=True,
+                    help_text=_("The subtitles should also be short but it can "
+                                "be a bit longer than the title. "
+                                "Only use a subtitle if it adds useful "
+                                "information about the content or will draw "
+                                "readers to the article. Otherwise leave "
+                                "blank."))
     authors = generic.GenericRelation(OrderedCredit, verbose_name=_('authors'), 
                                       blank=True, null=True)    
     teaser = EnhancedTextField(blank=True, 
@@ -88,15 +101,30 @@ class BasicPost(models.Model):
     introduction = EnhancedTextField(blank=True,
             help_text = _('Displayed on detail post page separately from the body'),
             default=("\W"))
-    body = EnhancedTextField(blank=True,
-            default=("\W"))
+    body = EnhancedTextField(blank=True, default=("\W"),
+                help_text=_('This is the content of the article.<br>'
+                            'Note: Instead of filling in the <em>teaser</em> ' 
+                            'and <em>introduction</em> fields, you can use '
+                            '&#60;!--endteaser--&#62; and/or '
+                            '&#60;!--endintro--&#62; in this field to indicate '
+                            'where the teaser and/or introduction end '
+                            'respectively.'))
         
     pullout_text = models.CharField(max_length=400, blank=True,
                         help_text=_('Usually used for a nice quote that will '
                                     'be prominently displayed'))
-    slug = models.SlugField(help_text=_('Used in the URL to identify the post.'))    
+    slug = models.SlugField(help_text=_('Used in the URL to identify the post. ' 
+                                        'This field is usually filled in '
+                                        'automatically by the system. The '
+                                        'system will ensure it has a  unique ' 
+                                        'value.<br/>'
+                                        '<b>Warning:</b> If you change the '
+                                        'slug after a post is published '
+                                        'the link to the post will change '
+                                        'and people who have bookmarked the '
+                                        'old link will not find it.'))    
     homepage = models.BooleanField(default=True,
-            help_text=_('Check to display on home page'))
+            help_text=_('Check to display this post on the home page'))
     sticky = models.BooleanField(default=False,
             help_text=_('Check to display at top of home page even when newer '
                         'posts are published.'))
@@ -105,7 +133,13 @@ class BasicPost(models.Model):
                         'Posts can only have one category, but multiple tags'))
     
     date_published = models.DateTimeField(blank=True, null=True,
-            help_text=_('Leave blank while this is a draft.'))
+            help_text=_('A post is published if the publication date has ' 
+                        'passed. Leave blank while this is a draft.<br/>'
+                        '<b>Warning:</b> If you change this '
+                        'date after a post is published '
+                        'the link to the post will change '
+                        'and people who have bookmarked the '
+                        'old link will not find it.'))
     last_modified = models.DateTimeField(auto_now=True, editable=False)
     date_added = models.DateTimeField(auto_now_add=True, editable=False)
     
@@ -426,6 +460,32 @@ class BasicPost(models.Model):
             
         return list(posts)
 
+    def _get_unique_slug(self):
+        '''Makes slug unique, if it is not already, and returns it as a string.
+        '''
+        slug_unique = False
+        counter = 1
+        slug = self.slug
+        
+        while not slug_unique: 
+            if self.pk:
+                posts = BasicPost.objects.filter(slug=slug).\
+                    exclude(pk=self.pk)
+            else:                
+                posts = BasicPost.objects.filter(slug=slug)
+            if len(posts) == 0:
+                slug_unique = True
+            else:
+                slug = self.slug + "-" + unicode(counter)
+                counter += 1
+        return slug
+        
+    def save(self, *args, **kwargs):
+        # Make the slug unique
+        self.slug = self._get_unique_slug()
+        super(BasicPost, self).save(*args, **kwargs)
+
+
     @staticmethod
     def get_posts_by_categories(categories):
         '''Returns all posts which are in the given categories.
@@ -485,6 +545,39 @@ class PostWithImage(BasicPost):
     class Meta:
         verbose_name = _('post with image')
         verbose_name_plural = _('posts with images')
+
+class PostWithSimpleImage(BasicPost):
+    '''This model was added because the PostWithImage model is actually too
+    complicated for most use cases. 
+    
+    This model adds an image, a caption and a URL link for the image to the 
+    BasicPost class.  
+    '''
+    image = ImageField(upload_to='uploads/images/', blank=True, null=True)
+    caption = models.CharField(max_length=300, blank=True,
+                          help_text=_('Give the image a meaningful '
+                                      'caption. You can use HTML.'))
+    url = models.URLField(verify_exists=False, blank=True, 
+                           help_text=_('If this has a value then the image '
+                                       'will have a link to this URL.' ))
+    
+    def image_thumbnail(self, height=50, width=50):
+        if self.image:
+            im = get_thumbnail(self.image, unicode(height) + 'x' + 
+                               unicode(width), crop='center', quality=99)
+            return '<img src="' + im.url + '"/>'
+        else:
+            return ""
+
+    def describe_for_admin(self):
+        return self.image_thumbnail()
+    
+    describe_for_admin.short_description = "Type"
+    describe_for_admin.allow_tags = True
+
+    class Meta:
+        verbose_name = _('post with simple image')
+        verbose_name_plural = _('posts with simple images')
                 
 class PostWithSlideshow(BasicPost):
     '''Post with multiple images which can then be displayed as a slideshow.

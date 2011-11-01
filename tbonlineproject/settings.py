@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.comments',
     'django.contrib.flatpages',
+    'sorl.thumbnail',
     'contact_form',
     'grappelli',
     'filebrowser',

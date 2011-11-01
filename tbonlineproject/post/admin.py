@@ -11,7 +11,10 @@ from django import forms
 
 from django.contrib.sites.models import Site
 
-from post.models import BasicPost, PostWithImage, PostWithSlideshow, PostWithEmbeddedObject
+from sorl.thumbnail.admin import AdminImageMixin
+
+from post.models import BasicPost, PostWithImage, PostWithSlideshow, \
+                        PostWithSimpleImage, PostWithEmbeddedObject
 
 from archive.admin import TaggedItemInline
 
@@ -79,6 +82,14 @@ class BasicPostAdmin(admin.ModelAdmin):
         css = enhancedtextcss 
         js = enhancedtextjs
 
+class PostWithSimpleImageAdmin(AdminImageMixin, BasicPostAdmin):
+    fieldsets = post_fieldsets[0:3] + \
+        ((_('Image'), {
+         'classes' : ['collapse open',],
+         'fields': ('image', 'caption', 'url',)
+        }),) + \
+        post_fieldsets[3:]
+        
 class PostWithImageAdmin(BasicPostAdmin):
     #list_display = ('id', 'title', 'image_thumbnail', 'date_published', 'category', 'homepage','is_published', 'date_added', 'last_modified')
     raw_id_fields = ['image',]
@@ -137,6 +148,7 @@ class CustomCommentAdmin(CommentsAdmin):
     list_display = ('id', 'name', 'content_type', 'object_pk', 'ip_address', 'submit_date', 'is_public', 'is_removed')
 
 admin.site.register(BasicPost, BasicPostAdmin)
+admin.site.register(PostWithSimpleImage, PostWithSimpleImageAdmin)
 admin.site.register(PostWithImage, PostWithImageAdmin)
 admin.site.register(PostWithSlideshow, PostWithSlideshowAdmin)
 admin.site.register(PostWithEmbeddedObject, PostWithEmbeddedObjectAdmin)

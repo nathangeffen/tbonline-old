@@ -246,6 +246,20 @@ class PostTest(unittest.TestCase):
         authors = BasicPost.objects.select_subclasses().filter(pk=3)[0].get_authors()        
         self.assertEquals(authors, "Jane Bloggs and Wikipedia")
         
+    def testUniqueSlug(self):
+        BasicPost.objects.create(title="Test slug 1", slug="t")
+        BasicPost.objects.create(title="Test slug 2", slug="t")
+        BasicPost.objects.create(title="Test slug 3", slug="t")
+        posts = BasicPost.objects.filter(slug="t")        
+        self.assertEquals(len(posts), 1)
+        self.assertEquals(posts[0].title, "Test slug 1")        
+        posts = BasicPost.objects.filter(slug="t-1")
+        self.assertEquals(len(posts), 1)        
+        self.assertEquals(posts[0].title, "Test slug 2")
+        posts = BasicPost.objects.filter(slug="t-2")
+        self.assertEquals(len(posts), 1)        
+        self.assertEquals(posts[0].title, "Test slug 3")        
+    
     def testEnhancedTextField(self):
         p = BasicPost.objects.select_subclasses()[0]
         p.teaser = "<h1>The quick brown fox jumps over the lazy dog</h1>"

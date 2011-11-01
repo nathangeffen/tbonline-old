@@ -1,0 +1,16 @@
+{% extends "post/basicpost_list_snippet.html" %}
+{% load thumbnail %}
+{% load url from future %}
+{% load fb_versions %}
+
+{% block media %}
+
+    <div class="thumbprint left">  
+       {% if post.image %}
+            {% thumbnail post.image "140x100" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}
+       {% endif %}
+    </div>
+
+{% endblock %}    
