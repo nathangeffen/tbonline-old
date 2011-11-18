@@ -1,0 +1,31 @@
+<script type='text/javascript'>
+/*<![CDATA[*/
+    // The view model holds all the state we're working with. It also has methods that can edit it, and it uses
+    // dependentObservables to compute more state in terms of the underlying data
+    // --
+    // The view (i.e., the HTML UI) binds to this using data-bind attributes, so it always stays up-to-date with
+    // the view model, even though the view model does not know or care about any view that binds to it
+
+    var viewModel = {
+        userList1: ko.observableArray([
+            { name: "twitterUsers",
+            userNames: [{% for username in twitter_usernames %}'{{ username }}'{% if forloop.counter < twitter_usernames|length %},{%  endif %}{% endfor %}] },
+        ]),
+        userList2: {
+            name: ko.observable("twitterUsers"),
+            userNames: ko.observableArray()
+        },
+        currentTweets : ko.observableArray([])
+    };
+
+
+    // The active user tweets are (asynchronously) computed from editingList.userNames
+    ko.dependentObservable(function () {
+        var userList1 = viewModel.userList1()[0];
+        viewModel.userList2.userNames(userList1.userNames.slice(0));
+        twitterApi.getTweetsForUsers(this.userList2.userNames(), function (data) { viewModel.currentTweets(data) })
+    }, viewModel);
+
+    ko.applyBindings(viewModel);
+/*]]>*/
+</script>
