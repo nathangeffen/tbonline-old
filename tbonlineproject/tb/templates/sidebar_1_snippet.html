@@ -4,7 +4,7 @@
 {% load feed %}
 
 <script type="text/javascript">
-    
+ 
  window.onload = function () {
     elements = document.getElementsByClassName('more');
     for (i=0; i<elements.length; i++) {
@@ -104,6 +104,14 @@
 	    {% trans "There are currently no entries for this feed" %}.
 	{% endfor %}
 	</ul>
+</div>
+
+<div class="featured-block vertical-scroller">
+    <h2>{% trans "Twitter" %}</h2>
+    {% load jquery_template %}
+        <div class="tweets" data-bind='template: { name: "tweetsTemplate", data: currentTweets }'> </div>
+        {% jquery_template 'tweets.html' 'tweetsTemplate'  %}
+        {% include 'knockout_script.html' %}
 </div>
 
  
