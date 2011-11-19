@@ -26,6 +26,11 @@
   <p class="required">
     {{form.comment.label_tag}}{{form.comment}}
   </p>
+  
+  {% if form.recaptcha.errors %}{{ form.recaptcha.errors }}{% endif %}  
+  <p class="required">
+    {{form.recaptcha.label_tag}}{{form.recaptcha}}
+  </p>
 
   <p {% if field.errors %} 
     class="error"{% endif %}

@@ -4,9 +4,10 @@
 import os
 
 try:
-    from local_settings import APP_NAME          
+    from local_settings import APP_NAME, COMMENTS_APP    
 except ImportError:
     APP_NAME = "tb"
+    COMMENTS_APP = "tb_comments"
 
 
 DEBUG = True
@@ -176,6 +177,7 @@ INSTALLED_APPS = (
     'story',
     'tagviews',
     'notifications',
+    COMMENTS_APP,
     APP_NAME,
 )
 
@@ -193,6 +195,10 @@ HAYSTACK_SITECONF = 'tbonlineproject.search_sites'
 HAYSTACK_SEARCH_ENGINE = 'xapian'
 HAYSTACK_WHOOSH_PATH = os.path.join(SITE_ROOT, 'whoosh_search_index')
 HAYSTACK_XAPIAN_PATH = os.path.join(SITE_ROOT, 'xapian_search_index')
+
+RECAPTCHA_PUBLIC_KEY = '6LeMQsoSAAAAAP5BQhOF0kuPCPvtwwu_9AYshPMA'
+RECAPTCHA_PRIVATE_KEY = '6LeMQsoSAAAAAGrrDr05Uyhoh7DJHHsArD4BNXmA'
+
 
 TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.debug",
