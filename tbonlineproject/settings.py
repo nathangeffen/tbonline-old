@@ -199,6 +199,15 @@ HAYSTACK_XAPIAN_PATH = os.path.join(SITE_ROOT, 'xapian_search_index')
 RECAPTCHA_PUBLIC_KEY = '6LeMQsoSAAAAAP5BQhOF0kuPCPvtwwu_9AYshPMA'
 RECAPTCHA_PRIVATE_KEY = '6LeMQsoSAAAAAGrrDr05Uyhoh7DJHHsArD4BNXmA'
 
+#The time in MINUTES that the homepage and posts views will be cached
+CACHE_TIME = 10
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.debug",
