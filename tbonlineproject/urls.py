@@ -2,9 +2,6 @@ from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.sitemaps import FlatPageSitemap
-from django.views.decorators.cache import cache_page
-
-import settings
 
 from contact_form.views import contact_form
 
@@ -26,7 +23,7 @@ sitemaps = {
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', cache_page(60 * settings.CACHE_TIME)(PublishedFrontPagePostsView.as_view(template_name = 'index.html')), 
+    url(r'^$', PublishedFrontPagePostsView.as_view(template_name = 'index.html'), 
         name='home'),
     (r'^archive/', include('archive.urls')),
     (r'^posts/', include('post.urls')),

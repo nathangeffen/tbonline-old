@@ -1,8 +1,5 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.decorators import permission_required
-from django.views.decorators.cache import cache_page
-
-import settings
 
 from post.views import ListPostView, DateDetailPostView, \
     PostsByTagView, DraftPostView, RedirectPostView, PostsByCategoryView
@@ -15,12 +12,12 @@ urlpatterns = patterns('post.views',
     
     # Detail view for post by date and slug
     url(r'^(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/(?P<slug>[a-zA-Z0-9-_]+)/$', 
-       cache_page(60 * settings.CACHE_TIME)(DateDetailPostView.as_view()), name='post_detail'),
+       DateDetailPostView.as_view(), name='post_detail'),
 
     
     # Detail view for post by id
     url(r'^id/(?P<pk>\d+)/$', 
-        cache_page(60 * settings.CACHE_TIME)(RedirectPostView.as_view()), name='story_id_detail'),
+        RedirectPostView.as_view(), name='story_id_detail'),
     
     # Detail view for unpublished post 
     url(r'^draft/(?P<pk>\d+)/$',
