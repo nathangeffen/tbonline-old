@@ -17,8 +17,6 @@ from categories.models import Category
 
 from post.models import BasicPost, PostModerator
 
-from tb.models import TwitterUsername
-
 from post import app_settings
 
 
@@ -60,12 +58,6 @@ class PublishedFrontPagePostsView(ListPostView):
         return BasicPost.objects.published().\
                 filter(homepage=True).\
                 select_subclasses()
-                
-    def get_context_data(self, **kwargs):
-        context = super(PublishedFrontPagePostsView, self).get_context_data(**kwargs)
-        context['twitter_usernames'] = TwitterUsername.objects.all()
-        return context
-
 
 class DetailPostViewMixin(object):
     context_object_name = "post"

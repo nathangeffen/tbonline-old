@@ -140,7 +140,8 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'gallery/templates'),
     os.path.join(SITE_ROOT, 'feeder/templates'),
     os.path.join(SITE_ROOT, 'copyright/templates'),
-    os.path.join(SITE_ROOT, 'notifications/templates'),    
+    os.path.join(SITE_ROOT, 'notifications/templates'),
+    os.path.join(SITE_ROOT, 'tweets/templates'),  
 )
                  
 INSTALLED_APPS = (
@@ -177,6 +178,7 @@ INSTALLED_APPS = (
     'story',
     'tagviews',
     'notifications',
+    'tweets',
     COMMENTS_APP,
     APP_NAME,
 )

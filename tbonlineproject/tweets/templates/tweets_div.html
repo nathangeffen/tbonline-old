@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<div class="featured-block vertical-scroller">
+    <h2>{% trans "Twitter" %}</h2>
+    {% load jquery_template %}
+        <div class="tweets" data-bind='template: { name: "tweetsTemplate", data: currentTweets }'> </div>
+        {% jquery_template 'tweets.html' 'tweetsTemplate'  %}
+        {% include 'knockout_script.html' %}
+</div>
