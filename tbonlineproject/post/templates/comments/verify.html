@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load markup %}
+
+{% block title %}{% trans "Verify your comment" %}{% endblock %}
+
+{% block content %}
+  {% load comments %}
+  <form action="{% url comments-post-comment %}" method="post">{% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+    <h1>{% trans "Verify and Preview your comment" %}</h1>
+      <blockquote>{{ comment|markdown:"safe,tables" }}</blockquote>
+    {% if form.recaptcha.errors %}{{ form.recaptcha.errors }}{% endif %}  
+    <p>
+        {{form.recaptcha.label_tag}}{{form.recaptcha}}
+    </p>
+    <input type="submit" />
+  </form>
+{% endblock %}
