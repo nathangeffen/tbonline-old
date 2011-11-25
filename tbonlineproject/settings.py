@@ -179,6 +179,7 @@ INSTALLED_APPS = (
     'tagviews',
     'notifications',
     'tweets',
+    'tb_registration',
     COMMENTS_APP,
     APP_NAME,
 )

@@ -24,7 +24,9 @@ var twitterApi = (function () {
             $.ajax({
                 url: url,
                 dataType: "jsonp",
-                success: function (data) { callback($.grep(data.results || [], function (tweet) { return tweet.to_user_id === null; })); }
+                success: function (data) {
+                    callback($.grep(data.results || [], function (tweet) { return tweet.to_user_id === null; }));
+                    }
             });
         }
     }, 50);

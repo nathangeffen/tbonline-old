@@ -6,7 +6,7 @@
 
 {% block content %}
   {% load comments %}
-  <form action="{% url comments-post-comment %}" method="post">{% csrf_token %}
+  <form action="{% url comments-post-comment-anonymous %}" method="post">{% csrf_token %}
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
     <h1>{% trans "Verify and Preview your comment" %}</h1>
       <blockquote>{{ comment|markdown:"safe,tables" }}</blockquote>

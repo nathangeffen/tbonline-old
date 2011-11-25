@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 from contact_form.forms import ContactForm 
 from stopspam.forms.fields import HoneypotField
 
+from tb_comments.fields import ReCaptchaField
 
 class EnhancedContactForm(ContactForm):
     error_css_class = 'error'
@@ -23,6 +24,7 @@ class EnhancedContactForm(ContactForm):
         if request.user.is_authenticated():
             kwargs['initial'] = {'name' : request.user.get_full_name() if request.user.get_full_name() != u''  else request.user.username,
                                  'email' : request.user.email}
+                                 
             
         super(EnhancedContactForm, self).__init__(data=data, 
                                                   files=files, 
@@ -30,5 +32,9 @@ class EnhancedContactForm(ContactForm):
                                                   *args, 
                                                   **kwargs)
 
-        self.fields.keyOrder = ['name', 'email', 'subject', 'accept_terms', 'body']
+        if not request.user.is_authenticated():
+            self.fields['recaptcha'] = ReCaptchaField()
+            self.fields.keyOrder = ['name', 'email', 'subject', 'accept_terms', 'body', 'recaptcha']
+        else:
+            self.fields.keyOrder = ['name', 'email', 'subject', 'accept_terms', 'body']
 

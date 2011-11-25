@@ -1,5 +1,5 @@
 {% load comments i18n %}
-<form action="{% comment_form_target %}" method="post">{% csrf_token %}
+<form action="{% if user.is_authenticated %}{% url comments-post-comment-authenticated %}{% else %}{% comment_form_target %}{% endif %}" method="post">{% csrf_token %}
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 
   {{form.content_type}}
