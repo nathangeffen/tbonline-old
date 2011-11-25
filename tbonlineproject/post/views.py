@@ -2,10 +2,12 @@
 
 import datetime
 
-
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.markup.templatetags.markup import markdown
 from django.contrib import messages
+from django.core.cache import cache 
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
@@ -14,16 +16,16 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DateDetailView, DetailView, RedirectView
-from tagging.models import TaggedItem, Tag
 
 import settings
+
+from tagging.models import TaggedItem, Tag
 
 from categories.models import Category
 
 from post.models import BasicPost, PostModerator
 
 from post import app_settings
-
 
 
 class ListPostView(ListView):
@@ -132,3 +134,9 @@ def markdownpreview(request):
     return render_to_response( 'enhancedtext/markdownpreview.html',
                               {'preview': data,},
                               context_instance=RequestContext(request))
+                              
+
+@user_passes_test(lambda u: u.is_superuser)
+def clear_cache(request):
+    cache.clear()
+    return HttpResponse(unicode(_('The cache has been cleared.')))

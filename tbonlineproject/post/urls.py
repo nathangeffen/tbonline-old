@@ -34,5 +34,7 @@ urlpatterns = patterns('post.views',
 
     # Preview for Markdown for enhanced text fields
     (r'^markdownpreview/$', 'markdownpreview'),
+    
+    (r'^clearcache/$', 'clear_cache'),
 )
 
