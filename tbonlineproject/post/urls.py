@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.decorators import permission_required
+from django.views.generic import TemplateView
 
 from post.views import ListPostView, DateDetailPostView, \
     PostsByTagView, DraftPostView, RedirectPostView, PostsByCategoryView
@@ -31,10 +32,13 @@ urlpatterns = patterns('post.views',
     url(r'^tag/(?P<tag>[\"\w\" \-]+)/$', PostsByTagView.as_view(), name='post_tag_list'),
 
     url(r'^category/(?P<category>[\"\w\" \-]+)/$', PostsByCategoryView.as_view(), name='post_category_list'),
+    
+    url(r'^submit/add/$', 'submit_article', name='submit_article'),
+    url(r'^submit/success/$', TemplateView.as_view(template_name="submit_article/success.html"), name='submit_article_success'),
+    
+    url(r'^clearcache/$', 'clear_cache', name='clear_cache'),
 
     # Preview for Markdown for enhanced text fields
     (r'^markdownpreview/$', 'markdownpreview'),
-    
-    (r'^clearcache/$', 'clear_cache'),
 )
 

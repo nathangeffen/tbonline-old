@@ -1,3 +1,4 @@
 *.sqlite
 local_settings.*
 *.pyc
+media/

@@ -1,9 +1,15 @@
 from django import forms
+from django.forms.formsets import BaseFormSet
 from django.utils.translation import ugettext as _
 
 from contact_form.forms import ContactForm 
 from stopspam.forms.fields import HoneypotField
 
+from credit.models import Credit
+from enhancedtext.fields import EnhancedTextWidget
+from gallery.models import Image
+from post.models import BasicPost
+from tagging.models import Tag
 from tb_comments.fields import ReCaptchaField
 
 class EnhancedContactForm(ContactForm):
@@ -37,4 +43,21 @@ class EnhancedContactForm(ContactForm):
             self.fields.keyOrder = ['name', 'email', 'subject', 'accept_terms', 'body', 'recaptcha']
         else:
             self.fields.keyOrder = ['name', 'email', 'subject', 'accept_terms', 'body']
+            
+class ArticleSubmissionForm(forms.Form):
+    EDITOR_CHOICES = (
+        ('\W', _('HTML editor')),
+        ('\M', _('Markdown')), 
+    )
+    
+    error_css_class = 'error'
+    required_css_class = 'required'
 
+    title = forms.CharField(max_length=200, label=_('Title'))
+    subtitle = forms.CharField(max_length=200, label=_('Subtitle'), required=False)
+    body = forms.CharField(label=_('Body'), widget=forms.Textarea)
+    editor = forms.ChoiceField(label=_('Editor'), choices=EDITOR_CHOICES, required=False)
+    authors = forms.ModelMultipleChoiceField(label=_('Authors'), help_text=_("(You may select multiple authors or leave it blank)"),
+                                            queryset=Credit.objects.all(), required=False)
+    tags = forms.ModelMultipleChoiceField(label=_('Tags'), help_text=_("(You may select multiple tags or leave it blank)"),
+                                            queryset=Tag.objects.all(), required=False)

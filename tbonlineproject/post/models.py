@@ -37,7 +37,9 @@ current datetime.
 import datetime
 
 from django.db import models
+from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.comments.moderation import CommentModerator, moderator
@@ -73,7 +75,19 @@ class PostManager(InheritanceManager):
                 filter(sites__id=Site.objects.get_current().id). \
                     exclude(date_published__lte=datetime.datetime.now())
 
+class SubmittedArticle(models.Model):
+    submitted_by = models.ForeignKey(User)
+    content_type = models.ForeignKey(ContentType, verbose_name=_('content type'))
+    object_id    = models.PositiveIntegerField(_('object id'))
+    object       = generic.GenericForeignKey('content_type', 'object_id')
     
+    class Meta:
+        verbose_name = _('submitted article')
+        verbose_name_plural = _('submitted articles')
+        
+    def __unicode__(self):
+        return  _('%s [%s]' % (self.object, self.tag))
+        
 class BasicPost(models.Model):
     '''This is the standard post. Complex post types requiring more 
     sophisticated content should inherit from this one. 

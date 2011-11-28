@@ -41,6 +41,12 @@
     </li>
     
     <li>
+        <a href="/submit/" {% if request.path == "/submit/" %}class="current"{% endif %}>
+        {% trans "Your Posts" %} 
+        </a>            
+    </li>
+    
+    <li>
         {% url 'contact' as contact_url  %}
         <a href="{{contact_url}}"{% if request.path == contact_url %}class="current"{% endif %}>
         {% trans "Contact" %} 

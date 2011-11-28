@@ -7,10 +7,11 @@ from django.contrib.markup.templatetags.markup import markdown
 from django.contrib import messages
 from django.core.cache import cache 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
+from django.template.defaultfilters import slugify
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.cache import cache_page
@@ -22,8 +23,11 @@ import settings
 from tagging.models import TaggedItem, Tag
 
 from categories.models import Category
-
-from post.models import BasicPost, PostModerator
+from credit.models import Credit, OrderedCredit
+from enhancedtext.fields import EnhancedText
+from gallery.models import Image
+from post.forms import ArticleSubmissionForm
+from post.models import BasicPost, PostWithSimpleImage, PostModerator
 
 from post import app_settings
 
@@ -135,6 +139,51 @@ def markdownpreview(request):
                               {'preview': data,},
                               context_instance=RequestContext(request))
                               
+def submit_article(request):
+    '''
+        View for Article Submission
+    '''
+    form = ArticleSubmissionForm()
+    if request.method == 'POST':
+        form = ArticleSubmissionForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = request.POST['title']
+            subtitle = request.POST['subtitle']
+            body = request.POST['body']
+            editor = request.POST['editor']
+            authors = request.POST.get('authors', [])
+            tags = request.POST.get('tags', [])
+            files = request.FILES
+            post_body = EnhancedText(body, editor)                                  #Combines body and editor field to for creating post
+            post = None
+            if len(files) == 0:                                                     #Will save post as basic post
+                post = BasicPost(title=title, slug=slugify(title), 
+                                    subtitle=subtitle, body=post_body)
+                post.slug = post._get_unique_slug()
+                post.save()
+            if len(files) == 1:
+                image = None
+                for f in files:
+                    image = files.itervalues().next()
+                post = PostWithSimpleImage(title=title, slug=slugify(title),
+                                            subtitle=subtitle, body=post_body,
+                                            image=image)
+                post.save()
+            if post:
+                # Saves the authors and tags of the post
+                for index, author in enumerate(authors):
+                    credit = OrderedCredit(credit=Credit.objects.get(id=author), 
+                                            content_object=post, position=index)
+                    credit.save()
+                for index, tag in enumerate(tags):
+                    tag = TaggedItem(tag=Tag.objects.get(id=tag), object=post)
+                    tag.save()
+            return HttpResponseRedirect(reverse('submit_article_success'))
+    else:
+        form = ArticleSubmissionForm()
+    return render_to_response('submit_article/add.html',
+                            {'form': form,},
+                            context_instance=RequestContext(request))
 
 @user_passes_test(lambda u: u.is_superuser)
 def clear_cache(request):

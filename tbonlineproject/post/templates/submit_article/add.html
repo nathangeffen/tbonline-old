@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ block.super }} - {% trans "Submit Article" %} {% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}enhancedtext/css/markitup.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}markitup/sets/markdown/style.css" />
+
+<script type="text/javascript" src="{{ STATIC_URL }}markitup/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}markitup/sets/markdown/set.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}enhancedtext/js/submit_article.js"></script>
+{% endblock %}
+{% block content %}
+
+<h1>{% trans "Submit Article" %}</h1>
+
+<div id="submit_article_form">   
+<form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
+    {% if form.title.errors %}{{ form.title.errors }}{% endif %}
+    <p class="required"><label for="{{ form.title.id }}">{{ form.title.label }}:</label>{{ form.title }}</p>
+    
+    {% if form.subtitle.errors %}{{ form.subtitle.errors }}{% endif %}
+    <p><label for="{{ form.subtitle.id }}">{{ form.subtitle.label }}:</label>{{ form.subtitle }}</p>
+    
+    {% if form.body.errors %}{{ form.body.errors }}{% endif %}
+    <p class="required"><label for="{{ form.body.id }}">{{ form.body.label }}:</label>{{ form.body }}</p>
+    
+    {% if form.editor.errors %}{{ form.editor.errors }}{% endif %}
+    <p>{{ form.editor }}</p>
+    
+    <p><label for="for-images">Images:</label></p>
+    <p><input type="button" id="add-image" value="Add" /></p>
+    
+    {% if form.authors.errors %}{{ form.authors.errors }}{% endif %}
+    <p><label for="{{ form.authors.id }}">{{ form.authors.label }} {{ form.authors.help_text}}:</label> {{ form.authors }}</p>
+    
+    {% if form.tags.errors %}{{ form.tags.errors }}{% endif %}
+    <p><label for="{{ form.tags.id }}">{{ form.tags.label }} {{ form.tags.help_text}}:</label> {{ form.tags }}</p>
+        
+    <input type="submit" name="submit" class="btn" value="{% trans 'Submit' %}" id="submit">
+</form>
+</div>
+
+{% endblock %}
