@@ -54,7 +54,7 @@ from tagging.models import TaggedItem, Tag
 from credit.utils import credit_list
 
 from copyright.models import Copyright
-from credit.models import OrderedCredit
+from credit.models import Credit, OrderedCredit
 from gallery.models import Gallery, Image
 from categories.models import Category 
 from enhancedtext.fields import EnhancedTextField
@@ -518,6 +518,24 @@ class BasicPost(models.Model):
         return BasicPost.objects.published().\
                     filter(category__name__in=categories).\
                         select_subclasses().distinct()
+                        
+    @staticmethod
+    def get_posts_by_author(author):
+        '''Returns all posts which is authored or co-authored by the author
+        passed as an argument to this method.
+        '''
+        if type(author) == str or type(author) == unicode:
+            author = int(author)
+            
+        if type(author) != int:
+            raise TypeError("Author is a %s. Expected author to be an int, string"
+                            " or unicode object." % unicode(type(author)))
+              
+        author = Credit.objects.get(id=author)  
+        ordered_credits = OrderedCredit.objects.filter(credit=author)
+        return BasicPost.objects.published().\
+              filter(authors__in=ordered_credits).\
+                select_subclasses().distinct()
         
     @models.permalink
     def get_absolute_url(self):

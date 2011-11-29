@@ -36,7 +36,7 @@ class RecoverTweetsNode(template.Node):
                         else:
                             query_string = '%s #%s' % (query_string, hashtag.tag)
                 base_query_string = query_string                                        #final query string
-                tweets_from_user = tweepy.api.search(q=base_query_string)
+                tweets_from_user = tweepy.api.search(q=base_query_string, rpp=100)
                 tweets.extend(tweets_from_user)
             tweets = sorted(tweets, key=lambda tweet: tweet.created_at, reverse=True)
             return t.render(Context({'tweets': tweets}, autoescape=context.autoescape))

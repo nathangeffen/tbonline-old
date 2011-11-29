@@ -60,7 +60,20 @@ class PostsByCategoryView(ListPostView):
         context = super(PostsByCategoryView, self).get_context_data(**kwargs)
         context['category'] = get_object_or_404(Category, name=self.kwargs['category'])
         return context
-
+        
+class PostsByAuthorView(ListPostView):
+    
+    template_name = 'post/post_author_list.html'
+    
+    def get_queryset(self):
+        return sorted(BasicPost.get_posts_by_author(self.kwargs['author']),
+                      key=lambda p: p.date_published, reverse=True)
+                      
+    def get_context_data(self, **kwargs):
+        context = super(PostsByAuthorView, self).get_context_data(**kwargs)
+        context['author'] = get_object_or_404(Credit, id=self.kwargs['author'])
+        return context
+        
 class PublishedFrontPagePostsView(ListPostView):
 
     @method_decorator(cache_page(60 * settings.CACHE_TIME))

@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import permission_required
 from django.views.generic import TemplateView
 
 from post.views import ListPostView, DateDetailPostView, \
-    PostsByTagView, DraftPostView, RedirectPostView, PostsByCategoryView
+    PostsByTagView, DraftPostView, RedirectPostView, PostsByCategoryView, \
+    PostsByAuthorView
 from post.feeds import LatestEntriesFeed
 
 urlpatterns = patterns('post.views',
@@ -32,6 +33,8 @@ urlpatterns = patterns('post.views',
     url(r'^tag/(?P<tag>[\"\w\" \-]+)/$', PostsByTagView.as_view(), name='post_tag_list'),
 
     url(r'^category/(?P<category>[\"\w\" \-]+)/$', PostsByCategoryView.as_view(), name='post_category_list'),
+    
+    url(r'^author/(?P<author>\d+)/$', PostsByAuthorView.as_view(), name='post_author_list'),
     
     url(r'^submit/add/$', 'submit_article', name='submit_article'),
     url(r'^submit/success/$', TemplateView.as_view(template_name="submit_article/success.html"), name='submit_article_success'),
