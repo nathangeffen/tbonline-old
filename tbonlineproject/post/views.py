@@ -161,10 +161,9 @@ def submit_article(request):
                                     subtitle=subtitle, body=post_body)
                 post.slug = post._get_unique_slug()
                 post.save()
-            if len(files) == 1:
+            if len(files) == 1:                                                     #Will save post as post with simple image
                 image = None
-                for f in files:
-                    image = files.itervalues().next()
+                image = files.itervalues().next()
                 post = PostWithSimpleImage(title=title, slug=slugify(title),
                                             subtitle=subtitle, body=post_body,
                                             image=image)

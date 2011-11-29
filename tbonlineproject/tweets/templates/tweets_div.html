@@ -2,8 +2,16 @@
 
 <div class="featured-block vertical-scroller">
     <h2>{% trans "Twitter" %}</h2>
-    {% load jquery_template %}
-        <div class="tweets" data-bind='template: { name: "tweetsTemplate", data: currentTweets }'> </div>
-        {% jquery_template 'tweets.html' 'tweetsTemplate'  %}
-        {% include 'knockout_script.html' %}
+    <table width="100%">
+    {% for tweet in tweets %}
+        <tr>
+            <td><img src="{{ tweet.profile_image_url }}"/></td>
+            <td>
+                <a href="http://twitter.com/{{ tweet.from_user }}">{{ tweet.from_user }}</a>
+                {{ tweet.text }}
+                <div class="tweetInfo">{{ tweet.created_at }}</div>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
 </div>
