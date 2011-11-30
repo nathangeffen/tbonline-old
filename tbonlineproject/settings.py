@@ -7,7 +7,7 @@ try:
     from local_settings import APP_NAME, COMMENTS_APP    
 except ImportError:
     APP_NAME = "tb"
-    COMMENTS_APP = "tb_comments"
+    COMMENTS_APP = "CommentRecaptcha"
 
 
 DEBUG = True
@@ -173,7 +173,7 @@ INSTALLED_APPS = (
     'tagviews',
     'notifications',
     'tweets',
-    'tb_registration',
+    'RegistrationRecaptcha',
     COMMENTS_APP,
     APP_NAME,
 )
@@ -182,6 +182,8 @@ AUTHENTICATION_BACKENDS = (
     'accounts.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend'
 )
+
+TWEETS_ACTIVATED = True
 
 GRAPPELLI_ADMIN_TITLE = '<a href="/">TB Online</a> Administration'
 

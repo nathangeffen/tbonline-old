@@ -10,7 +10,7 @@ from enhancedtext.fields import EnhancedTextWidget
 from gallery.models import Image
 from post.models import BasicPost
 from tagging.models import Tag
-from tb_comments.fields import ReCaptchaField
+from CommentRecaptcha.fields import ReCaptchaField
 
 class EnhancedContactForm(ContactForm):
     error_css_class = 'error'
@@ -60,4 +60,4 @@ class ArticleSubmissionForm(forms.Form):
     authors = forms.ModelMultipleChoiceField(label=_('Authors'), help_text=_("(You may select multiple authors or leave it blank)"),
                                             queryset=Credit.objects.all(), required=False)
     tags = forms.ModelMultipleChoiceField(label=_('Tags'), help_text=_("(You may select multiple tags or leave it blank)"),
-                                            queryset=Tag.objects.all(), required=False)
+                                            queryset=Tag.objects.all().order_by('name'), required=False)

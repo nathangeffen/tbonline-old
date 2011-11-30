@@ -32,7 +32,7 @@ class Credit(models.Model):
     class Meta:
         verbose_name = _('credit')
         verbose_name_plural = _('credits')
-        ordering = ['last_name',]
+        ordering = ['last_name', 'first_names']
 
 
 class OrderedCredit(models.Model):

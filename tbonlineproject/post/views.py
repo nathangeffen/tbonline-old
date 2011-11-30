@@ -14,7 +14,7 @@ from django.template import RequestContext
 from django.template.defaultfilters import slugify
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page, never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DateDetailView, DetailView, RedirectView
 
@@ -76,10 +76,17 @@ class PostsByAuthorView(ListPostView):
         
 class PublishedFrontPagePostsView(ListPostView):
 
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)
     def dispatch(self, *args, **kwargs):
         return super(PublishedFrontPagePostsView, self).dispatch(*args, **kwargs)
+
+    @method_decorator(cache_page(60 * settings.CACHE_TIME))
+    @method_decorator(csrf_protect)        
+    def get(self, *args, **kwargs):
+        return super(PublishedFrontPagePostsView, self).get(*args, **kwargs)
+        
+    @method_decorator(never_cache)
+    def post(self, *args, **kwargs):
+        return super(PublishedFrontPagePostsView, self).post(*args, **kwargs)
         
     def get_queryset(self):
         return BasicPost.objects.published().\
@@ -121,10 +128,17 @@ class DraftPostView(DetailPostView):
 class RedirectPostView(RedirectView):
     query_string = True
     
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)
     def dispatch(self, *args, **kwargs):
         return super(RedirectPostView, self).dispatch(*args, **kwargs)
+    
+    @method_decorator(cache_page(60 * settings.CACHE_TIME))
+    @method_decorator(csrf_protect)        
+    def get(self, *args, **kwargs):
+        return super(RedirectPostView, self).get(*args, **kwargs)
+
+    @method_decorator(never_cache)
+    def post(self, *args, **kwargs):
+        return super(RedirectPostView, self).post(*args, **kwargs)
     
     def get_redirect_url(self, **kwargs):
         p = get_object_or_404(BasicPost, pk=int(kwargs['pk']), date_published__lte=datetime.datetime.now())
@@ -138,11 +152,18 @@ class DateDetailPostView(DetailPostViewMixin, DateDetailView):
     date_field = "date_published"
     month_format = "%m"
 
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)
     def dispatch(self, *args, **kwargs):
         return super(DateDetailPostView, self).dispatch(*args, **kwargs)
 
+    @method_decorator(cache_page(60 * settings.CACHE_TIME))
+    @method_decorator(csrf_protect)        
+    def get(self, *args, **kwargs):
+        return super(DateDetailPostView, self).get(*args, **kwargs)
+
+    @method_decorator(never_cache)
+    def post(self, *args, **kwargs):
+        return super(DateDetailPostView, self).post(*args, **kwargs)
+        
 def markdownpreview(request):
     '''Used by Markitup! editor to render the markdown for the preview button.
     '''
