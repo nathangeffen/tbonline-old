@@ -1,17 +1,19 @@
 {% load i18n %}
 
-<div class="featured-block vertical-scroller">
+<div class="box" style="height: 300px; overflow: auto;">
     <h2>{% trans "Twitter" %}</h2>
     <table width="100%">
     {% for tweet in tweets %}
         <tr>
             <td><img src="{{ tweet.profile_image_url }}"/></td>
             <td>
-                <a href="http://twitter.com/{{ tweet.from_user }}">{{ tweet.from_user }}</a>
-                {{ tweet.text }}
+                <strong><a href="http://twitter.com/{{ tweet.from_user }}">{{ tweet.from_user }}</a></strong>
+                <span style="display: block;">{{ tweet.text }}</span>
                 <div class="tweetInfo">{{ tweet.created_at }}</div>
             </td>
         </tr>
+    {% empty %}
+        {% trans "There are currently no tweets recovered" %}.
     {% endfor %}
 </table>
 </div>

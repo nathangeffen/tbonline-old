@@ -210,6 +210,7 @@ def submit_article(request):
                     credit.save()
                 for index, tag in enumerate(tags):
                     tag = TaggedItem(tag=Tag.objects.get(id=tag), object=post)
+                    print tag.id, tag.tag, tag.content_type, tag.object_id
                     tag.save()
             return HttpResponseRedirect(reverse('submit_article_success'))
     else:

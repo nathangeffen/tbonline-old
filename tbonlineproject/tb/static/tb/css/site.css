@@ -1,0 +1,67 @@
+* { margin: 0; padding: 0 }
+
+body { background: #fff; color: #555; font: 14px/1.5 "Trebuchet MS", sans-serif }
+
+a, a:link { color: #1ac; text-decoration: none; -webkit-transition: all .4s ease; -moz-transition: all .4s ease }
+a:visited { color: #1ac }
+a:hover { color: #812 }
+a:active {  }
+
+a img { border: 0 }
+
+fieldset { border: 0 }
+
+h1, h1 a { color: #1ac; font-size: 22px; font-weight: normal; text-decoration: none; line-height: 28px }
+h1 a { padding: 0 0 2px 0 }
+
+h1, h2, h3, h4, h5, p, ul, ol { margin: 0 0 15px 0 }
+
+.grid { margin: 0 auto; width: 940px; padding: 35px 0 50px 0 }
+	.grid:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
+
+.pdf { background: url(../gfx/pdf.png) no-repeat 100% 4px; padding-right: 22px }
+
+#head { background: url(../gfx/brand.png) no-repeat; height: 195px; width: 960px; margin: 0 auto }
+    #head div { width: 310px; float: right; padding: 10px 0 0 0 }
+		#head form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+		#head form input#search-button { background: #fff; border: 0; color: #777; width: 60px; cursor: pointer; padding: 0 }
+			#head form input#search-button:hover { color: #1ac }
+
+#menu { background: url(../gfx/menu-bg.png) top center repeat-y; height: 46px; line-height: 46px; font-size: 14px }
+	#menu ul { background: #841127; width: 930px; margin: 0 auto; padding: 0 0 0 10px; height: 46px; list-style: none; -webkit-border-top-left-radius: 3px; -webkit-border-bottom-left-radius: 3px; -moz-border-radius-topleft: 3px; -moz-border-radius-bottomleft: 3px; border-top-left-radius: 3px; border-bottom-left-radius: 3px }
+	#menu li { display: inline; }
+	#menu a { color: #fff; display: block; line-height: 28px; padding: 10px 15px; float: left; height: 26px }
+		#menu a:hover { background: transparent url(../gfx/indicator.png) bottom no-repeat }
+
+#content { width: 550px; float: left }
+	.post { border-bottom: 1px solid #ddd; padding: 15px 0; margin: 0 0 20px 0 }
+	.post:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
+		.post-meta { font-size: 11px; color: #888; text-transform: uppercase }
+			.post-meta a { color: #888; border-bottom: 1px solid #eee }
+			.post-meta a:hover { color: #812 }
+		.more a { background: #fbffe6; border: 1px solid #ddb; padding: 4px 20px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px }
+	.post img { float: left; display: inline; margin: 3px 15px 15px 0 }
+	#sponsors { width: 100%; border-top: 1px solid #ddd; padding: 20px 0; margin: 40px 0; float: left; clear: both }
+		#sponsors img { margin: 0 40px 0 0 }
+		
+#secondary { width: 300px; float: right }
+	#login { background: #fbffe6; border: 1px solid #ddb; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 15px 20px; margin: 15px 0 }
+		#secondary #login p { margin: 0; font-size: 14px }
+	.box { border-bottom: 1px solid #ddd; padding: 15px 0 }
+	.box a { color: #555 }
+	.box a:hover { color: #812; text-decoration: underline }
+	#secondary h2 { color: #812; font-size: 16px }
+	#secondary h2 a { color: #812; font-size: 16px }
+	#secondary li, #secondary p { font-size: 13px; list-style: none }		
+	.box .more a { border: 0; padding: 0; background: transparent }
+
+#about { background: #812; clear: both; font-size: 13px }
+	#about a { color: #4de }
+	#about a:hover { text-decoration: underline }
+	#about:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
+	#about .grid, #foot { width: 960px; margin: 0 auto; padding: 40px 0 30px 0; color: #fff }
+	#about p { float: left; width: 310px }
+	#about p#cc { width: 540px; display: inline; margin-left: 90px }
+		#cc img { margin: 10px 0 0 0 }
+	
+#foot { color: #999; font-size: 12px }

@@ -1,18 +1,9 @@
 {% load i18n %}
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">{% trans "Newer posts" %}</a>
-        {% endif %}
-
-        <span class="current">
-            {% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}&nbsp;|&nbsp;
-            {% trans "Total posts" %}: {{posts|length}}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">{% trans "Older posts" %}</a>
-        {% endif %}
-    </span>
-</div>
+<p>{% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }} &middot;  {% trans "Total posts" %}: {{posts|length}}</p>
+{% if page_obj.has_previous %}
+    <p class="more"><a href="?page={{ page_obj.previous_page_number }}">&larr; {% trans "Newer posts" %}</a></p>
+{% endif %}
+{% if page_obj.has_next %}
+    <p class="more"><a href="?page={{ page_obj.next_page_number }}">{% trans "Older posts" %} &rarr;</a></p>
+{% endif %}

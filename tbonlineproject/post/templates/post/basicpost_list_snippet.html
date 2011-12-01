@@ -1,21 +1,14 @@
 {% load url from future %}
 {% load i18n %}
 
-<h1 class="title">
-<a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">
-{{post.title}}</a>
+<h1>
+<a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">{{post.title}}</a>
 </h1>
 
-{% include 'post/byline_snippet.html' %}
-{% include 'post/dateline_snippet.html' %}
-
+{% include "post/post_meta_snippet.html" %}
 
 {% block media %} {% endblock %}
 
 <div class="teaser">{{post.get_teaser|safe}}</div>
 
-<div class="post-information">
-
-    {% include 'post/post_information_snippet.html' %}
-
-</div>
+<p><a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">Read More &rarr;</a></p>

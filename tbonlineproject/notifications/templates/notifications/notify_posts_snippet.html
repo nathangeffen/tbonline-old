@@ -2,10 +2,10 @@
 {% load i18n %}
 {% load notification_tags %}
 
-<div id="notification-message">
+<div id="login">
 {% if user.is_authenticated %}
     {% is_notified "post" as notified %}
-    {% if not notified %}  
+    {% if not notified %}
         <form name="notify" action="{% url 'notify_post'  %}?next={{request.path}}" method="post">{% csrf_token %}
         <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />        
         <input type="submit" value="{% trans "Email" %}"/>
@@ -20,8 +20,9 @@
         </form>    
     {% endif %}    
 {% else %} 
-    <a href="{% url 'django.contrib.auth.views.login' %}?next={{post.get_absolute_url}}">{% trans "Login" %}</a> {% trans "or" %} 
-    <a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">{% trans "register" %}</a> 
+	<p><a href="{% url 'django.contrib.auth.views.login' %}?next={{post.get_absolute_url}}">{% trans "Login" %}</a> {% trans "or" %}
+	<a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">{% trans "register" %}</a>
+	{% trans "to be notified of new&nbsp;posts." %}</p>
     {% trans "to be notified of new posts." %}  
 {% endif %}    
 </div>

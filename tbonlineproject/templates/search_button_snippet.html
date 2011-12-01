@@ -1,8 +1,10 @@
 {% load i18n %}
 
 <div id="search">
-    <form method="get" action="/search/">
-    <input type="text" name="q" id="id_q" />
-    <input type="submit" value={% trans "Search" %}>    
-    </form>           
+    <form method="get" action="">
+		<fieldset>
+			<input type="text" autofocus id="s" name="s" size="15" value="" />
+			<input class="input-image" type="submit" value={% trans "Search" %} id="search-button" />
+		</fieldset>
+	</form>      
 </div>

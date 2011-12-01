@@ -157,7 +157,7 @@ $(document).ready(function($){
     });
     $('.image').live('change', function(){
         var str = $(this).val();
-        if(!str.match("(.jpg|.gif|.png|.jpeg)$")){
+        if(!str.toLowerCase().match("(.jpg|.gif|.png|.jpeg)$")){
             var field = $(this);
             field.val('');
             field.parent().before('<p>Error: File field only accepts jpg, gif, png and jpeg.</p>');

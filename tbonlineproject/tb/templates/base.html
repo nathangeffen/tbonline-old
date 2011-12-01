@@ -23,8 +23,7 @@
     {% endblock %}
 
     {% block stylesheets %}
-        <link rel="stylesheet" type="text/css" 
-        href="{{STATIC_URL}}tb/css/style.css"/>
+        <link rel="stylesheet" media="screen, projection" href="{{ STATIC_URL }}tb/css/site.css" />
         
         {% comment %}
         Inline styles can be used if the style depends on context data.
@@ -45,33 +44,38 @@
 
 <div id="wrapper">
 
-    <div id="header">
-    
-        {% with logo_file="tb/images/tbonlinelogo.png" %}
-        {% include 'logo_snippet.html' %}        
-        {% endwith %}
-        {% block account %}{% include 'account_snippet.html' %}{% endblock %}        
-        {% include 'search_button_snippet.html' %}
-        {% include 'menu_snippet.html' %}
-                 
+    <div id="head">
+        <div>
+            {% block account %}{% include 'account_snippet.html' %}{% endblock %}        
+            {% include 'search_button_snippet.html' %}
+        </div>
     </div> <!-- header --> 
-
-    <div id="columns">
+    
+    {% include 'menu_snippet.html' %}
+    
+    <div class="grid">
 
         <div id="content">{% block content %}{% endblock %}</div>
-        <div id="sidebar-1">
+        <div id="secondary">
         {% block sidebar-1 %}
 
         {% endblock %}
         </div>
         
+        <div id="sponsors">
+			<a href="#"><img src="{{ STATIC_URL }}tb/gfx/tac_logo.png" alt="TAC logo" /></a>
+			<a href="#"><img src="{{ STATIC_URL }}tb/gfx/tag_logo.jpeg" alt="TAG logo" /></a>
+			<a href="#"><img src="{{ STATIC_URL }}tb/gfx/ibase_logo.png" alt="i-base logo" /></a>
+			<a href="#"><img src="{{ STATIC_URL }}tb/gfx/eatg_logo.jpg" alt="EATG logo" /></a>
+			<a href="#"><img src="{{ STATIC_URL }}tb/gfx/sadf_logo.jpeg" alt="SADF logo" /></a>
+			<a href="#"><img src="{{ STATIC_URL }}tb/gfx/cmt_logo.png" alt="CMT logo" /></a>
+		</div>
+        
     </div>
 
-    <div id="footer">
     {% block footer %}
         {% include 'footer_snippet.html' %}
     {% endblock %}
-    </div>      
 
 </div>  <!-- wrapper -->
 
