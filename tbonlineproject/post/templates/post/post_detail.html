@@ -13,10 +13,9 @@
 {% endblock %}
 
 {% block sidebar-1 %}
-
-    {% include 'post/category_snippet.html' %}
     
-    <div id="article-info">
+    <div id="post-meta">
+    {% include 'post/category_snippet.html' %}
     {% include 'post/byline_snippet.html' %}
     {% include 'post/dateline_snippet.html' %}
     {% include 'post/last_updated_snippet.html' %}

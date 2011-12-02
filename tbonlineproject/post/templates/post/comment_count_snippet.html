@@ -3,6 +3,5 @@
 {% load comments %}
 
 {% get_comment_count for post as comment_count %}
-{{comment_count}} 
-<a href="{{ post.get_absolute_url }}#comments">
-{% trans "comment" %}{{ comment_count|pluralize }}</a>
+<h2>{{ comment_count }} {% trans "comment" %}{{ comment_count|pluralize }}</h2>
+				

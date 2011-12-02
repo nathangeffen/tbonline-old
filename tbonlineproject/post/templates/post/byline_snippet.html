@@ -1,11 +1,5 @@
 {% load i18n %}
 
 {% if post.get_authors %}
-    <p class="byline">
-    {% trans "By" %}:
-        {% for ordered_credit in post.authors.all %}
-        <a href="{% url post_author_list ordered_credit.credit.id %}">{{ ordered_credit.credit }}</a>{% if forloop.counter < ordered_credit in post.authors.all|length|add:"-1" %} | {% endif %}
-        {% endfor %}         
-    <!--{#{{post.get_authors}}#}-->
-    </p>
+    <h3>{% trans "Article By" %} {{ post.get_authors }}</h3>
 {% endif %}

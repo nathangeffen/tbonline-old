@@ -1,32 +1,23 @@
 {% load i18n %}
 {% load comments %}
 
-<h1 class="title">{{post.title}}</h1>
-
-{% if post.subtitle %}
-    <h2 class="title">{{post.subtitle}}</h2>
-{% endif %}
-    
-{% block media %}{% endblock %}
-
-<div class="introduction">{{post.get_introduction|safe}}</div>
-
-<div class="post-content">
- 
-    {% if post.pullout_text %}
-    <div id="primary-pullout">
-        {{post.pullout_text}}
-    </div>
+<div class="post">
+    <h1><a href="#">{{ post.title }}</a></h1>
+    {% if post.subtitle %}
+    <h2>{{ post.subtitle }}</h2>
     {% endif %}
-
-    <div class="post-body">{{post.get_body|safe}}</div>
-
+    {% block media %}{% endblock %}
+    <div class="intro">{{ post.get_introduction|safe }}</div>
+    
+    {% if post.pullout_text %}
+    {{post.pullout_text}}
+    {% endif %}
+    
+    {{post.get_body|safe}}
 </div>
 
-<div class="post-information">
-
+<div id="comments">
     {% include 'post/comment_count_snippet.html' %} 
-
 </div>
 
 <div id="comments-section">

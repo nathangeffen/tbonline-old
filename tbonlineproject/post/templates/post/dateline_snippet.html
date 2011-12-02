@@ -1,8 +1,4 @@
 {% load i18n %}
 {% if post.date_published %}
-    <p class="dateline">
-    <span class="published">{% trans "Published: " %}</span>
-    {{post.date_published}}
-    </p>
-    
+    <p>{% trans "Published: " %}{{post.date_published}}</p>
 {% endif %}

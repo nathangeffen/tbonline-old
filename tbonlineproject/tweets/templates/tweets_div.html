@@ -1,19 +1,15 @@
 {% load i18n %}
 
-<div class="box" style="height: 300px; overflow: auto;">
-    <h2>{% trans "Twitter" %}</h2>
-    <table width="100%">
-    {% for tweet in tweets %}
-        <tr>
-            <td><img src="{{ tweet.profile_image_url }}"/></td>
-            <td>
-                <strong><a href="http://twitter.com/{{ tweet.from_user }}">{{ tweet.from_user }}</a></strong>
-                <span style="display: block;">{{ tweet.text }}</span>
-                <div class="tweetInfo">{{ tweet.created_at }}</div>
-            </td>
-        </tr>
-    {% empty %}
-        {% trans "There are currently no tweets recovered" %}.
-    {% endfor %}
-</table>
+<div class="box" id="twitter">
+	<h2>{% trans "Latest Tweets" %}</h2>
+	{% for tweet in tweets|slice:"5" %}
+	<div class="tweet">
+	    <p>{{ tweet.text }}<em><a href="">{{ tweet.created_at }}</a></em></p>
+	</div>
+	{%empty%}
+	<div class="tweet">
+	    <p>{% trans "There are currently no tweets recovered."%}</p>
+	</div>
+	{% endfor %}
+	<p><a href="http://twitter.com">Follow us on Twitter &rarr;</a></p>				
 </div>

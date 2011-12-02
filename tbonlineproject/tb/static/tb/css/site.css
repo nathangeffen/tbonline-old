@@ -14,15 +14,20 @@ fieldset { border: 0 }
 h1, h1 a { color: #1ac; font-size: 22px; font-weight: normal; text-decoration: none; line-height: 28px }
 h1 a { padding: 0 0 2px 0 }
 
-h1, h2, h3, h4, h5, p, ul, ol { margin: 0 0 15px 0 }
+h1, h2, h3, h4, h5, p, ul, ol, ol li { margin: 0 0 15px 0 }
+h2 { line-height: 22px; font-size: 16px }
+
+ol { margin-left: 20px }
 
 .grid { margin: 0 auto; width: 940px; padding: 35px 0 50px 0 }
 	.grid:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
 
 .pdf { background: url(../gfx/pdf.png) no-repeat 100% 4px; padding-right: 22px }
+.intro { font-style: italic }
+.image { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 300px }
 
 #head { background: url(../gfx/brand.png) no-repeat; height: 195px; width: 960px; margin: 0 auto }
-    #head div { width: 310px; float: right; padding: 10px 0 0 0 }
+	#head div { width: 310px; float: right; padding: 10px 0 0 0 }
 		#head form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
 		#head form input#search-button { background: #fff; border: 0; color: #777; width: 60px; cursor: pointer; padding: 0 }
 			#head form input#search-button:hover { color: #1ac }
@@ -36,24 +41,37 @@ h1, h2, h3, h4, h5, p, ul, ol { margin: 0 0 15px 0 }
 #content { width: 550px; float: left }
 	.post { border-bottom: 1px solid #ddd; padding: 15px 0; margin: 0 0 20px 0 }
 	.post:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
-		.post-meta { font-size: 11px; color: #888; text-transform: uppercase }
-			.post-meta a { color: #888; border-bottom: 1px solid #eee }
-			.post-meta a:hover { color: #812 }
+		#post-meta { padding: 15px 0 0 0 }
+			#post-meta h3 { font-size: 16px; background: url(../gfx/author.png) no-repeat }
+			#post-meta h3, #post-meta p { margin: 0; padding: 0 0 0 18px }
+		.post-meta, .comment-meta { font-size: 11px; color: #888; text-transform: uppercase }
+			.post-meta a, .comment-meta a { color: #888; border-bottom: 1px solid #eee }
+			.post-meta a:hover, .comment-meta a:hover { color: #812 }
 		.more a { background: #fbffe6; border: 1px solid #ddb; padding: 4px 20px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px }
 	.post img { float: left; display: inline; margin: 3px 15px 15px 0 }
-	#sponsors { width: 100%; border-top: 1px solid #ddd; padding: 20px 0; margin: 40px 0; float: left; clear: both }
+	#sponsors { width: 100%; border-top: 1px solid #ddd; padding: 20px 0; margin: 40px 0 0 0; float: left; clear: both }
 		#sponsors img { margin: 0 40px 0 0 }
+	#comments {}
+		#comments h2 { color: #812; margin: 0 }
+		.comment { background: #f3f3f3; padding: 25px 25px 15px 25px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; margin: 0 0 20px 0 }
+			.comment .author { color: #999; font-style: italic }
+				.comment .author strong { color: #444; font-weight: bold; font-style: normal; background: url(../gfx/comment.png) no-repeat; padding: 0 0 0 23px }
 		
 #secondary { width: 300px; float: right }
-	#login { background: #fbffe6; border: 1px solid #ddb; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 15px 20px; margin: 15px 0 }
+	#login, #tags { background: #fbffe6; border: 1px solid #ddb; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 15px 20px; margin: 15px 0 }
+	#tags { margin: 30px 0 }
+		#tags p { margin: 0 }
+	#share { margin: 0 0 0 18px }
 		#secondary #login p { margin: 0; font-size: 14px }
 	.box { border-bottom: 1px solid #ddd; padding: 15px 0 }
 	.box a { color: #555 }
 	.box a:hover { color: #812; text-decoration: underline }
 	#secondary h2 { color: #812; font-size: 16px }
-	#secondary h2 a { color: #812; font-size: 16px }
 	#secondary li, #secondary p { font-size: 13px; list-style: none }		
 	.box .more a { border: 0; padding: 0; background: transparent }
+	
+	#twitter h2 { background: url(../gfx/twitter.png) no-repeat right }
+		.tweet em a { color: #1ac; text-transform: uppercase; font-style: normal; font-size: 11px; display: block }
 
 #about { background: #812; clear: both; font-size: 13px }
 	#about a { color: #4de }

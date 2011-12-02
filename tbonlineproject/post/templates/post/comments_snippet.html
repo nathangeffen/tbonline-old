@@ -2,16 +2,18 @@
 {% load comments %}
 {% load i18n %}
 
-<div id="comment-heading">
-
 {% get_comment_count for post as comment_count %}
-
 {% if comment_count > 0 %}
-    <h2>{% trans "Comments in chronological order" %}</h2>
+<p class="comment-meta">Comments in chronological order</p>
 {% endif %}
-</div> 
 
-{% render_comment_list for post %}
+{% get_comment_list for post as comment_list %}
+{% for comment in comment_list %}
+<div class="comment">
+	<p class="author"><strong>{{ comment.user_name }}</strong> wrote on {{ comment.submit_date }}</p>
+	<p>{{ comment.comment }}</p>
+</div>
+{% endfor %}
 
 {% if comments_allowed == 'true' %}
     <p id="invite-comment">{% trans "Please leave a comment." %}</p>
@@ -32,9 +34,7 @@
 {% endif %}
 
 {% if comments_allowed == 'closed' %}
-    <p>
-    {% trans "This article is closed for comments" %}.
-    </p>
+    <p>{% trans "This article is closed for comments" %}.</p>
 {% endif %}
 
 
