@@ -17,19 +17,19 @@
     <p><a href="{% url django.contrib.auth.views.password_change %}">Change password</a></p>
 {% else %}
 
-
+<div id="login-form">
     <form method="post" action="{% url django.contrib.auth.views.login %}">
     {% csrf_token %}
     <ul>
     {{ form.username.errors }}
-    <p  class="required"><label for="id_username">{% trans "Username or email" %}:</label> <input id="id_username" type="text" name="username" maxlength="75" /></p>
+    <p  class="required"><label for="id_username">{% trans "Username or email" %}:</label><br /><input id="id_username" type="text" name="username" maxlength="75" /></p>
     {{ form.password.errors }}
-    <p class="required"><label for="id_password">{% trans "Password" %}:</label> <input type="password" name="password" id="id_password" /></p>
+    <p class="required"><label for="id_password">{% trans "Password" %}:</label><br /><input type="password" name="password" id="id_password" /></p>
 
     <p><input type="submit" value="{% trans 'Login' %}" class="btn"/></p>
     <input type="hidden" name="next"  value="{{ next }}" />
     </form>
-    
+</div>
     <p>
         <a href="{% url django.contrib.auth.views.password_reset %}?next={{next}">
         {% trans "Forgotten username or password" %}?

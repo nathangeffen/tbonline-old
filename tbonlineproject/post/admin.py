@@ -14,7 +14,8 @@ from django.contrib.sites.models import Site
 from sorl.thumbnail.admin import AdminImageMixin
 
 from post.models import BasicPost, PostWithImage, PostWithSlideshow, \
-                        PostWithSimpleImage, PostWithEmbeddedObject
+                        PostWithSimpleImage, PostWithEmbeddedObject, \
+                        SubmittedArticle
 
 from archive.admin import TaggedItemInline
 
@@ -152,6 +153,7 @@ admin.site.register(PostWithSimpleImage, PostWithSimpleImageAdmin)
 admin.site.register(PostWithImage, PostWithImageAdmin)
 admin.site.register(PostWithSlideshow, PostWithSlideshowAdmin)
 admin.site.register(PostWithEmbeddedObject, PostWithEmbeddedObjectAdmin)
+admin.site.register(SubmittedArticle)
 
 admin.site.unregister(FlatPage)
 admin.site.register(FlatPage, CustomFlatPageAdmin)

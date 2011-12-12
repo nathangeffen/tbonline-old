@@ -61,3 +61,6 @@ class ArticleSubmissionForm(forms.Form):
                                             queryset=Credit.objects.all(), required=False)
     tags = forms.ModelMultipleChoiceField(label=_('Tags'), help_text=_("(You may select multiple tags or leave it blank)"),
                                             queryset=Tag.objects.all().order_by('name'), required=False)
+                                            
+class ImageForm(forms.Form):
+    image = forms.ImageField(label=_('Image'), widget=forms.FileInput(attrs={'class':'image-field'}), required=False)

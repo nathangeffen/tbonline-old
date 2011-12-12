@@ -86,7 +86,7 @@ class SubmittedArticle(models.Model):
         verbose_name_plural = _('submitted articles')
         
     def __unicode__(self):
-        return  _('%s [%s]' % (self.object, self.tag))
+        return  unicode(_('%s [%s]' % (self.object_id, self.submitted_by.username)))
         
 class BasicPost(models.Model):
     '''This is the standard post. Complex post types requiring more 

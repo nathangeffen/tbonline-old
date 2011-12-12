@@ -4,24 +4,25 @@
 {% block content %}
 
 <h1>{% trans "Register as a user of" %} {{site.name}}</h1>
-<form method="post" action=".">{% csrf_token %}
-
+<div id="registration-form">
+    <form method="post" action=".">{% csrf_token %}
+        {{ form.non_field_errors }}
         {{form.username.errors}}
-        <p class="required"><label for="id_username">{% trans "username" %}:</label> <input id="id_username" type="text" class="required" name="username" maxlength="30" /></p>
+        <p class="required"><label for="id_username">{% trans "Username" %}:</label><br /><input id="id_username" type="text" class="required" name="username" maxlength="30" /></p>
         {{form.email.errors}}
-        <p class="required"><label for="id_email">email address:</label> <input id="id_email" type="text" class="required" name="email" maxlength="75" /></p>
+        <p class="required"><label for="id_email">Email address:</label><br /><input id="id_email" type="text" class="required" name="email" maxlength="75" /></p>
         {{form.password1.errors}}
-        <p class="required"><label for="id_password1">{% trans "password" %}:</label> <input id="id_password1" type="password" class="required" name="password1" /></p>
+        <p class="required"><label for="id_password1">{% trans "Password" %}:</label><br /><input id="id_password1" type="password" class="required" name="password1" /></p>
         {{form.password2.errors}}        
-        <p  class="required"><label for="id_password2">{% trans "password (again)" %}:</label> <input id="id_password2" type="password" class="required" name="password2" /></p>
+        <p  class="required"><label for="id_password2">{% trans "Password (again)" %}:</label><br /><input id="id_password2" type="password" class="required" name="password2" /></p>
         
         {{form.recaptcha.errors}}        
-        <p  class="required"><label for="recaptcha">{% trans "Recaptcha" %}:</label>{{form.recaptcha}}</p>
+        <p  class="required"><label for="recaptcha">{% trans "Recaptcha" %}:</label><br />{{form.recaptcha}}</p>
 
+        <p><input type="submit" class="btn" value="{% trans 'Register' %}" /></p>
 
-    <p><input type="submit" class="btn" value="{% trans 'Register' %}" /></p>
-
-</form>
+    </form>
+</div>
 {% endblock %}
 
 

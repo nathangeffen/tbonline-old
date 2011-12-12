@@ -9,9 +9,20 @@
 
 <p>{% trans "Send us an email using this contact form" %}.</p>
 
-<div id="contact_form">   
+<div id="contact-form">   
 <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
-    {{form.as_p}}
+    {{ form.name.errors }}
+    <p {% if form.name.field.required %}class="required"{% endif %}><label for="{{ form.name.auto_id }}">{{ form.name.label }}:</label><br /> {{ form.name }}</p>
+    {{ form.email.errors }}
+    <p {% if form.email.field.required %}class="required"{% endif %}><label for="{{ form.email.auto_id }}">{{ form.email.label }}:</label><br /> {{ form.email }}</p>
+    {{ form.subject.errors }}
+    <p {% if form.subject.field.required %}class="required"{% endif %}><label for="{{ form.subject.auto_id }}">{{ form.subject.label }}</label><br /> {{ form.subject }}</p>
+    {{ form.body.errors }}
+    <p {% if form.body.field.required %}class="required"{% endif %}><label for="{{ form.body.auto_id}}">{{ form.body.label }}</label><br />{{ form.body }}</p>
+    {% if user.is_anonymous %}
+    {{ form.recaptcha.errors }}
+    <p {% if form.recaptcha.field.required %}class="required"{% endif %}><label for="{{ form.recaptcha.auto_id}}">{{ form.recaptcha.label }}</label><br />{{ form.recaptcha }}</p>
+    {% endif %}
     <input type="submit" name="submit" class="btn" value="{% trans 'Send' %}" id="submit">
 </form>
 </div>

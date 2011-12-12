@@ -39,12 +39,14 @@
         {% trans "Learn" %} 
         </a>            
     </li>
-    
+   
+    {% if perms.can_submit %}
     <li>
         <a href="/submit/" {% if request.path == "/submit/" %}class="current"{% endif %}>
         {% trans "Your Posts" %} 
         </a>            
     </li>
+    {% endif %}
     
     <li>
         {% url 'contact' as contact_url  %}

@@ -4,6 +4,7 @@
 	<h2>{% trans "Latest Tweets" %}</h2>
 	{% for tweet in tweets|slice:"5" %}
 	<div class="tweet">
+	    <img src="{{ tweet.profile_image_url }}" alt="" />
 	    <p>{{ tweet.text }}<em><a href="">{{ tweet.created_at }}</a></em></p>
 	</div>
 	{%empty%}

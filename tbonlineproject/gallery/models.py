@@ -52,6 +52,26 @@ class Image(models.Model):
     image_thumbnail.allow_tags = True
     image_thumbnail.short_description = "Thumbnail"
 
+    def _get_unique_slug(self):
+        '''Makes slug unique, if it is not already, and returns it as a string.
+        '''
+        slug_unique = False
+        counter = 1
+        slug = self.slug
+        
+        while not slug_unique: 
+            if self.id:
+                images = Image.objects.filter(slug=slug).\
+                    exclude(pk=self.id)
+            else:                
+                images = Image.objects.filter(slug=slug)
+            if len(images) == 0:
+                slug_unique = True
+            else:
+                slug = self.slug + "-" + unicode(counter)
+                counter += 1
+        return slug
+        
     def get_credits(self):
         return credit_list(self.credits)
 

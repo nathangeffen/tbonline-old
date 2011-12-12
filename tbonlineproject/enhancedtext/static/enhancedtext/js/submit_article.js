@@ -119,6 +119,21 @@ function selectEditor(editorType) {
 
 };
 
+function updateFileList() {
+    $('#filenames').children().remove();
+    var htmlString = '<ul>';
+    fileCount = 0;
+    $('.image-form').each(function(index){
+        var fieldID = '#id_form-'+index+'-image';
+        if($(fieldID).val()){
+            var filename = $(fieldID).val().split('\\').pop();
+            htmlString += '<li><p>'+filename+' <input type="button" id="'+index+'" class="del-file" value="Delete" /></p></li>';
+            fileCount++;
+        }
+    });
+    htmlString += '</ul>';
+    $('#filenames').html(htmlString);
+}
 var editors = {};
 var editorType = '\\W';
 var fileCount = 0;
@@ -129,44 +144,52 @@ $(document).ready(function($){
 	    editorType = $('#id_editor').val();
 		selectEditor(editorType);
 	});
+   
     $('#add-image').live('click', function(){
-        fileInputField = '<p><input type="file" class="image" id="image-file-'+fileCount+'" name="name-file-'+fileCount+'"/><input type="button" class="del-file" value="delete" /></p>';
-        var hasValue = true;
-        $('.image').each(function(){
-            if(!$(this).val())
-                hasValue = false;
-        });
-        if(hasValue || fileCount == 0){
-            fileCount++;
-            $('#id_form-TOTAL_FORMS').val(fileCount);
-            $('#add-image').parent().before(fileInputField);
+        if(fileCount < maxForms){
+            $('.image-form').each(function(index){
+                var fieldID = '#id_form-'+index+'-image';
+                if(!$(fieldID).val()){
+                    $(this).children('input[type=file]').trigger('click');
+                    return false;
+                }
+            });
         }else{
-            $('#add-image').parent().before('<p>Error: Can\'t add a file field. Use the empty file field instead.</p>');
-            $('#add-image').parent().prev().hide().fadeIn('slow');
+            $('#add-image').before('<p>Error: Maximum number of images reached.</p>');
+            $('#add-image').prev().hide().fadeIn('slow');
             setTimeout(function(){
-                $('#add-image').parent().prev().fadeOut('slow', function(){
-                    $('#add-image').parent().prev().remove();
+                $('#add-image').prev().fadeOut('slow', function(){
+                    $('#add-image').prev().remove();
                 });
             }, 3000);
-        }
+        }    
     });
+    
+    $('.image-form').each(function(){
+        $(this).addClass('hidden');
+    })
+    
     $('.del-file').live('click', function(){
-        $(this).parent().remove();
-        fileCount--;
-        $('#id_form-TOTAL_FORMS').val(fileCount);
+        var id = $(this).attr('id');
+        id = '#id_form-'+id+'-image';
+        $(id).val('');
+        updateFileList();
     });
-    $('.image').live('change', function(){
+    
+    $('.image-field').live('change', function(){
         var str = $(this).val();
         if(!str.toLowerCase().match("(.jpg|.gif|.png|.jpeg)$")){
             var field = $(this);
             field.val('');
-            field.parent().before('<p>Error: File field only accepts jpg, gif, png and jpeg.</p>');
-            field.parent().prev().hide().fadeIn('slow');
+            $('#add-image').before('<p>Error: This only accepts jpg, gif, png and jpeg.</p>');
+            $('#add-image').prev().hide().fadeIn('slow');
             setTimeout(function(){
-                field.parent().prev().fadeOut('slow', function(){
-                    field.parent().prev().remove();
+                $('#add-image').prev().fadeOut('slow', function(){
+                    $('#add-image').prev().remove();
                 });
             }, 3000);
+        }else{
+            updateFileList();
         }
     })
 });

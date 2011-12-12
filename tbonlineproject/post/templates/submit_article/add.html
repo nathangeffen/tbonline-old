@@ -12,33 +12,42 @@
 <script type="text/javascript" src="{{ STATIC_URL }}grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}markitup/sets/markdown/set.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}enhancedtext/js/submit_article.js"></script>
+<script type="text/javascript">var maxForms = {{ max_forms }}</script>
 {% endblock %}
 {% block content %}
 
-<h1>{% trans "Submit Article" %}</h1>
+<h1>{% trans "Send us an article" %}</h1>
+<p>{% trans "We really welcome new and interesting articles with original opinions and content. Please use this form to send us an article." %}</p>
+<p>{% trans "We cannot guarantee we will publish it, but we will do our best to give you feedback. Well-written and well-researched short (800-1200 words) articles are more likely to be published." %}</p>
 
-<div id="submit_article_form">   
+<div id="submit-article-form">   
 <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
     {% if form.title.errors %}{{ form.title.errors }}{% endif %}
-    <p class="required"><label for="{{ form.title.id }}">{{ form.title.label }}:</label>{{ form.title }}</p>
+    <p class="required"><label for="{{ form.title.id }}">{{ form.title.label }}:</label><br />{{ form.title }}</p>
     
     {% if form.subtitle.errors %}{{ form.subtitle.errors }}{% endif %}
-    <p><label for="{{ form.subtitle.id }}">{{ form.subtitle.label }}:</label>{{ form.subtitle }}</p>
+    <p><label for="{{ form.subtitle.id }}">{{ form.subtitle.label }}:</label><br />{{ form.subtitle }}</p>
     
     {% if form.body.errors %}{{ form.body.errors }}{% endif %}
-    <p class="required"><label for="{{ form.body.id }}">{{ form.body.label }}:</label>{{ form.body }}</p>
+    <p class="required"><label for="{{ form.body.id }}">{{ form.body.label }}:</label><br />{{ form.body }}</p>
     
     {% if form.editor.errors %}{{ form.editor.errors }}{% endif %}
     <p>{{ form.editor }}</p>
     
-    <p><label for="for-images">Images:</label></p>
+    <p><label for="for-images">Images(Max number of uploads is {{ max_forms }}):</label></p>
+    <p id="filenames">
+    </p>
     <p><input type="button" id="add-image" value="Add" /></p>
+    {{ image_forms.management_form }}
+    {% for image_form in image_forms %}
+    <p class="image-form">{{ image_form.image.label_tag }} {{ image_form.image }}</p>
+    {% endfor %}
     
     {% if form.authors.errors %}{{ form.authors.errors }}{% endif %}
-    <p><label for="{{ form.authors.id }}">{{ form.authors.label }} {{ form.authors.help_text}}:</label> {{ form.authors }}</p>
+    <p><label for="{{ form.authors.id }}">{{ form.authors.label }} {{ form.authors.help_text}}:</label><br />{{ form.authors }}</p>
     
     {% if form.tags.errors %}{{ form.tags.errors }}{% endif %}
-    <p><label for="{{ form.tags.id }}">{{ form.tags.label }} {{ form.tags.help_text}}:</label> {{ form.tags }}</p>
+    <p><label for="{{ form.tags.id }}">{{ form.tags.label }} {{ form.tags.help_text}}:</label><br />{{ form.tags }}</p>
         
     <input type="submit" name="submit" class="btn" value="{% trans 'Submit' %}" id="submit">
 </form>

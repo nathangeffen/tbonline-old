@@ -18,6 +18,7 @@ h1, h2, h3, h4, h5, p, ul, ol, ol li { margin: 0 0 15px 0 }
 h2 { line-height: 22px; font-size: 16px }
 
 ol { margin-left: 20px }
+ul.errorlist { color: red; list-style-type: none; margin: 10px 0 0 0; padding: 10px 0 0 0; }
 
 .grid { margin: 0 auto; width: 940px; padding: 35px 0 50px 0 }
 	.grid:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
@@ -26,8 +27,10 @@ ol { margin-left: 20px }
 .intro { font-style: italic }
 .image { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 300px }
 
+.required label:after { padding-left: 2px; color: red; content:"*"; }
+
 #head { background: url(../gfx/brand.png) no-repeat; height: 195px; width: 960px; margin: 0 auto }
-	#head div { width: 310px; float: right; padding: 10px 0 0 0 }
+	#head div { width: 310px; float: right; padding: 15px 0 0 0 }
 		#head form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
 		#head form input#search-button { background: #fff; border: 0; color: #777; width: 60px; cursor: pointer; padding: 0 }
 			#head form input#search-button:hover { color: #1ac }
@@ -71,7 +74,8 @@ ol { margin-left: 20px }
 	.box .more a { border: 0; padding: 0; background: transparent }
 	
 	#twitter h2 { background: url(../gfx/twitter.png) no-repeat right }
-		.tweet em a { color: #1ac; text-transform: uppercase; font-style: normal; font-size: 11px; display: block }
+		.tweet img { float: left; padding: 5px 10px 10px 0 display: block; }
+		.tweet em a { color: #1ac; text-transform: uppercase; font-style: normal; font-size: 11px; display: block; }
 
 #about { background: #812; clear: both; font-size: 13px }
 	#about a { color: #4de }
@@ -82,4 +86,17 @@ ol { margin-left: 20px }
 	#about p#cc { width: 540px; display: inline; margin-left: 90px }
 		#cc img { margin: 10px 0 0 0 }
 	
+#submit-article-form .hidden{float: right; height: 0; width: 0; opacity: 0; filter:alpha(opacity: 0); }
+#submit-article-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#submit-article-form form input.del-file{ background: #f7f7f7; border: 1px solid #aaa; width: 100px; height: 20px; line-height: 20px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#submit-article-form form input[type=text] { background: #f7f7f7; border: 1px solid #aaa; width: 595px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#submit-article-form form textarea { background: #f7f7f7; border: 1px solid #aaa; width: 500px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
+#contact-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#contact-form form textarea { background: #f7f7f7; border: 1px solid #aaa; width: 500px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
+#registration-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
+#login-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
 #foot { color: #999; font-size: 12px }
