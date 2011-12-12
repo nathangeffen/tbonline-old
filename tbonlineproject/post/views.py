@@ -218,9 +218,9 @@ def submit_article(request):
                     counter = 1
                     while not filename_unique:
                         if os.path.exists(filename):
-                            filename = filename.split('.')
-                            extension = filename[1]
-                            filename = filename[0]
+                            filename_split = filename.split('.')
+                            filename = filename_split[0]
+                            extension = filename_split[1]
                             filename = filename + unicode(counter) + '.' + extension
                         else:
                             filename_unique = True
@@ -228,7 +228,11 @@ def submit_article(request):
                     for chunk in files[image].chunks():
                         image_file.write(chunk)
                     image_file.close()
-                    image = Image(title=title, slug=slugify(title), file=image_file.name)
+                    filename_split = filename.split(os.sep) 
+                    base_filename = filename_split[-1]
+                    filename = os.path.join('uploads', 'images')
+                    filename = os.path.join(filename, base_filename)
+                    image = Image(title=title, slug=slugify(title), file=filename)
                     image.slug = image._get_unique_slug()
                     image.save()
                     ordered_image = OrderedImage(gallery=gallery, image=image, position=index)
