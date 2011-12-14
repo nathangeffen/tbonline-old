@@ -95,6 +95,9 @@ ul.errorlist { color: red; list-style-type: none; margin: 10px 0 0 0; padding: 1
 #contact-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
 #contact-form form textarea { background: #f7f7f7; border: 1px solid #aaa; width: 500px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
 
+#comment-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#comment-form form textarea { background: #f7f7f7; border: 1px solid #aaa; width: 500px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
 #registration-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
 
 #login-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
