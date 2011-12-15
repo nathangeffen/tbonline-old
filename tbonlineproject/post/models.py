@@ -533,9 +533,12 @@ class BasicPost(models.Model):
               
         author = Credit.objects.get(id=author)  
         ordered_credits = OrderedCredit.objects.filter(credit=author)
-        return BasicPost.objects.published().\
-              filter(authors__in=ordered_credits).\
-                select_subclasses().distinct()
+        posts = []
+        for ordered_credit in ordered_credits:
+            if ordered_credit.content_object != None:  
+                posts.append(ordered_credit.content_object)
+        posts = set(posts)
+        return posts
         
     @models.permalink
     def get_absolute_url(self):

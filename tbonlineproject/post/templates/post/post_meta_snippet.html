@@ -3,10 +3,18 @@
 {% load comments %}
 
 {% if post.date_published %}
-    <p class="post-meta">{% trans "Published: " %} {{ post.date_published }}&middot;
+    <p class="post-meta">
+    {% if post.authors.all %}
+    {% trans "Article By "%}
+    {% for author in post.authors.all %}
+        <a href="{% url "post_author_list" author.credit.id %}">{{ author }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    <br />
+    {% endif %}
+    {% trans "Published: " %} {{ post.date_published }}&middot;
     {% trans "Tags" %}:
         {% for taggeditem in post.tags.all %}<a href="#">treatment</a>, <a href="#">diagnostics</a> &middot;
-            <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{taggeditem.tag}}</a>{% if not forloop.last %}, {% else %}&middot;{% endif %}
+            <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{ taggeditem.tag }}</a>{% if not forloop.last %}, {% else %}&middot;{% endif %}
         {% empty %}
             {% trans "None" %}&middot;
         {% endfor %}
