@@ -6,7 +6,7 @@
 <ul>
     <li>
         {% url 'home' as index_url %}
-        <a href="{{index_url}}" {% if request.path == index_url %}class="current"{% endif %}>
+        <a href="{{ index_url }}" {% if request.path == index_url %}class="current"{% endif %}>
         {% trans "Home" %} 
         </a>            
     </li>
@@ -42,7 +42,8 @@
    
     {% if perms.can_submit %}
     <li>
-        <a href="/submit/" {% if request.path == "/submit/" %}class="current"{% endif %}>
+        {% url 'submit_article' as submit_url  %}
+        <a href="{{ submit_url }}" {% if request.path == "/submit/" %}class="current"{% endif %}>
         {% trans "Your Posts" %} 
         </a>            
     </li>
@@ -50,7 +51,7 @@
     
     <li>
         {% url 'contact' as contact_url  %}
-        <a href="{{contact_url}}"{% if request.path == contact_url %}class="current"{% endif %}>
+        <a href="{{ contact_url }}"{% if request.path == contact_url %}class="current"{% endif %}>
         {% trans "Contact" %} 
         </a>            
     </li>

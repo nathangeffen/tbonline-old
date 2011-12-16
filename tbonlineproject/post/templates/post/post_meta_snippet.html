@@ -5,7 +5,7 @@
 {% if post.date_published %}
     <p class="post-meta">
     {% if post.authors.all %}
-    {% trans "Article By "%}
+    {% trans "By "%}
     {% for author in post.authors.all %}
         <a href="{% url "post_author_list" author.credit.id %}">{{ author }}</a>{% if not forloop.last %}, {% endif %}
     {% endfor %}
