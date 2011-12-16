@@ -75,7 +75,7 @@ ul.errorlist { color: red; list-style-type: none; margin: 10px 0 0 0; padding: 1
 	
 	#twitter h2 { background: url(../gfx/twitter.png) no-repeat right }
 		.tweet img { float: left; padding: 5px 10px 10px 0 display: block; }
-		.tweet em a { color: #1ac; text-transform: uppercase; font-style: normal; font-size: 11px; display: block; }
+		.tweet em span { color: #1ac; text-transform: uppercase; font-style: normal; font-size: 11px; display: block; }
 
 #about { background: #812; clear: both; font-size: 13px }
 	#about a { color: #4de }
