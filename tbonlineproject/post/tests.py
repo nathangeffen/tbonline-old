@@ -286,8 +286,8 @@ ago. [#Stone]_
 
 \R'''
         
-        self.assertEquals(unicode(p.teaser), '\nTB in our ancestors\n-------------------\n\nRecent research shows that the disease probably originated at least several \nhundred thousand years ago in hominids but perhaps even more than 2 million years \nago. [#Stone]_  \n\n.. [#Stone] Stone *et al.* 2009. Tuberculosis and leprosy in perspective. \n\n')
-        self.assertEquals(unicode(p.get_teaser()), '\nTB in our ancestors\n-------------------\n\nRecent research shows that the disease probably originated at least several \nhundred thousand years ago in hominids but perhaps even more than 2 million years \nago. [#Stone]_  \n\n.. [#Stone] Stone *et al.* 2009. Tuberculosis and leprosy in perspective. \n\n')
+        self.assertEquals(unicode(p.teaser), '<p>Recent research shows that the disease probably originated at least several\nhundred thousand years ago in hominids but perhaps even more than 2 million years\nago. <a class="footnote-reference" href="#stone" id="id1">[1]</a></p>\n<table class="docutils footnote" frame="void" id="stone" rules="none">\n<colgroup><col class="label" /><col /></colgroup>\n<tbody valign="top">\n<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Stone <em>et al.</em> 2009. Tuberculosis and leprosy in perspective.</td></tr>\n</tbody>\n</table>\n')
+        self.assertEquals(unicode(p.get_teaser()), '<p>Recent research shows that the disease probably originated at least several\nhundred thousand years ago in hominids but perhaps even more than 2 million years\nago. <a class="footnote-reference" href="#stone" id="id1">[1]</a></p>\n<table class="docutils footnote" frame="void" id="stone" rules="none">\n<colgroup><col class="label" /><col /></colgroup>\n<tbody valign="top">\n<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Stone <em>et al.</em> 2009. Tuberculosis and leprosy in perspective.</td></tr>\n</tbody>\n</table>\n')
 
     def testTeaserIntroBody(self):
         """This tests that the teaser, introduction and body extraction methods work properly.
