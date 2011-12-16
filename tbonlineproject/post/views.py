@@ -85,6 +85,7 @@ class PublishedFrontPagePostsView(ListPostView):
     @method_decorator(cache_page(60 * settings.CACHE_TIME))
     @method_decorator(csrf_protect)        
     def get(self, *args, **kwargs):
+        print cache
         return super(PublishedFrontPagePostsView, self).get(*args, **kwargs)
         
     @method_decorator(never_cache)

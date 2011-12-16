@@ -3,8 +3,6 @@
 {% load notification_tags %}
 
 <div id="notification-message">
-{% load cache %}
-{% cache 0 comments %}
 {% if user.is_authenticated %}
     {% is_comment_notified "comment" post as notified %}
     {% if not notified %} 
@@ -32,5 +30,4 @@
     <a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">{% trans "register" %}</a> 
     {% trans "to be notified of new comments on this article." %}  
 {% endif %}    
-{% endcache %}
 </div>
