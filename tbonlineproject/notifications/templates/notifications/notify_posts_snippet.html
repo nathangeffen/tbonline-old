@@ -3,6 +3,8 @@
 {% load notification_tags %}
 
 <div id="login">
+{% load cache %}
+{% cache 0 login %}
 {% if user.is_authenticated %}
     {% is_notified "post" as notified %}
     {% if not notified %}
@@ -23,5 +25,6 @@
 	<p><a href="{% url 'django.contrib.auth.views.login' %}?next={{post.get_absolute_url}}">{% trans "Login" %}</a> {% trans "or" %}
 	<a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">{% trans "register" %}</a>
 	{% trans "to be notified of new posts." %}</p>
-{% endif %}    
+{% endif %}  
+{% endcache %} 
 </div>
