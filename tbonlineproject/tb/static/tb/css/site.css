@@ -79,7 +79,6 @@ ul.errorlist { color: red; list-style-type: none; margin: 10px 0 0 0; padding: 1
 
 #about { background: #812; clear: both; font-size: 13px }
 	#about a { color: #4de }
-
 	#about a:hover { text-decoration: underline }
 	#about:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
 	#about .grid, #foot { width: 960px; margin: 0 auto; padding: 40px 0 30px 0; color: #fff }
