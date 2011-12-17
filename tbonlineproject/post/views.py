@@ -79,10 +79,8 @@ class PostsByAuthorView(ListPostView):
         
 class PublishedFrontPagePostsView(ListPostView):
 
-    def dispatch(self, request, *args, **kwargs):
-        if request._messages.used: 
-            add_never_cache_headers(response)
-        return super(PublishedFrontPagePostsView, self).dispatch(request, *args, **kwargs)
+    def dispatch(self, *args, **kwargs):
+        return super(PublishedFrontPagePostsView, self).dispatch(*args, **kwargs)
 
     @method_decorator(cache_page(60 * settings.CACHE_TIME))
     @method_decorator(csrf_protect)        

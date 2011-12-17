@@ -534,9 +534,13 @@ class BasicPost(models.Model):
         author = Credit.objects.get(id=author)  
         ordered_credits = OrderedCredit.objects.filter(credit=author)
         posts = []
+        post_classes = [BasicPost]
+        for subclass in BasicPost.get_subclasses():
+            post_classes.append(subclass.model)
         for ordered_credit in ordered_credits:
-            if ordered_credit.content_object != None:  
-                posts.append(ordered_credit.content_object)
+            if type(ordered_credit.content_object) in post_classes:
+                if ordered_credit.content_object.is_published():
+                    posts.append(ordered_credit.content_object)
         posts = set(posts)
         return posts
         
