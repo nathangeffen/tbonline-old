@@ -77,6 +77,7 @@ class PostManager(InheritanceManager):
 
 class SubmittedArticle(models.Model):
     submitted_by = models.ForeignKey(User)
+    submitted_on = models.DateTimeField(auto_now_add=True)
     content_type = models.ForeignKey(ContentType, verbose_name=_('content type'))
     object_id    = models.PositiveIntegerField(_('object id'))
     object       = generic.GenericForeignKey('content_type', 'object_id')

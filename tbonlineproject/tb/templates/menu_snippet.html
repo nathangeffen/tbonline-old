@@ -42,7 +42,7 @@
    
     {% if perms.can_submit %}
     <li>
-        {% url 'submit_article' as submit_url  %}
+        {% url 'submit_article_list' as submit_url  %}
         <a href="{{ submit_url }}" {% if request.path == "/submit/" %}class="current"{% endif %}>
         {% trans "Your Posts" %} 
         </a>            

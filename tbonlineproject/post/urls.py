@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 from post.views import ListPostView, DateDetailPostView, \
     PostsByTagView, DraftPostView, RedirectPostView, PostsByCategoryView, \
-    PostsByAuthorView
+    PostsByAuthorView, SubmittedArticleListView
 from post.feeds import LatestEntriesFeed
 
 urlpatterns = patterns('post.views',
@@ -36,6 +36,7 @@ urlpatterns = patterns('post.views',
     
     url(r'^author/(?P<author>\d+)/$', PostsByAuthorView.as_view(), name='post_author_list'),
     
+    url(r'^submit/list/$', SubmittedArticleListView.as_view(), name='submit_article_list'),
     url(r'^submit/add/$', 'submit_article', name='submit_article'),
     url(r'^submit/success/$', TemplateView.as_view(template_name="submit_article/success.html"), name='submit_article_success'),
     

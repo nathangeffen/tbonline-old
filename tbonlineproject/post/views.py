@@ -76,6 +76,20 @@ class PostsByAuthorView(ListPostView):
         context = super(PostsByAuthorView, self).get_context_data(**kwargs)
         context['author'] = get_object_or_404(Credit, id=self.kwargs['author'])
         return context
+
+class SubmittedArticleListView(ListView):
+    context_object_name= 'articles'
+    paginate_by=app_settings.POSTS_PER_PAGE
+    template_name = 'submit_article/list.html'
+    
+    def get_queryset(self):
+        user = self.request.user
+        submitted_articles = SubmittedArticle.objects.filter(submitted_by=user).order_by('-submitted_on')
+        unpublished_articles = []
+        for article in submitted_articles:
+            if not article.object.is_published():
+                unpublished_articles.append(article)
+        return unpublished_articles
         
 class PublishedFrontPagePostsView(ListPostView):
 
