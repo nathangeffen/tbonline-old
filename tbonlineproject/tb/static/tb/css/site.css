@@ -27,7 +27,9 @@ blockquote { font-family: georgia, serif; font-style: italic }
 
 .pdf { background: url(../gfx/pdf.png) no-repeat 100% 4px; padding-right: 22px }
 .intro { font-style: italic }
-.caption { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 300px }
+.figure { display: block; }
+.picture { display: block; }
+.caption { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; width: 300px }
 
 .required label:after { padding-left: 2px; color: red; content:"*"; }
 
@@ -53,7 +55,7 @@ blockquote { font-family: georgia, serif; font-style: italic }
 			.post-meta a, .comment-meta a { color: #888; border-bottom: 1px solid #eee }
 			.post-meta a:hover, .comment-meta a:hover { color: #812 }
 		.more a { background: #fbffe6; border: 1px solid #ddb; padding: 4px 20px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px }
-	.post img { float: left; display: inline; margin: 3px 15px 15px 0 }
+	.post img { float: left; display: block; margin: 3px 15px 15px 0 }
 	#sponsors { width: 100%; border-top: 1px solid #ddd; padding: 20px 0; margin: 40px 0 0 0; float: left; clear: both }
 		#sponsors img { margin: 0 40px 0 0 }
 	#comments {}

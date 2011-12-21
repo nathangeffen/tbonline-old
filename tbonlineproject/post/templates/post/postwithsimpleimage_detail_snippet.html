@@ -6,15 +6,16 @@
 
     {% if post.image %}
 
-      <div class="picture left">    
+      <div class="picture">    
           <a href="{{post.url}}" title="{{post.caption}}">
           {% thumbnail post.image "300x200" crop="center" as im %}
           <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"
           alt={{post.caption}}/>
           {% endthumbnail %} 
           </a>
-          <br/>
+          <p class="caption">
           {{post.caption|safe}}
+          </p>
       </div>
     
     {% endif %}
