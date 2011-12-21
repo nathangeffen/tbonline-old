@@ -7,7 +7,7 @@
     {% if post.authors.all %}
     {% trans "By "%}
     {% for author in post.authors.all %}
-        <a href="{% url "post_author_list" author.credit.id %}">{{ author }}</a>{% if not forloop.last %}, {% endif %}
+        <a href="{% url 'post_author_list' author.credit.id %}">{{ author }}</a>{% if not forloop.last %}, {% endif %}
     {% endfor %}
     <br />
     {% endif %}
