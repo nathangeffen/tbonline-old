@@ -1,0 +1,13 @@
+{% load url from future %}
+{% load i18n %}
+{% for article in articles %}
+
+<div class="post">
+    <h1>{{article.object.title}}</h1>
+    {% include "submit_article/submitted_article_meta_snippet.html" %}
+    {% block media %} {% endblock %}
+    <div class="teaser">{{article.object.get_teaser|safe}}</div>
+</div><!-- /post -->
+{%empty%}
+<h1>{% trans "There are no un published articles from you" %}.</h1>
+{% endfor %}

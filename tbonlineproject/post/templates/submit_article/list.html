@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{{ block.super }} - Your Posts{% endblock %}
+
+{% block content %}
+
+<h1><a href="{% url submit_article %}">Submit Article</a></h1>
+
+<h2 id="user-name">Articles submitted by {{ user.username }}</h2>
+
+{% include "submit_article/submitted_article_list_snippet.html" %}
+
+{% include "post/paginator_snippet.html" %}
+
+{% endblock %}

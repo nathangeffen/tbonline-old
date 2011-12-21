@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load url from future %}
+{% load comments %}
+
+<p class="post-meta">
+{% if article.object.authors.all %}
+{% trans "By "%}
+{% for author in article.object.authors.all %}
+    <a href="{% url 'post_author_list' author.credit.id %}">{{ author }}</a>{% if not forloop.last %}, {% endif %}
+{% endfor %}
+<br />
+{% endif %}
+{% trans "Tags" %}:
+{% for taggeditem in post.tags.all %}<a href="#">treatment</a>, <a href="#">diagnostics</a> &middot;
+    <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{ taggeditem.tag }}</a>{% if not forloop.last %}, {% else %}&middot;{% endif %}
+{% empty %}
+    {% trans "None" %}&middot;
+{% endfor %}
