@@ -29,7 +29,16 @@ blockquote { font-family: georgia, serif; font-style: italic }
 .intro { font-style: italic }
 .figure { display: block; }
 .picture { display: block; }
+
+.image { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 50% }
+.image img { width: 100% !important }
+     
+.image2 { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 100% }
+.image2 img { width: 100% !important }
+
 .caption { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; width: 300px }
+
+.info{ color: red; font-weight: bold }
 
 .required label:after { padding-left: 2px; color: red; content:"*"; }
 
