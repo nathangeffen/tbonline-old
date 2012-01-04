@@ -6,9 +6,9 @@
     {% if post.subtitle %}
     <h2>{{ post.subtitle }}</h2>
     {% endif %}
+    <div class="intro">{{ post.get_introduction|safe }}</div>    
     {% block media %}{% endblock %}
-    <div class="intro">{{ post.get_introduction|safe }}</div>
-    
+
     {% if post.pullout_text %}
     {{post.pullout_text}}
     {% endif %}
