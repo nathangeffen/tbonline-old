@@ -42,6 +42,9 @@ blockquote { font-family: georgia, serif; font-style: italic }
 
 .required label:after { padding-left: 2px; color: red; content:"*"; }
 
+.line-block {margin: 5px; }
+.line {font-style: italic; }
+
 #head { background: url(../gfx/brand.png) no-repeat; height: 195px; width: 960px; margin: 0 auto }
 	#head div { width: 310px; float: right; padding: 15px 0 0 0 }
 		#head form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
