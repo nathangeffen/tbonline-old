@@ -42,6 +42,9 @@ blockquote { font-family: georgia, serif; font-style: italic }
 
 .required label:after { padding-left: 2px; color: red; content:"*"; }
 
+.line-block {margin: 5px; }
+.line {font-style: italic; }
+
 #head { background: url(../gfx/brand.png) no-repeat; height: 195px; width: 960px; margin: 0 auto }
 	#head div { width: 310px; float: right; padding: 15px 0 0 0 }
 		#head form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
@@ -64,7 +67,7 @@ blockquote { font-family: georgia, serif; font-style: italic }
 			.post-meta a, .comment-meta a { color: #888; border-bottom: 1px solid #eee }
 			.post-meta a:hover, .comment-meta a:hover { color: #812 }
 		.more a { background: #fbffe6; border: 1px solid #ddb; padding: 4px 20px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px }
-	.post img { float: left; display: block; margin: 3px 15px 15px 0 }
+	.post img { display: block; margin: 3px 15px 15px 0 }
 	#sponsors { width: 100%; border-top: 1px solid #ddd; padding: 20px 0; margin: 40px 0 0 0; float: left; clear: both }
 		#sponsors img { margin: 0 40px 0 0 }
 	#comments {}
