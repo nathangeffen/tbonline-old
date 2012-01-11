@@ -96,12 +96,12 @@ class PublishedFrontPagePostsView(ListPostView):
     def dispatch(self, *args, **kwargs):
         return super(PublishedFrontPagePostsView, self).dispatch(*args, **kwargs)
 
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)        
+    #@method_decorator(cache_page(60 * settings.CACHE_TIME))
+    #@method_decorator(csrf_protect)        
     def get(self, *args, **kwargs):
         return super(PublishedFrontPagePostsView, self).get(*args, **kwargs)
         
-    @method_decorator(never_cache)
+    #@method_decorator(never_cache)
     def post(self, *args, **kwargs):
         return super(PublishedFrontPagePostsView, self).post(*args, **kwargs)
         
@@ -109,6 +109,14 @@ class PublishedFrontPagePostsView(ListPostView):
         return BasicPost.objects.published().\
                 filter(homepage=True).\
                 select_subclasses()
+                
+    def get_context_data(self, **kwargs):
+        context = super(PublishedFrontPagePostsView, self).get_context_data(**kwargs)
+        if cache.get('context',''):
+            cache.set('context', context, 60 * settings.CACHE_TIME)
+        else:
+            context = cache.get('context')
+        return context
 
 class DetailPostViewMixin(object):
     context_object_name = "post"
