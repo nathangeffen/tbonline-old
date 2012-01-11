@@ -114,10 +114,8 @@ class PublishedFrontPagePostsView(ListPostView):
         context = super(PublishedFrontPagePostsView, self).get_context_data(**kwargs)
         cache_value = cache.get('context', '')
         if cache_value == '':
-            print 1
             cache.add('context', context, 60 * settings.CACHE_TIME)
         else:
-            print 2
             context = cache.get('context')
         return context
 

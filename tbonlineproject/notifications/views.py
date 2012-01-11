@@ -28,14 +28,6 @@ def notify(request, NotificationType, name,
                                 "the notification system"))
  
     try:
-        if request._messages.used:
-            del response["ETag"]
-            del response["Last-Modified"]
-            response["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
-            # FixMe: One should check whether the following settings are
-            # sensible.
-            response["Pragma"] = "no-cache"
-            response["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate, private"
         return HttpResponseRedirect(request.GET['next'])
     except:
         raise Http404    
@@ -91,15 +83,7 @@ def remove_notification(request, NotificationType, name,
         except:
             messages.info(request, already_msg)
 
-    try:
-        if request._messages.used:
-            del response["ETag"]
-            del response["Last-Modified"]
-            response["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
-            # FixMe: One should check whether the following settings are
-            # sensible.
-            response["Pragma"] = "no-cache"
-            response["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate, private"        
+    try:     
         return HttpResponseRedirect(request.GET['next'])
     except:
         raise Http404    
