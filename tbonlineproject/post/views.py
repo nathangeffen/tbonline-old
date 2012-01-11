@@ -112,9 +112,12 @@ class PublishedFrontPagePostsView(ListPostView):
                 
     def get_context_data(self, **kwargs):
         context = super(PublishedFrontPagePostsView, self).get_context_data(**kwargs)
-        if cache.get('context',''):
-            cache.set('context', context, 60 * settings.CACHE_TIME)
+        cache_value = cache.get('context', '')
+        if cache_value == '':
+            print 1
+            cache.add('context', context, 60 * settings.CACHE_TIME)
         else:
+            print 2
             context = cache.get('context')
         return context
 
@@ -156,12 +159,12 @@ class RedirectPostView(RedirectView):
     def dispatch(self, *args, **kwargs):
         return super(RedirectPostView, self).dispatch(*args, **kwargs)
     
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)        
+    #@method_decorator(cache_page(60 * settings.CACHE_TIME))
+    #@method_decorator(csrf_protect)        
     def get(self, *args, **kwargs):
         return super(RedirectPostView, self).get(*args, **kwargs)
 
-    @method_decorator(never_cache)
+    #@method_decorator(never_cache)
     def post(self, *args, **kwargs):
         return super(RedirectPostView, self).post(*args, **kwargs)
     
@@ -180,12 +183,12 @@ class DateDetailPostView(DetailPostViewMixin, DateDetailView):
     def dispatch(self, *args, **kwargs):
         return super(DateDetailPostView, self).dispatch(*args, **kwargs)
 
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)        
+    #@method_decorator(cache_page(60 * settings.CACHE_TIME))
+    #@method_decorator(csrf_protect)        
     def get(self, *args, **kwargs):
         return super(DateDetailPostView, self).get(*args, **kwargs)
 
-    @method_decorator(never_cache)
+    #@method_decorator(never_cache)
     def post(self, *args, **kwargs):
         return super(DateDetailPostView, self).post(*args, **kwargs)
         
