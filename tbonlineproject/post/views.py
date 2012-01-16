@@ -95,13 +95,10 @@ class PublishedFrontPagePostsView(ListPostView):
 
     def dispatch(self, *args, **kwargs):
         return super(PublishedFrontPagePostsView, self).dispatch(*args, **kwargs)
-
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)        
+       
     def get(self, *args, **kwargs):
         return super(PublishedFrontPagePostsView, self).get(*args, **kwargs)
         
-    @method_decorator(never_cache)
     def post(self, *args, **kwargs):
         return super(PublishedFrontPagePostsView, self).post(*args, **kwargs)
         
@@ -109,6 +106,15 @@ class PublishedFrontPagePostsView(ListPostView):
         return BasicPost.objects.published().\
                 filter(homepage=True).\
                 select_subclasses()
+                
+    def get_context_data(self, **kwargs):
+        context = super(PublishedFrontPagePostsView, self).get_context_data(**kwargs)
+        cache_value = cache.get('context', '')
+        if cache_value == '':
+            cache.add('context', context, 60 * settings.CACHE_TIME)
+        else:
+            context = cache.get('context')
+        return context
 
 class DetailPostViewMixin(object):
     context_object_name = "post"
@@ -147,13 +153,10 @@ class RedirectPostView(RedirectView):
     
     def dispatch(self, *args, **kwargs):
         return super(RedirectPostView, self).dispatch(*args, **kwargs)
-    
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)        
+  
     def get(self, *args, **kwargs):
         return super(RedirectPostView, self).get(*args, **kwargs)
 
-    @method_decorator(never_cache)
     def post(self, *args, **kwargs):
         return super(RedirectPostView, self).post(*args, **kwargs)
     
@@ -164,6 +167,15 @@ class RedirectPostView(RedirectView):
                                str(p.date_published.day), 
                                p.slug 
                                ])
+                               
+    def get_context_data(self, **kwargs):
+        context = super(RedirectPostView, self).get_context_data(**kwargs)
+        cache_value = cache.get('context', '')
+        if cache_value == '':
+            cache.add('context', context, 60 * settings.CACHE_TIME)
+        else:
+            context = cache.get('context')
+        return context
 
 class DateDetailPostView(DetailPostViewMixin, DateDetailView):
     date_field = "date_published"
@@ -171,15 +183,21 @@ class DateDetailPostView(DetailPostViewMixin, DateDetailView):
 
     def dispatch(self, *args, **kwargs):
         return super(DateDetailPostView, self).dispatch(*args, **kwargs)
-
-    @method_decorator(cache_page(60 * settings.CACHE_TIME))
-    @method_decorator(csrf_protect)        
+       
     def get(self, *args, **kwargs):
         return super(DateDetailPostView, self).get(*args, **kwargs)
 
-    @method_decorator(never_cache)
     def post(self, *args, **kwargs):
         return super(DateDetailPostView, self).post(*args, **kwargs)
+        
+    def get_context_data(self, **kwargs):
+        context = super(DateDetailPostView, self).get_context_data(**kwargs)
+        cache_value = cache.get('context', '')
+        if cache_value == '':
+            cache.add('context', context, 60 * settings.CACHE_TIME)
+        else:
+            context = cache.get('context')
+        return context
         
 def markdownpreview(request):
     '''Used by Markitup! editor to render the markdown for the preview button.

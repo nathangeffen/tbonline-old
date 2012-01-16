@@ -83,7 +83,7 @@ def remove_notification(request, NotificationType, name,
         except:
             messages.info(request, already_msg)
 
-    try:        
+    try:     
         return HttpResponseRedirect(request.GET['next'])
     except:
         raise Http404    

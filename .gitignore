@@ -2,5 +2,7 @@
 local_settings.*
 *.pyc
 media/
+<<<<<<< HEAD
 static/
 .*
+*.orig
