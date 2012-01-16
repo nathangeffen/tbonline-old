@@ -2,3 +2,5 @@
 local_settings.*
 *.pyc
 media/
+static/
+.*
