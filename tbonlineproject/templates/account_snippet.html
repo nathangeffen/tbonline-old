@@ -4,12 +4,14 @@
 {% block login %}
 <div id="account">
       {% if user.is_authenticated %}
-          {% trans "Welcome" %}      
+          {% trans "Welcome" %}  
+			<a href="{% url 'update_profile' %}">		  
           {% if user.get_full_name %} 
               {{user.get_full_name}}
           {% else %}
               {{user.username}}
           {% endif %}
+		  </a>
           |          
           <a href="{% url 'django.contrib.auth.views.logout' %}">
           {% trans "Logout" %}
