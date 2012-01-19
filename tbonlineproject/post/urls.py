@@ -42,6 +42,8 @@ urlpatterns = patterns('post.views',
     
     url(r'^clearcache/$', 'clear_cache', name='clear_cache'),
 
+    url(r'^print/(?P<slug>[a-zA-Z0-9-_]+)/$', 'print_post', name='print_post'),
+
     # Preview for Markdown for enhanced text fields
     (r'^markdownpreview/$', 'markdownpreview'),
 )

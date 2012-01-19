@@ -298,3 +298,21 @@ def submit_article(request):
 def clear_cache(request):
     cache.clear()
     return HttpResponse(unicode(_('The cache has been cleared.')))
+
+
+def print_post(request, slug):
+    post = get_object_or_404(BasicPost, slug=slug)
+
+    has_image = False
+    if post.get_class_name() == 'PostWithImage':
+        post = post.postwithimage
+        has_image = True
+    elif post.get_class_name() == 'PostWithSimpleImage':
+        post = post.postwithsimpleimage
+        has_image = True
+        
+    context = {'post':post,
+               'has_image':has_image,}
+    return render_to_response('post/post_print.html',
+                              context,
+                              RequestContext(request))
