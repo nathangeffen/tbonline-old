@@ -1,6 +1,23 @@
 {% load url from future %}
 {% load comments %}
 {% load i18n %}
+{% load posttags %}
+
+{% block scripts %}
+<style>
+	.featured{
+		background:#FFE87C;
+	}
+	.last{
+		border-bottom: 2px solid;
+		margin-top:0;
+		margin-bottom:10px;
+	}
+	.lastFeatured{
+		margin-bottom:0;
+	}
+</style>
+{% endblock %}
 
 {% get_comment_count for post as comment_count %}
 {% if comment_count > 0 %}
@@ -8,11 +25,21 @@
 {% endif %}
 
 {% get_comment_list for post as comment_list %}
-{% for comment in comment_list %}
-<div class="comment">
-	<p class="author"><strong>{{ comment.user_name }}</strong> wrote on {{ comment.submit_date }}</p>
-	<p>{{ comment.comment }}</p>
-</div>
+
+{% for comment in post|get_choice_comments %}
+	<div class="comment featured {% if forloop.last %}lastFeatured{% endif %}">
+		<p class="author"><strong>{{ comment.user_name }}</strong> wrote on {{ comment.submit_date }}</p>
+		<p>{{ comment.comment }}</p>
+	</div>
+	{% if forloop.last %}
+	<div class="last">&nbsp;</div>
+	{% endif %}
+{% endfor %}
+{% for comment in post|get_normal_comments %}
+	<div class="comment">
+		<p class="author"><strong>{{ comment.user_name }}</strong> wrote on {{ comment.submit_date }}</p>
+		<p>{{ comment.comment }}</p>
+	</div>
 {% endfor %}
 
 {% if comments_allowed == 'true' %}

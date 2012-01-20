@@ -1,8 +1,10 @@
 import re
 
 from django import template
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.comments.models import Comment
 
-from post.models import BasicPost
+from post.models import BasicPost, EditorChoice
 from feeder.models import Feed 
 
 register = template.Library()
@@ -105,4 +107,30 @@ def do_get_active_feeders(parser, token):
 
 register.tag('get_active_feeders', do_get_active_feeders)
 
+    
+def get_comments(post, editors_choice):
+    model_name = post.get_class_name().lower()
+    content_type = ContentType.objects.get(app_label="post",
+                                           model=model_name)
+
+    post_comments = Comment.objects.filter(content_type=content_type,
+                                           object_pk=post.id)
+
+    choice = EditorChoice.objects.filter(editors_choice=True)\
+                     .values('comment')
+    choice_ids = [x['comment'] for x in choice]
+    if editors_choice:
+        return post_comments.filter(id__in=choice_ids)
+    else:
+        return post_comments.exclude(id__in=choice_ids)
+
+
+def get_choice_comments(post):
+    return get_comments(post, editors_choice=True)
+
+def get_normal_comments(post):
+    return get_comments(post, editors_choice=False)
+
+register.filter('get_choice_comments', get_choice_comments)
+register.filter('get_normal_comments', get_normal_comments)
     

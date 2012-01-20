@@ -42,6 +42,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.comments.models import Comment
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.contrib.sites.models import Site
 
@@ -695,6 +696,12 @@ class PostModerator(CommentModerator):
             return False
         else:
             return super(PostModerator,self).allow(comment, content_object, request)  
+
+
+class EditorChoice(models.Model):
+    comment = models.OneToOneField(Comment)
+    editors_choice = models.BooleanField(default=False,
+                                         verbose_name="Editor's Choice")
     
 
 for p in [BasicPost, PostWithImage, PostWithSlideshow, PostWithEmbeddedObject]:

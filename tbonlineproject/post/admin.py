@@ -15,7 +15,7 @@ from sorl.thumbnail.admin import AdminImageMixin
 
 from post.models import BasicPost, PostWithImage, PostWithSlideshow, \
                         PostWithSimpleImage, PostWithEmbeddedObject, \
-                        SubmittedArticle
+                        SubmittedArticle, EditorChoice
 
 from archive.admin import TaggedItemInline
 
@@ -145,8 +145,17 @@ class FlatPageForm(forms.ModelForm):
 class CustomFlatPageAdmin(FlatPageAdmin):
     form = FlatPageForm 
 
+
+class EditorsChoiceInline(admin.StackedInline):
+    model = EditorChoice
+    max_num = 1
+    fields = ['editors_choice']
+    can_delete = False
+
+
 class CustomCommentAdmin(CommentsAdmin):
     list_display = ('id', 'name', 'content_type', 'object_pk', 'ip_address', 'submit_date', 'is_public', 'is_removed')
+    inlines = [EditorsChoiceInline]
 
 admin.site.register(BasicPost, BasicPostAdmin)
 admin.site.register(PostWithSimpleImage, PostWithSimpleImageAdmin)
