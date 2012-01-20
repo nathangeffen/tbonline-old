@@ -11,9 +11,13 @@ class ItemsByTagView(ListView):
     template_name='tagviews/tag_list_items.html'
     
     def get_queryset(self):
-        tag = Tag.objects.get(name=self.kwargs["tag"])
-        taggeditems = TaggedItem.objects.filter(tag=tag)
-        return taggeditems
+        try:
+            tag = Tag.objects.get(name=self.kwargs["tag"])
+            taggeditems = TaggedItem.objects.filter(tag=tag)
+            return taggeditems
+        except Tag.DoesNotExist:
+            return []
+        
     
     def get_context_data(self, **kwargs):
         context = super(ItemsByTagView, self).get_context_data(**kwargs)
