@@ -108,12 +108,12 @@ class PublishedFrontPagePostsView(ListPostView):
                 select_subclasses()
                 
     def get_context_data(self, **kwargs):
-        context = super(PublishedFrontPagePostsView, self).get_context_data(**kwargs)
-        cache_value = cache.get('context', '')
+        cache_value = cache.get('context_frontpage', '')
         if cache_value == '':
-            cache.add('context', context, 60 * settings.CACHE_TIME)
+            context = super(PublishedFrontPagePostsView, self).get_context_data(**kwargs)
+            cache.add('context_frontpage', context, 60 * settings.CACHE_TIME)
         else:
-            context = cache.get('context')
+            context = cache.get('context_frontpage')
         return context
 
 class DetailPostViewMixin(object):
