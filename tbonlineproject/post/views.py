@@ -169,9 +169,9 @@ class RedirectPostView(RedirectView):
                                ])
                                
     def get_context_data(self, **kwargs):
-        context = super(RedirectPostView, self).get_context_data(**kwargs)
         cache_value = cache.get('context', '')
         if cache_value == '':
+            context = super(RedirectPostView, self).get_context_data(**kwargs)
             cache.add('context', context, 60 * settings.CACHE_TIME)
         else:
             context = cache.get('context')
@@ -191,12 +191,15 @@ class DateDetailPostView(DetailPostViewMixin, DateDetailView):
         return super(DateDetailPostView, self).post(*args, **kwargs)
         
     def get_context_data(self, **kwargs):
-        context = super(DateDetailPostView, self).get_context_data(**kwargs)
-        cache_value = cache.get('context', '')
+        post =  kwargs['object']
+        cache_key = 'context_%s_%s' % (post.get_class_name(), post.id)
+        cache_value = cache.get(cache_key, '')
+
         if cache_value == '':
-            cache.add('context', context, 60 * settings.CACHE_TIME)
+            context = super(DateDetailPostView, self).get_context_data(**kwargs)
+            cache.add(cache_key, context, 60 * settings.CACHE_TIME)
         else:
-            context = cache.get('context')
+            context = cache.get(cache_key)
         return context
         
 def markdownpreview(request):
