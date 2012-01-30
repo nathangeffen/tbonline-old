@@ -43,7 +43,7 @@ urlpatterns = patterns('',
         
     (r'^grappelli/', include('grappelli.urls')),
     (r'^admin/filebrowser/', include('filebrowser.urls')),
-    (r'^profile/', include('profiles.urls')),
+    (r'^profile/', include('userprofiles.urls')),
     
 
 

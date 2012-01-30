@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+	<link rel="stylesheet" href="{{ STATIC_URL }}userprofiles/css/calendarview.css">
+	<script src="{{ STATIC_URL }}userprofiles/js/prototype.js"></script>
+    <script src="{{ STATIC_URL }}userprofiles/js/calendarview.js"></script>
+	<script>
+      function setupCalendars() {
+        // Popup Calendar
+        Calendar.setup(
+          {
+            dateField: 'id_{{ profile_form.date_of_birth.html_name }}',
+            triggerElement: 'id_{{ profile_form.date_of_birth.html_name }}',
+			x_offset:120,
+			y_offset:40
+          }
+        )
+      }
+
+      Event.observe(window, 'load', function() { setupCalendars() })
+    </script>
+{% endblock %}
+
+{% block content %}
+	<form enctype="multipart/form-data" method="POST">
+		{% csrf_token %}
+		<p>
+		
+		{{ user_form.username.label }}:<br/>
+		{{ user_form.username }}<br/>
+		{{ user_form.first_name.label }}:<br/>
+		{{ user_form.first_name }}<br/>
+		{{ user_form.last_name.label }}:<br/>
+		{{ user_form.last_name }}<br/>
+		{{ user_form.email.label }}:<br/>
+		{{ user_form.email }}<br/>
+		
+		{{ profile_form.avatar.label }}:<br/>
+		{{ profile_form.avatar }}<br/>
+		{{ profile_form.date_of_birth.label }}:<br/>
+		{{ profile_form.date_of_birth }}<br/>
+		{{ profile_form.website.label }}:<br/>
+		{{ profile_form.website }}<br/>
+		</p>
+		<input type="submit" value="update">
+	</form>
+{% endblock %}

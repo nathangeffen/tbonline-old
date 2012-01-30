@@ -174,7 +174,7 @@ INSTALLED_APPS = (
     'notifications',
     'tweets',
     'RegistrationRecaptcha',
-    'profiles',
+    'userprofiles',
     COMMENTS_APP,
     APP_NAME,
 )
