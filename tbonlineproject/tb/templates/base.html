@@ -51,8 +51,33 @@
 
     <div id="head">
         <div>
-            {% block account %}{% include 'account_snippet.html' %}{% endblock %}        
+
+          <a href="/"><img src="{{ STATIC_URL }}tb/gfx/brand.png" alt="TB Online logo" /></a>
+          <p><strong>Information for activists, patients, health workers &amp; researchers working to end&nbsp;Tuberculosis</strong></p>
+                        
             {% include 'search_button_snippet.html' %}
+            <small><em>Website of the Global Tuberculosis Community Advisory Board
+      {% if user.is_authenticated %}
+          <p></p>
+          {% trans "Welcome" %}
+  
+      <a href="{% url 'update_profile' %}">
+      
+          {% if user.get_full_name %} 
+              {{user.get_full_name}}
+          {% else %}
+              {{user.username}}
+          {% endif %}
+
+      </a>
+
+          |          
+          <a href="{% url 'django.contrib.auth.views.logout' %}">
+          {% trans "Logout" %}
+          </a>
+
+      {% endif %}      
+          </small></em>                                    
         </div>
     </div> <!-- header --> 
     
