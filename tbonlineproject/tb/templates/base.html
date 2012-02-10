@@ -5,6 +5,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width; initial-scale=1"/>    
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="CMT, TAC, TAG, i-Base"/>
     <meta name="description" content="Tuberculosis advocacy and education"/>
@@ -24,8 +25,11 @@
     {% endblock %}
 
     {% block stylesheets %}
-        <link rel="stylesheet" media="screen, projection" href="{{ STATIC_URL }}tb/css/site.css" />
-        
+        <link rel="stylesheet" media="screen, projection" 
+        href="{{ STATIC_URL }}tb/css/site.css" />
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+                
         {% comment %}
         Inline styles can be used if the style depends on context data.
         {% endcomment %}
