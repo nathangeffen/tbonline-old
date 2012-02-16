@@ -18,17 +18,32 @@ h1, h2, h3, h4, h5, p, ul, ol, ol li { margin: 0 0 15px 0 }
 h2 { line-height: 22px; font-size: 16px }
 
 ol { margin-left: 20px }
+ul.errorlist { color: red; list-style-type: none; margin: 10px 0 0 0; padding: 10px 0 0 0; }
+
+blockquote { font-family: georgia, serif; font-style: italic }
 
 .grid { margin: 0 auto; width: 940px; padding: 35px 0 50px 0 }
 	.grid:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
 
 .pdf { background: url(../gfx/pdf.png) no-repeat 100% 4px; padding-right: 22px }
 .intro { font-style: italic }
+.figure { display: block; }
+.picture { display: block; }
+
 .image { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 50% }
 	.image img { width: 100% !important }
 	
 .image2 { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 100% }
 	.image2 img { width: 100% !important }
+
+.caption { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; width: 300px }
+
+.info{ color: red; font-weight: bold }
+
+.required label:after { padding-left: 2px; color: red; content:"*"; }
+
+.line-block {margin: 5px; }
+.line {font-style: italic; }
 
 #head { background: transparent; height: 195px; width: 940px; margin: 0 auto; position: relative }
 	#head img { float: left; margin: 40px 0 0 0 }
@@ -77,6 +92,10 @@ ol { margin-left: 20px }
 	#secondary h2 { color: #812; font-size: 16px }
 	#secondary li, #secondary p { font-size: 13px; list-style: none }		
 	.box .more a { border: 0; padding: 0; background: transparent }
+	
+	#twitter h2 { background: url(../gfx/twitter.png) no-repeat right }
+		.tweet img { float: left; padding: 5px 10px 10px 0 display: block; }
+		.tweet em span { color: #1ac; text-transform: uppercase; font-style: normal; font-size: 11px; display: block; }
 
 #about { background: #812; clear: both; font-size: 13px }
 	#about a { color: #4de }
@@ -87,30 +106,21 @@ ol { margin-left: 20px }
 	#about p#cc { width: 540px; display: inline; margin-left: 90px }
 		#cc img { margin: 10px 0 0 0 }
 	
+#submit-article-form .hidden{float: right; height: 0; width: 0; opacity: 0; filter:alpha(opacity: 0); }
+#submit-article-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#submit-article-form form input.del-file{ background: #f7f7f7; border: 1px solid #aaa; width: 100px; height: 20px; line-height: 20px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#submit-article-form form input[type=text] { background: #f7f7f7; border: 1px solid #aaa; width: 595px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#submit-article-form form textarea { background: #f7f7f7; border: 1px solid #aaa; width: 500px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
+#contact-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#contact-form form textarea { background: #f7f7f7; border: 1px solid #aaa; width: 500px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
+#comment-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+#comment-form form textarea { background: #f7f7f7; border: 1px solid #aaa; width: 500px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
+#registration-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
+#login-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
+
 #foot { color: #999; font-size: 12px }
 
-@media screen and (max-width: 480px) {
-	#head { padding: 20px; width: auto }
-	#head img { margin: 20px 0 }
-	#head form { float: left; padding: 0; margin: 20px 0 0 0; width: auto }
-		#head form input[type='text'] { width: 200px }
-	#head p strong { float: left; margin: 0; width: auto }
-	#head small { float: left; color: #812; font-size: 14px; width: auto }
-
-  	#menu { width: 100%; margin: 20px 0; background: none; float: left }
-  		#menu:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
-		#menu ul { padding: 0; list-style: none; background: transparent; width: 100% }
-		#menu a { background: #841127; display: block; width: 45%; color: #fff; padding: 5px 0 5px 5%; float: left; border-bottom: 1px solid #fff }
-			#menu a:hover { background: #400 }
-	#secondary, #sponsors { float: none; clear: both; border: 0 }
-	#secondary { width: auto }
-	#content { padding-top: 50px }
-	#about .grid, #foot, #content, .grid { width: auto; clear: both }
-	#about { padding: 0 20px }
-	#about p { width: auto }
-	#about p#cc { width: auto; margin: 0 }
-	.grid { padding: 40px 20px 0 20px }
-	#content, #sponsors { clear: both }
-	#sponsors img { margin: 0 30px 20px 0 }
-	#foot { padding: 20px }
-}
