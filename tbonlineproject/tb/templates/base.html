@@ -57,7 +57,9 @@
 
             {% include 'search_button_snippet.html' %}
 
-            <small><em>Website of the Global Tuberculosis Community Advisory Board
+            <small>
+	      <img src="{{ STATIC_URL }}tb/gfx/tcab_logo.png" alt="TBCAB logo" />
+	      <em>Website of the Global Tuberculosis Community Advisory Board
       {% if user.is_authenticated %}
           <p></p>
           {% trans "Welcome" %}
