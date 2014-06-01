@@ -7,66 +7,65 @@
     <li>
         {% url 'home' as index_url %}
         <a href="{{ index_url }}" {% if request.path == index_url %}class="current"{% endif %}>
-        {% trans "Home" %} 
-        </a>            
+        {% trans "Home" %}
+        </a>
+    </li>
+    <li>
+        <a href="/learn/" {% if request.path == "/learn/" %}class="current"{% endif %}>
+        {% trans "TB Basics" %}
+        </a>
     </li>
     <li>
         <a href="/medicines/" {% if request.path == "/medicines/" %}class="current"{% endif %}>
-        {% trans "Medicines" %} 
-        </a>            
-    </li>    
+        {% trans "Medicines" %}
+        </a>
+    </li>
 
     <li>
         <a href="/diagnostics/" {% if request.path == "/diagnostics/" %}class="current"{% endif %}>
-        {% trans "Diagnostics" %} 
-        </a>            
-    </li>        
+        {% trans "Diagnostics" %}
+        </a>
+    </li>
 
     <li>
         <a href="/vaccines/" {% if request.path == "/vaccines/" %}class="current"{% endif %}>
-        {% trans "Vaccines" %} 
-        </a>            
-    </li>        
+        {% trans "Vaccines" %}
+        </a>
+    </li>
 
     <li>
         <a href="/guidelines/" {% if request.path == "/guidelines/" %}class="current"{% endif %}>
-        {% trans "Guidelines" %} 
-        </a>            
-    </li>        
-
-    <li>
-        <a href="/learn/" {% if request.path == "/learn/" %}class="current"{% endif %}>
-        {% trans "Learn" %} 
-        </a>            
+        {% trans "Guidelines" %}
+        </a>
     </li>
-   
+
     {% if perms.can_submit %}
     <li>
         {% url 'submit_article_list' as submit_url  %}
         <a href="{{ submit_url }}" {% if request.path == "/submit/" %}class="current"{% endif %}>
-        {% trans "Your Posts" %} 
-        </a>            
+        {% trans "Your Posts" %}
+        </a>
     </li>
     {% endif %}
-    
+
     <li>
         {% url 'contact' as contact_url  %}
         <a href="{{ contact_url }}"{% if request.path == contact_url %}class="current"{% endif %}>
-        {% trans "Contact" %} 
-        </a>            
-    </li>
-    
-    <li>
-        <a href="/about/" {% if request.path == "/about/" %}class="current"{% endif %}>
-        {% trans "About" %} 
-        </a>            
+        {% trans "Contact" %}
+        </a>
     </li>
 
-    
+    <li>
+        <a href="/about/" {% if request.path == "/about/" %}class="current"{% endif %}>
+        {% trans "About" %}
+        </a>
+    </li>
+
+
     {% if user.is_staff %}
         <li><a href="/admin/">{% trans "Admin" %}</a></li>
     {% endif %}
-    
+
 </ul>
 
 </div>
