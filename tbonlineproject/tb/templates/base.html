@@ -57,7 +57,9 @@
 
             {% include 'search_button_snippet.html' %}
 
-            <small><em>Website of the Global Tuberculosis Community Advisory Board
+            <small>
+	      <img src="{{ STATIC_URL }}tb/gfx/tcab_logo.png" alt="TBCAB logo" />
+	      <em>Website of the Global Tuberculosis Community Advisory Board
       {% if user.is_authenticated %}
           <p></p>
           {% trans "Welcome" %}
@@ -94,12 +96,6 @@
         </div>
 
         <div id="sponsors">
-			<a href="http://www.tac.org.za/"><img src="{{ STATIC_URL }}tb/gfx/tac_logo.png" alt="TAC logo" /></a>
-			<a href="http://www.treatmentactiongroup.org/"><img src="{{ STATIC_URL }}tb/gfx/tag_logo.jpeg" alt="TAG logo" /></a>
-			<a href="http://i-base.info/"><img src="{{ STATIC_URL }}tb/gfx/ibase_logo.png" alt="i-base logo" /></a>
-			<a href="http://www.eatg.org/"><img src="{{ STATIC_URL }}tb/gfx/eatg_logo.jpg" alt="EATG logo" /></a>
-			<a href="http://www.sadevelopmentfund.org/"><img src="{{ STATIC_URL }}tb/gfx/sadf_logo.jpeg" alt="SADF logo" /></a>
-			<a href="http://www.cmt.org.za/"><img src="{{ STATIC_URL }}tb/gfx/cmt_logo.png" alt="CMT logo" /></a>
 		</div>
 
     </div>
