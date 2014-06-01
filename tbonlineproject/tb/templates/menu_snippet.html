@@ -20,10 +20,14 @@
         {% trans "Medicines" %}
         </a>
     </li>
-
     <li>
         <a href="/diagnostics/" {% if request.path == "/diagnostics/" %}class="current"{% endif %}>
         {% trans "Diagnostics" %}
+        </a>
+    </li>
+    <li>
+        <a href="/pediatrics/" {% if request.path == "/pediatrics/" %}class="current"{% endif %}>
+        {% trans "Pediatrics" %}
         </a>
     </li>
 
@@ -36,6 +40,17 @@
     <li>
         <a href="/guidelines/" {% if request.path == "/guidelines/" %}class="current"{% endif %}>
         {% trans "Guidelines" %}
+        </a>
+    </li>
+    <li>
+        <a href="/advocacy/" {% if request.path == "/advocacy/" %}class="current"{% endif %}>
+        {% trans "Advocacy Campaigns" %}
+        </a>
+    </li>
+
+    <li>
+        <a href="/tbcab/" {% if request.path == "/tbcab/" %}class="current"{% endif %}>
+        {% trans "TBCAB" %}
         </a>
     </li>
 
