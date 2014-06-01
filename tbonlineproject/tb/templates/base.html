@@ -32,51 +32,70 @@
 
       <title>{% block title %}{{site.name}}{% endblock %}</title>
   </head>
-
 <body>
 
 <div class="container">
-  <header id="head">
-      <div>
-        <a href="/"><img src="{{ STATIC_URL }}tb/gfx/brand.png" alt="TB Online logo" /></a>
-        <p><strong>Information for activists, patients, health workers &amp; researchers working to end&nbsp;Tuberculosis</strong></p>
+  <header id="head" class="navbar-collapse collapse row">
+    <div class="col-sm-6 col-12-xs brand">
+      <a href="/">
+        <img class="brand-logo" src="{{ STATIC_URL }}tb/gfx/brand.png" alt="TB Online logo" />
+      </a>
 
-          {% include 'search_button_snippet.html' %}
+      <p class="brand-info">Information for activists, patients, health workers &amp;  researchers working to end&nbsp;Tuberculosis</p>
+    </div>
 
-          <small>
-      <img src="{{ STATIC_URL }}tb/gfx/tcab_logo.png" alt="TBCAB logo" />
-      <em>Website of the Global Tuberculosis Community Advisory Board
-    {% if user.is_authenticated %}
+    <div class="col-sm-6 hidden-xs">
+      {% include 'search_button_snippet.html' %}
+
+      <small class="tbcab-brand">
+        <img class="tbcab-brand-img" src="{{ STATIC_URL }}tb/gfx/tcab_logo.png" alt="TBCAB logo" />
+        <em class="tbcab-brand-text">Website of the Global Tuberculosis Community Advisory Board</em>
+      </small>
+
+      {% if user.is_authenticated %}
         <p></p>
         {% trans "Welcome" %}
-        {% include 'search_button_snippet.html' %}
 
-        <small><em>Website of the Global Tuberculosis Community Advisory Board
-
-      <a href="{% url 'update_profile' %}">
+        <a href="{% url 'update_profile' %}">
         {% if user.get_full_name %}
-            {{user.get_full_name}}
+          {{user.get_full_name}}
         {% else %}
-            {{user.username}}
+          {{user.username}}
         {% endif %}
-      </a>
-          |
-          <a href="{% url 'django.contrib.auth.views.logout' %}">
-          {% trans "Logout" %}
-          </a>
+        </a>
+        |
+        <a href="{% url 'django.contrib.auth.views.logout' %}">
+        {% trans "Logout" %}
+        </a>
 
       {% endif %}
-          </small></em>
     </div>
   </header>
 
-  {% include 'menu_snippet.html' %}
+  <div class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <a class="navbar-brand visible-xs" href="/">TB Online</a>
+      </div>
+
+      {% include 'menu_snippet.html' %}
+    </div><!--/.container-fluid -->
+  </div>
+
 
   <div class="row">
-    <div id="content" class="col-lg-8">
+    <div id="content" class="col-md-8">
       {% block content %}{% endblock %}
     </div>
-    <div id="secondary" class="col-lg-4">
+
+    <div id="secondary" class="col-md-4">
       {% block sidebar-1 %}
       {% endblock %}
     </div>

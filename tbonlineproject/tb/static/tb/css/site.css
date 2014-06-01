@@ -115,94 +115,97 @@ blockquote {
     font-style: italic;
 }
 #head {
-    background: transparent;
-    height: 195px;
-    width: 940px;
-    margin: 0 auto;
-    position: relative
+	overflow: hidden;
+	margin-top: 30px;
+	padding-bottom: 30px;
 }
-#head img {
-    float: left;
-    margin: 40px 0 0 0
+#head .brand{
+	position: relative;
 }
-#head form {
-    width: 300px;
-    display: block;
-    float: right;
-    margin: 40px 0 0 0
+#head .brand-logo{
+	margin-top: 30px;
+	padding-bottom: 30px;
 }
-#head form input {
-    background: #f7f7f7;
-    border: 1px solid #aaa;
-    width: 220px;
-    height: 26px;
-    line-height: 26px;
-    font-size: 14px;
-    font-family:"Trebuchet MS", sans-serif;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    padding: 0 0 0 4px
+#head .brand-info{
+	position: absolute;
+top: 90px;
+left: 170px;
 }
-#head form input#search-button {
-    background: #fff;
-    border: 0;
-    color: #777;
-    width: 60px;
-    cursor: pointer;
-    padding: 0
+#head .tbcab-brand{
+	width: 100%;
+	position: absolute;
+	top: 70px;
+	left: 0px;
+	/*right: 110px;*/
 }
-#head form input#search-button:hover {
-    color: #1ac
+
+#head .tbcab-brand-img{
 }
-#head p strong {
-    display: block;
-    float: left;
-    margin: 100px 0 0 -50px;
-    width: 320px;
-    font-weight: normal
+
+#head .tbcab-brand-text{
+	position: absolute;
+	top: 5px;
+	left: 235px;
 }
-#head small {
-    float: right;
-    margin: 30px 20px 0 0;
-    width: 280px;
-    color: #812;
-    font-size: 14px
+#head #search{
+	position: absolute;
+	top: 0px;
+	right: 0px;
 }
+
 #menu {
-    background: url(../gfx/menu-bg.png) top center repeat-y;
-    height: 46px;
+    /*background: url(../gfx/menu-bg.png) top center repeat-y;*/
+    /*height: 46px;*/
     line-height: 46px;
-    font-size: 14px
-}
-#menu ul {
+    font-size: 14px;
     background: #841127;
-    width: 930px;
-    margin: 0 auto;
-    padding: 0 0 0 10px;
-    height: 46px;
-    list-style: none;
+}
+
+/* navbar */
+.navbar-default {
+    background-color: #841127;
+    border-color: #841127;
+}
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+/* mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #fff;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: rgb(182, 152, 152);
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+#menu ul {
+    /*height: 46px;*/
+/*    list-style: none;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-bottom-left-radius: 3px;
     -moz-border-radius-topleft: 3px;
     -moz-border-radius-bottomleft: 3px;
     border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px
+    border-bottom-left-radius: 3px*/
 }
 #menu li {
-    display: inline;
+    /*display: inline;*/
 }
 #menu a {
     color: #fff;
-    display: block;
+/*    display: block;
     line-height: 28px;
     padding: 10px 15px;
     float: left;
-    height: 26px
+    height: 26px*/
 }
 #menu a:hover {
     background: transparent url(../gfx/indicator.png) bottom no-repeat
 }
+
 #content {
 }
 .post {

@@ -1,9 +1,8 @@
 {% load i18n %}
 {% load url from future %}
 
-<div id="menu">
-
-<ul>
+<div id="menu" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
     <li>
         {% url 'home' as index_url %}
         <a href="{{ index_url }}" {% if request.path == index_url %}class="current"{% endif %}>
@@ -80,7 +79,5 @@
     {% if user.is_staff %}
         <li><a href="/admin/">{% trans "Admin" %}</a></li>
     {% endif %}
-
 </ul>
-
 </div>
