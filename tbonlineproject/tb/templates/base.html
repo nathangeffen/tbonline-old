@@ -35,87 +35,70 @@
 
 <body>
 
-<div id="wrapper" class="row">
-    <header id="head">
-        <div>
+<div class="container">
+  <header id="head">
+      <div>
+        <a href="/"><img src="{{ STATIC_URL }}tb/gfx/brand.png" alt="TB Online logo" /></a>
+        <p><strong>Information for activists, patients, health workers &amp; researchers working to end&nbsp;Tuberculosis</strong></p>
 
-          <a href="/"><img src="{{ STATIC_URL }}tb/gfx/brand.png" alt="TB Online logo" /></a>
-          <p><strong>Information for activists, patients, health workers &amp; researchers working to end&nbsp;Tuberculosis</strong></p>
-
-            {% include 'search_button_snippet.html' %}
-
-            <small>
-	      <img src="{{ STATIC_URL }}tb/gfx/tcab_logo.png" alt="TBCAB logo" />
-	      <em>Website of the Global Tuberculosis Community Advisory Board
-      {% if user.is_authenticated %}
-          <p></p>
-          {% trans "Welcome" %}
           {% include 'search_button_snippet.html' %}
 
-          <small><em>Website of the Global Tuberculosis Community Advisory Board
+          <small>
+      <img src="{{ STATIC_URL }}tb/gfx/tcab_logo.png" alt="TBCAB logo" />
+      <em>Website of the Global Tuberculosis Community Advisory Board
     {% if user.is_authenticated %}
         <p></p>
         {% trans "Welcome" %}
+        {% include 'search_button_snippet.html' %}
 
-    <a href="{% url 'update_profile' %}">
-      {% if user.get_full_name %}
-          {{user.get_full_name}}
-      {% else %}
-          {{user.username}}
+        <small><em>Website of the Global Tuberculosis Community Advisory Board
+
+      <a href="{% url 'update_profile' %}">
+        {% if user.get_full_name %}
+            {{user.get_full_name}}
+        {% else %}
+            {{user.username}}
+        {% endif %}
+      </a>
+          |
+          <a href="{% url 'django.contrib.auth.views.logout' %}">
+          {% trans "Logout" %}
+          </a>
+
       {% endif %}
-    </a>
-        |
-        <a href="{% url 'django.contrib.auth.views.logout' %}">
-        {% trans "Logout" %}
-        </a>
+          </small></em>
+    </div>
+  </header>
 
-    {% endif %}
-        </small></em>
+  {% include 'menu_snippet.html' %}
+
+  <div class="row">
+    <div id="content" class="col-lg-8">
+      {% block content %}{% endblock %}
+    </div>
+    <div id="secondary" class="col-lg-4">
+      {% block sidebar-1 %}
+      {% endblock %}
+    </div>
   </div>
-</div> <!-- header -->
 
-{% include 'menu_snippet.html' %}
-
-<div class="row">
-  <div id="content" class="col-lg-8">
-    {% block content %}{% endblock %}
   </div>
-  <div id="secondary" class="col-lg-4">
-    {% block sidebar-1 %}
-    {% endblock %}
-  </div>
-</div>
 
-<div id="sponsors" class="row">
-	<a href="http://www.tac.org.za/"><img src="{{ STATIC_URL }}tb/gfx/tac_logo.png" alt="TAC logo" /></a>
-	<a href="http://www.treatmentactiongroup.org/"><img src="{{ STATIC_URL }}tb/gfx/tag_logo.jpeg" alt="TAG logo" /></a>
-	<a href="http://i-base.info/"><img src="{{ STATIC_URL }}tb/gfx/ibase_logo.png" alt="i-base logo" /></a>
-	<a href="http://www.eatg.org/"><img src="{{ STATIC_URL }}tb/gfx/eatg_logo.jpg" alt="EATG logo" /></a>
-	<a href="http://www.sadevelopmentfund.org/"><img src="{{ STATIC_URL }}tb/gfx/sadf_logo.jpeg" alt="SADF logo" /></a>
-	<a href="http://www.cmt.org.za/"><img src="{{ STATIC_URL }}tb/gfx/cmt_logo.png" alt="CMT logo" /></a>
-</div>
+{% block footer %}
+    {% include 'footer_snippet.html' %}
+{% endblock %}
 
+{% with google_code="UA-22851877-1" %}
+{% include 'google_analytics_script_snippet.html' %}
+{% endwith %}
 
-<<<<<<< Updated upstream
-        <div id="sponsors">
-		</div>
-=======
-  {% block footer %}
-      {% include 'footer_snippet.html' %}
-  {% endblock %}
->>>>>>> Stashed changes
+{% block scripts %}
 
-  {% with google_code="UA-22851877-1" %}
-  {% include 'google_analytics_script_snippet.html' %}
-  {% endwith %}
+{% endblock %}
 
-  {% block scripts %}
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js'></script>
 
-  {% endblock %}
-
-  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-  <script src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js'></script>
-</div>
 </body>
 
 
