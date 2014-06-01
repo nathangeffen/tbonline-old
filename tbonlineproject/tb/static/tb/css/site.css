@@ -22,9 +22,6 @@ ul.errorlist { color: red; list-style-type: none; margin: 10px 0 0 0; padding: 1
 
 blockquote { font-family: georgia, serif; font-style: italic }
 
-.grid { margin: 0 auto; width: 940px; padding: 35px 0 50px 0 }
-	.grid:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
-
 .pdf { background: url(../gfx/pdf.png) no-repeat 100% 4px; padding-right: 22px }
 .intro { font-style: italic }
 .figure { display: block; }
@@ -32,7 +29,7 @@ blockquote { font-family: georgia, serif; font-style: italic }
 
 .image { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 50% }
 	.image img { width: 100% !important }
-	
+
 .image2 { font-size: 11px; color: #999; border-bottom: 1px solid #ddd; margin: 0 20px 15px 0; float: left; width: 100% }
 	.image2 img { width: 100% !important }
 
@@ -61,7 +58,7 @@ blockquote { font-family: georgia, serif; font-style: italic }
 	#menu a { color: #fff; display: block; line-height: 28px; padding: 10px 15px; float: left; height: 26px }
 		#menu a:hover { background: transparent url(../gfx/indicator.png) bottom no-repeat }
 
-#content { width: 550px; float: left }
+#content {}
 	.post { border-bottom: 1px solid #ddd; padding: 15px 0; margin: 0 0 20px 0 }
 	.post:after { content: "."; display: block; height: 0; clear: both; visibility: hidden }
 		#post-meta { padding: 15px 0 0 0 }
@@ -72,15 +69,16 @@ blockquote { font-family: georgia, serif; font-style: italic }
 			.post-meta a:hover, .comment-meta a:hover { color: #812 }
 		.more a { background: #fbffe6; border: 1px solid #ddb; padding: 4px 20px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px }
 	.post img { float: left; display: inline; margin: 3px 15px 15px 0 }
-	#sponsors { width: 100%; border-top: 1px solid #ddd; padding: 20px 0; margin: 40px 0; float: left; clear: both }
+
+	#sponsors { border-top: 1px solid #ddd; padding: 20px 0; margin: 40px 0; float: left; clear: both }
 		#sponsors img { margin: 0 40px 0 0 }
 	#comments {}
 		#comments h2 { color: #812; margin: 0 }
 		.comment { background: #f3f3f3; padding: 25px 25px 15px 25px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; margin: 0 0 20px 0 }
 			.comment .author { color: #999; font-style: italic }
 				.comment .author strong { color: #444; font-weight: bold; font-style: normal; background: url(../gfx/comment.png) no-repeat; padding: 0 0 0 23px }
-		
-#secondary { width: 300px; float: right }
+
+#secondary {}
 	#login, #tags { background: #fbffe6; border: 1px solid #ddb; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 15px 20px; margin: 15px 0 }
 	#tags { margin: 30px 0 }
 		#tags p { margin: 0 }
@@ -90,9 +88,9 @@ blockquote { font-family: georgia, serif; font-style: italic }
 	.box a { color: #555 }
 	.box a:hover { color: #812; text-decoration: underline }
 	#secondary h2 { color: #812; font-size: 16px }
-	#secondary li, #secondary p { font-size: 13px; list-style: none }		
+	#secondary li, #secondary p { font-size: 13px; list-style: none }
 	.box .more a { border: 0; padding: 0; background: transparent }
-	
+
 	#twitter h2 { background: url(../gfx/twitter.png) no-repeat right }
 		.tweet img { float: left; padding: 5px 10px 10px 0 display: block; }
 		.tweet em span { color: #1ac; text-transform: uppercase; font-style: normal; font-size: 11px; display: block; }
@@ -105,7 +103,7 @@ blockquote { font-family: georgia, serif; font-style: italic }
 	#about p { float: left; width: 310px }
 	#about p#cc { width: 540px; display: inline; margin-left: 90px }
 		#cc img { margin: 10px 0 0 0 }
-	
+
 #submit-article-form .hidden{float: right; height: 0; width: 0; opacity: 0; filter:alpha(opacity: 0); }
 #submit-article-form form input { background: #f7f7f7; border: 1px solid #aaa; width: 220px; height: 26px; line-height: 26px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
 #submit-article-form form input.del-file{ background: #f7f7f7; border: 1px solid #aaa; width: 100px; height: 20px; line-height: 20px; font-size: 14px; font-family: "Trebuchet MS", sans-serif; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 0 0 0 4px }
