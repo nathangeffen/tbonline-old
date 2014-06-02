@@ -115,44 +115,41 @@ blockquote {
     font-style: italic;
 }
 #head {
-	overflow: hidden;
-	margin-top: 30px;
-	padding-bottom: 30px;
+    overflow: hidden;
+    margin-top: 30px;
+    padding-bottom: 30px;
 }
-#head .brand{
-	position: relative;
+#head .brand {
+    position: relative;
 }
-#head .brand-logo{
-	margin-top: 30px;
-	padding-bottom: 30px;
+#head .brand-logo {
+    margin-top: 30px;
+    padding-bottom: 30px;
 }
-#head .brand-info{
-	position: absolute;
-top: 90px;
-left: 170px;
+#head .brand-info {
+    position: absolute;
+    top: 90px;
+    left: 170px;
 }
-#head .tbcab-brand{
-	width: 100%;
-	position: absolute;
-	top: 70px;
-	left: 0px;
-	/*right: 110px;*/
+#head .tbcab-brand {
+    width: 100%;
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    /*right: 110px;*/
 }
-
-#head .tbcab-brand-img{
+#head .tbcab-brand-img {
 }
-
-#head .tbcab-brand-text{
-	position: absolute;
-	top: 5px;
-	left: 235px;
+#head .tbcab-brand-text {
+    position: absolute;
+    top: 5px;
+    left: 235px;
 }
-#head #search{
-	position: absolute;
-	top: 0px;
-	right: 0px;
+#head #search {
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
-
 #menu {
     /*background: url(../gfx/menu-bg.png) top center repeat-y;*/
     /*height: 46px;*/
@@ -160,9 +157,8 @@ left: 170px;
     font-size: 14px;
     background: #841127;
 }
-
 /* navbar */
-.navbar-default {
+ .navbar-default {
     background-color: #841127;
     border-color: #841127;
 }
@@ -170,20 +166,18 @@ left: 170px;
     color: #fff;
 }
 /* mobile version */
-.navbar-default .navbar-toggle {
+ .navbar-default .navbar-toggle {
     border-color: #fff;
 }
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
     background-color: rgb(182, 152, 152);
 }
 .navbar-default .navbar-toggle .icon-bar {
     background-color: #fff;
 }
-
 #menu ul {
     /*height: 46px;*/
-/*    list-style: none;
+    /*    list-style: none;
     -webkit-border-top-left-radius: 3px;
     -webkit-border-bottom-left-radius: 3px;
     -moz-border-radius-topleft: 3px;
@@ -196,7 +190,7 @@ left: 170px;
 }
 #menu a {
     color: #fff;
-/*    display: block;
+    /*    display: block;
     line-height: 28px;
     padding: 10px 15px;
     float: left;
@@ -205,7 +199,6 @@ left: 170px;
 #menu a:hover {
     background: transparent url(../gfx/indicator.png) bottom no-repeat
 }
-
 #content {
 }
 .post {
@@ -353,19 +346,17 @@ left: 170px;
     font-size: 11px;
     display: block;
 }
-
-footer{
-		margin-top: 30px;
-		color: #fff;
+footer {
+    margin-top: 30px;
+    color: #fff;
 }
-footer .copyright{
+footer .copyright {
     color: #999;
     font-size: 13px;
     padding: 30px;
 }
-
 #about {
-		background: #812;
+    background: #812;
     font-size: 12px;
 }
 #about a {
@@ -374,7 +365,6 @@ footer .copyright{
 #about a:hover {
     text-decoration: underline
 }
-
 #about p {
     padding: 26px 0px;
 }
@@ -384,7 +374,6 @@ footer .copyright{
 #cc img {
     margin: 10px 0 0 0
 }
-
 #submit-article-form .hidden {
     float: right;
     height: 0;
@@ -518,4 +507,27 @@ footer .copyright{
     -moz-border-radius: 2px;
     border-radius: 2px;
     padding: 0 0 0 4px
+}
+/* google custom search*/
+ #search .cse .gsc-search-button
+ 	input.gsc-search-button-v2, input.gsc-search-button-v2 {
+    background-image: inherit;
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+}
+
+#search div#gsc-iw-id1{
+    height: 29px;
+    width: 350px !important;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+#search #gs_cb50{
+	font: 20px arial,sans-serif !important;
+}
+
+#search .gsc-selected-option-container{
+	width: 80px !important;
 }
