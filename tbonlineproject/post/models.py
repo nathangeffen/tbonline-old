@@ -548,6 +548,16 @@ class BasicPost(models.Model):
         posts = set(posts)
         return posts
 
+    @staticmethod
+    def get_featured_posts():
+        posts = []
+        post_classes = [BasicPost]
+        for subclass in BasicPost.get_subclasses():
+            post_classes.append(subclass.model)
+        for subclass in post_classes:
+            posts += filter(lambda p: p.featured, subclass.objects.all())
+        return posts
+
     @models.permalink
     def get_absolute_url(self):
         if self.is_published():
