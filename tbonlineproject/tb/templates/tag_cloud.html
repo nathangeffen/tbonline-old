@@ -1,5 +1,5 @@
-<ol>
+<ol class="tagcloud">
   {% for t in tags %}
-    <font size={{t.font_size}}>{{t.name}}</font>
+    <li class="li size-{{t.font_size}}">{{t.name}}</li>
   {% endfor %}
 </ol>
