@@ -323,10 +323,6 @@ blockquote {
     color: #812;
     font-size: 16px
 }
-#secondary li, #secondary p {
-    font-size: 13px;
-    list-style: none
-}
 .box .more a {
     border: 0;
     padding: 0;
@@ -533,3 +529,15 @@ footer .copyright {
 #search .gsc-selected-option-container{
 	width: 80px !important;
 }
+
+.tagcloud .li{
+	display: inline;
+}
+
+.tagcloud .size-1{ font-size: 15px }
+.tagcloud .size-2{ font-size: 20px }
+.tagcloud .size-3{ font-size: 23px }
+.tagcloud .size-4{ font-size: 25px }
+.tagcloud .size-5{ font-size: 30px }
+.tagcloud .size-6{ font-size: 33px }
+.tagcloud .size-7{ font-size: 38px }
