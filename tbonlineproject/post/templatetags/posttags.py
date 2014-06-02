@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.comments.models import Comment
 from tagging.models import Tag
 
-from post.models import BasicPost, EditorChoice, PostWithImage
+from post.models import BasicPost, EditorChoice, PostWithImage, PostWithSimpleImage, PostWithSlideshow, PostWithEmbeddedObject
 from feeder.models import Feed
 
 register = template.Library()
@@ -42,7 +42,11 @@ def do_get_posts_by_categories(parser, token):
 register.tag('get_posts_by_categories', do_get_posts_by_categories)
 
 def get_tag_cloud():
-    cloud = Tag.objects.cloud_for_model(BasicPost) + Tag.objects.cloud_for_model(PostWithImage)
+    cloud = Tag.objects.cloud_for_model(BasicPost)
+    cloud += Tag.objects.cloud_for_model(PostWithImage)
+    cloud += Tag.objects.cloud_for_model(PostWithSimpleImage)
+    cloud += Tag.objects.cloud_for_model(PostWithSlideshow)
+    cloud += Tag.objects.cloud_for_model(PostWithEmbeddedObject)
     sorted(cloud, key=lambda c: c.name)
     return {"tags" : cloud}
 
