@@ -522,6 +522,7 @@ footer .copyright {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+    float: right;
 }
 
 #search #gs_cb50{
