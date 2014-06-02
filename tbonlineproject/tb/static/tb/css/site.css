@@ -506,14 +506,12 @@ footer .copyright {
     padding: 0 0 0 4px
 }
 /* google custom search*/
- #search .cse .gsc-search-button
- 	input.gsc-search-button-v2, input.gsc-search-button-v2 {
+ #search .cse .gsc-search-button input.gsc-search-button-v2, input.gsc-search-button-v2 {
     background-image: inherit;
     box-sizing: content-box;
     -moz-box-sizing: content-box;
 }
-
-#search div#gsc-iw-id1{
+#search div#gsc-iw-id1 {
     height: 29px;
     width: 350px !important;
     -webkit-border-radius: 2px;
@@ -521,23 +519,33 @@ footer .copyright {
     border-radius: 2px;
     float: right;
 }
-
-#search #gs_cb50{
-	font: 20px arial,sans-serif !important;
+#search #gs_cb50 {
+    font: 20px arial, sans-serif !important;
 }
-
-#search .gsc-selected-option-container{
-	width: 80px !important;
+#search .gsc-selected-option-container {
+    width: 80px !important;
 }
-
-.tagcloud .li{
-	display: inline;
+.tagcloud .li {
+    display: inline;
 }
-
-.tagcloud .size-1{ font-size: 15px }
-.tagcloud .size-2{ font-size: 20px }
-.tagcloud .size-3{ font-size: 23px }
-.tagcloud .size-4{ font-size: 25px }
-.tagcloud .size-5{ font-size: 30px }
-.tagcloud .size-6{ font-size: 33px }
-.tagcloud .size-7{ font-size: 38px }
+.tagcloud .size-1 {
+    font-size: 15px
+}
+.tagcloud .size-2 {
+    font-size: 20px
+}
+.tagcloud .size-3 {
+    font-size: 23px
+}
+.tagcloud .size-4 {
+    font-size: 25px
+}
+.tagcloud .size-5 {
+    font-size: 30px
+}
+.tagcloud .size-6 {
+    font-size: 33px
+}
+.tagcloud .size-7 {
+    font-size: 38px
+}
