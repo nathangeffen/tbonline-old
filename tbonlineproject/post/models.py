@@ -175,7 +175,9 @@ class BasicPost(models.Model):
             help_text=_('Use this field to indicate additional css classes for '
                         'list post pages. Separate classes with a space. '
                         'It is safe to leave this blank.'))
-    featured = models.BooleanField(default=False, blank=True)
+    featured = models.BooleanField(default=False, blank=True,
+            help_text=_('Use this field to indicate whether a post is '
+                        'featured.'))
     copyright = models.ForeignKey(Copyright, blank=True, null=True)
     sites = models.ManyToManyField(Site)
     tags = generic.GenericRelation(TaggedItem, verbose_name=_('tags'),
