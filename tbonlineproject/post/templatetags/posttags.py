@@ -43,6 +43,7 @@ register.tag('get_posts_by_categories', do_get_posts_by_categories)
 
 def get_tag_cloud():
     cloud = Tag.objects.cloud_for_model(BasicPost) + Tag.objects.cloud_for_model(PostWithImage)
+    sorted(cloud, key=lambda c: c.name)
     return {"tags" : cloud}
 
 register.inclusion_tag('tag_cloud.html')(get_tag_cloud)

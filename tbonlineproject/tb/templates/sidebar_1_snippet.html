@@ -8,26 +8,11 @@
 {% endwith %}
 
 <div class="box">
-	<h2>{% trans "Learn about TB" %}</h2>
-
+	<h2>Tag Cloud</h2>
 	{% get_tag_cloud %}
 	</ol>
-	<ul>
-		<li><a href="{% url 'tb_patient_info'%}">{% trans "Questions and answers about TB" %}</a></li>
-		<li><a href="/learn">{% trans "Simple tutorial on the science of TB" %}</a></li>
-	</ul>
 </div><!-- /box -->
 
-<div class="box">
-	<h2><a href="{% url 'post_category_list' 'News'%}">{% trans "Latest TB news" %}</a></h2>
-	<ul>
-	    {% get_posts_by_categories "News" as news_posts  %}
-	    {% for post in news_posts|slice:":10" %}
-	    <li><strong>{{post.date_published|date:"d N"}}</strong> &middot; <a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">{{post.title}}</a></li>
-		</li>
-		{% endfor %}
-	</ul>
-</div><!-- /box -->
 
 <div class="box">
 <a href="https://www.facebook.com/pages/TB-Online/234621373332022?ref=ts&fref=ts" target="_blank"><img src="{{ STATIC_URL }}tb/gfx/facebook_64.png" /></a><br/>
@@ -56,26 +41,3 @@
 	<p><a href="http://beatit.co.za/treatment-literacy-series-english/tb-and-hiv">{% trans "Watch the full HIV and TB treatment literacy programme free on the Beat-it website &rarr;" %}</a></p>
 
 </div><!-- /box -->
-
-<div class="box">
-			<h2>{% trans "Recommended Reading" %}</h2>
-			<ul>
-                <li><a title="Get tested for TB. It can be cured." href="http://www.tac.org.za/community/files/file/TBPamphlets/TBTreatmentbrochureEnglish.pdf">Get tested for TB: A simple pamphlet from the TAC</a></li>
-                <li><a title="Blogs from people living with drug-resistant TB" href="http://www.msf.org.za/">MSF's TB &amp; Me: Real stories of people living with drug-resistant TB</a></li>
-                <li><a title="TAG&rsquo;s annually updated report on drugs, diagnostics, vaccines, immune-based therapies  and preventative technologies in development for HIV, TB and hepatitis" href="http://www.treatmentactiongroup.org/publication.aspx?id=3798">TAG Pipeline Report: Drugs, diagnostics and vaccines in development for TB, HIV and hepatitis</a></li>
-                <li><a title="TAG&rsquo;s 2010 Report on Tuberculosis research funding trends" href="http://www.treatmentactiongroup.org/publication.aspx?id=4450">Tuberculosis funding trends: A report by the Treatment Action Group</a></li>
-                <li><a title="WHO recommendations on the implementation of the Gene Xpert TB diagnostic, March 2011" href="http://www.tbonline.info/wp-content/uploads/2011/03/who_xpert_implementation_document_final_draft_6_march.pdf">WHO Recommendations on the Implementation of the Gene Xpert</a></li>
-            </ul>
-</div>
-
-<div class="box">
-	<h2>{% trans "Latest TB on Pubmed" %}</h2>
-	{% get_feeder "latest-tb-public-library-medicine" as feed %}
-	<ul>
-	    {% for entry in feed.get_rss_items|slice:"5" %}
-	        <li><a href="{{ entry.link }}">{{entry.title}}</a>
-	    {% empty %}
-	        {% trans "There are currently no entries for this feed" %}.
-	    {% endfor %}
-	</ul>
-</div>
