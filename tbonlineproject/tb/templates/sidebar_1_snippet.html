@@ -9,6 +9,9 @@
 
 <div class="box">
 	<h2>{% trans "Learn about TB" %}</h2>
+
+	{% get_tag_cloud %}
+	</ol>
 	<ul>
 		<li><a href="{% url 'tb_patient_info'%}">{% trans "Questions and answers about TB" %}</a></li>
 		<li><a href="/learn">{% trans "Simple tutorial on the science of TB" %}</a></li>
@@ -22,7 +25,7 @@
 	    {% for post in news_posts|slice:":10" %}
 	    <li><strong>{{post.date_published|date:"d N"}}</strong> &middot; <a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">{{post.title}}</a></li>
 		</li>
-		{% endfor %}		
+		{% endfor %}
 	</ul>
 </div><!-- /box -->
 
@@ -51,7 +54,7 @@
 		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/bnVG4cdBXWI"><strong>Ch. 11</strong> - Multi Drug Resistant TB (MDR-TB)</a></li>
 	</ul>
 	<p><a href="http://beatit.co.za/treatment-literacy-series-english/tb-and-hiv">{% trans "Watch the full HIV and TB treatment literacy programme free on the Beat-it website &rarr;" %}</a></p>
-	
+
 </div><!-- /box -->
 
 <div class="box">
@@ -74,5 +77,5 @@
 	    {% empty %}
 	        {% trans "There are currently no entries for this feed" %}.
 	    {% endfor %}
-	</ul>			
+	</ul>
 </div>
