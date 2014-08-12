@@ -8,6 +8,15 @@
 {% endwith %}
 
 <div class="box">
+	<h2>{% trans "Learn about TB" %}</h2>
+	<ul>
+		<li><a href="{% url 'tb_patient_info'%}">{% trans "Questions and answers about TB" %}</a></li>
+		<li><a href="/learn">{% trans "Simple tutorial on the science of TB" %}</a></li>
+	</ul>
+</div><!-- /box -->
+
+
+<div class="box">
 	<h2>Tag Cloud</h2>
 	{% get_tag_cloud %}
 	</ol>
