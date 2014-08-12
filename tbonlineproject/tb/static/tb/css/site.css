@@ -135,9 +135,10 @@ blockquote {
     left: 170px;
 }
 #head .tbcab-brand {
+    text-align: right;
     width: 100%;
     position: absolute;
-    top: 70px;
+    top: 37px;
     left: 0px;
     /*right: 110px;*/
 }
@@ -145,14 +146,14 @@ blockquote {
 }
 #head .tbcab-brand-text {
     position: absolute;
-    top: 5px;
-    left: 235px;
+    top: 82px;
+    right: 0px;
     font: 14px/1.5 "Trebuchet MS", sans-serif;
 }
 #head #search {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 150px;
+    right: -15px;
 }
 #menu {
     /*background: url(../gfx/menu-bg.png) top center repeat-y;*/
