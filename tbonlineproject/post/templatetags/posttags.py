@@ -1,4 +1,5 @@
 import re
+import tagging.utils
 
 from django import template
 from django.contrib.contenttypes.models import ContentType
@@ -42,13 +43,17 @@ def do_get_posts_by_categories(parser, token):
 register.tag('get_posts_by_categories', do_get_posts_by_categories)
 
 def get_tag_cloud():
-    cloud = Tag.objects.cloud_for_model(BasicPost)
-    cloud += Tag.objects.cloud_for_model(PostWithImage)
-    cloud += Tag.objects.cloud_for_model(PostWithSimpleImage)
-    cloud += Tag.objects.cloud_for_model(PostWithSlideshow)
-    cloud += Tag.objects.cloud_for_model(PostWithEmbeddedObject)
+    names = set()
+    cloud = Tag.objects.cloud_for_model(BasicPost, min_count=8)
+    cloud += Tag.objects.cloud_for_model(PostWithImage, min_count=8)
+    cloud += Tag.objects.cloud_for_model(PostWithSimpleImage, min_count=8)
+    cloud += Tag.objects.cloud_for_model(PostWithSlideshow, min_count=8)
+    cloud += Tag.objects.cloud_for_model(PostWithEmbeddedObject, min_count=8)
     sorted(cloud, key=lambda c: c.name)
-    return {"tags" : cloud}
+    keys = { }
+    for c in cloud:
+        keys[c.name] = c
+    return {"tags" : keys.values()}
 
 register.inclusion_tag('tag_cloud.html')(get_tag_cloud)
 
