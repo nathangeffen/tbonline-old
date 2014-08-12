@@ -147,6 +147,7 @@ blockquote {
     position: absolute;
     top: 5px;
     left: 235px;
+    font: 14px/1.5 "Trebuchet MS", sans-serif;
 }
 #head #search {
     position: absolute;
