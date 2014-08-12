@@ -53,6 +53,9 @@ ul.errorlist {
     margin: 10px 0 0 0;
     padding: 10px 0 0 0;
 }
+li{
+    list-style-position: inside;
+}
 blockquote {
     font-family: georgia, serif;
     font-style: italic
