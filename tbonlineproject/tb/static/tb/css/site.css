@@ -164,6 +164,7 @@ blockquote {
  .navbar-default {
     background-color: #841127;
     border-color: #841127;
+    margin-bottom: 50px;
 }
 .navbar-default .navbar-brand {
     color: #fff;
@@ -288,6 +289,7 @@ blockquote {
     padding: 0 0 0 23px
 }
 #secondary {
+    padding-left: 50px;
 }
 #login, #tags {
     background: #fbffe6;
