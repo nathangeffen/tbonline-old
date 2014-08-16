@@ -221,10 +221,12 @@ blockquote {
 }
 #post-meta {
     padding: 15px 0 0 0;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 30px;
 }
 #post-meta h3 {
+    font-size: 14px;
+    margin-bottom: 3px;
     background: url(../gfx/author.png) no-repeat
 }
 #post-meta h3, #post-meta p {
