@@ -233,6 +233,9 @@ blockquote {
     margin: 0;
     padding: 0 0 0 18px
 }
+.post-meta .post-category{
+    margin-bottom: 13px;
+}
 .post-meta, .comment-meta {
     font-size: 11px;
     color: #888;
