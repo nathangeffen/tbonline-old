@@ -253,7 +253,8 @@ blockquote {
 .post img {
     float: left;
     display: inline;
-    margin: 3px 15px 15px 0
+    margin: 3px 15px 15px 0;
+    width: 300px;
 }
 #sponsors {
     border-top: 1px solid #ddd;
