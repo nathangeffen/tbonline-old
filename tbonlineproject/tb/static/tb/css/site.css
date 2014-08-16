@@ -222,6 +222,7 @@ blockquote {
 #post-meta {
     padding: 15px 0 0 0;
     font-size: 16px;
+    margin-bottom: 30px;
 }
 #post-meta h3 {
     background: url(../gfx/author.png) no-repeat
