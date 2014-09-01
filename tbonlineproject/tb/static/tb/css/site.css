@@ -220,15 +220,21 @@ blockquote {
     visibility: hidden
 }
 #post-meta {
-    padding: 15px 0 0 0
+    padding: 15px 0 0 0;
+    font-size: 14px;
+    margin-bottom: 30px;
 }
 #post-meta h3 {
-    font-size: 16px;
+    font-size: 14px;
+    margin-bottom: 3px;
     background: url(../gfx/author.png) no-repeat
 }
 #post-meta h3, #post-meta p {
     margin: 0;
     padding: 0 0 0 18px
+}
+#post-meta .post-category{
+    margin-bottom: 13px;
 }
 .post-meta, .comment-meta {
     font-size: 11px;
@@ -253,7 +259,11 @@ blockquote {
 .post img {
     float: left;
     display: inline;
-    margin: 3px 15px 15px 0
+    margin: 3px 15px 15px 0;
+}
+.post-entry .post img{
+    max-width: 45%;
+    max-height: 45%;
 }
 #sponsors {
     border-top: 1px solid #ddd;
