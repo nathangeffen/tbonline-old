@@ -16,6 +16,17 @@
 </div><!-- /box -->
 
 <div class="box">
+	<h2><a href="{% url 'post_category_list' 'News'%}">{% trans "Latest TB news" %}</a></h2>
+	<ul>
+	    {% get_posts_by_categories "News" as news_posts  %}
+	    {% for post in news_posts|slice:":10" %}
+	    <li><strong>{{post.date_published|date:"d N"}}</strong> &middot; <a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">{{post.title}}</a></li>
+		</li>
+		{% endfor %}
+	</ul>
+</div><!-- /box -->
+
+<div class="box">
 	<h2>Tag Cloud</h2>
 	{% get_tag_cloud %}
 	</ol>
