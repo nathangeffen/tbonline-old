@@ -42,7 +42,8 @@ h1, h2, h3, h4, h5, p, ul, ol, ol li {
 }
 h2 {
     line-height: 22px;
-    font-size: 16px
+    font-size: 16px;
+    font-weight: bold;
 }
 ol {
     margin-left: 20px
