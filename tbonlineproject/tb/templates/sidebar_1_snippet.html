@@ -15,7 +15,7 @@
 	</ul>
 </div><!-- /box -->
 
-<div class="box">
+<div class="box tb-news">
 	<h2><a href="{% url 'post_category_list' 'News'%}">{% trans "Latest TB news" %}</a></h2>
 	<ul>
 	    {% get_posts_by_categories "News" as news_posts  %}
