@@ -1,5 +1,11 @@
+<script type="text/javascript">
+function searchForTag(tag) {
+  google.search.cse.element.getElement("standard0").execute(tag);
+  return false;
+}
+</script>
 <ol class="tagcloud">
   {% for t in tags %}
-    <li class="li size-{{t.font_size}}">{{t.name}}</li>
+  <li class="li size-{{t.font_size}}"><a href="#" onclick="return searchForTag('{{t.name}}');">{{t.name}}</a></li>
   {% endfor %}
 </ol>
