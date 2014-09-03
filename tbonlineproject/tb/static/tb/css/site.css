@@ -338,6 +338,9 @@ blockquote {
     margin: 0;
     font-size: 14px
 }
+#secondary .tb-news li{
+    list-style: none
+}
 .box {
     border-bottom: 1px solid #ddd;
     padding: 15px 0
