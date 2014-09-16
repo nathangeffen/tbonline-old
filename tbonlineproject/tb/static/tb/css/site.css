@@ -319,8 +319,9 @@ blockquote {
 #secondary {
     padding-left: 50px;
 }
-#secondary #notification-message{
-    margin: 30px 0;
+#secondary .related-content-item{
+    list-style-position: outside;
+    margin-left: 20px;
 }
 #login, #tags {
     background: #fbffe6;
