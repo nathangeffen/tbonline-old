@@ -319,6 +319,9 @@ blockquote {
 #secondary {
     padding-left: 50px;
 }
+#secondary #notification-message{
+    margin: 30px 0;
+}
 #login, #tags {
     background: #fbffe6;
     border: 1px solid #ddb;
