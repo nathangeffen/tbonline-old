@@ -232,6 +232,9 @@ blockquote {
     clear: both;
     visibility: hidden
 }
+.post .thumbprint img{
+    width: 140px;
+}
 #post-meta {
     padding: 15px 0 0 0;
     font-size: 14px;
