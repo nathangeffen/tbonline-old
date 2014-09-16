@@ -14,9 +14,7 @@
     {% else %}
         <form name="notify" action="{% url 'remove_post_notification'  %}?next={{request.path}}" method="post">{% csrf_token %}
         <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />
-        {% trans "Please" %}
-        <input type="submit" value="{% trans "stop" %}"/>
-        {% trans "emailing me about new articles." %}
+        <input type="submit" value="{% trans "Unsubscribe" %}"/>
         </form>
     {% endif %}
 {% else %}
