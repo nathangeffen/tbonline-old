@@ -319,7 +319,8 @@ blockquote {
 #secondary {
     padding-left: 50px;
 }
-#secondary .related-content-item{
+#secondary .related-content-item,
+#secondary .learn-about-item{
     list-style-position: outside;
     margin-left: 20px;
 }
@@ -404,9 +405,6 @@ footer .copyright {
 }
 #about p {
     padding: 26px 0px;
-}
-#about p#cc {
-    width: 540px;
 }
 #cc img {
     margin: 10px 0 0 0
