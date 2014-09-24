@@ -6,6 +6,6 @@ function searchForTag(tag) {
 </script>
 <ol class="tagcloud">
   {% for t in tags %}
-  <li class="li size-{{t.font_size}}"><a href="#" onclick="return searchForTag('{{t.name}}');">{{t.name}}</a></li>
+  <li class="li size-{{t.font_size}}"><a href="/posts/tag/{{t.name|urlencode}}">{{t.name}}</a></li>
   {% endfor %}
 </ol>
