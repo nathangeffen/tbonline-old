@@ -336,6 +336,10 @@ blockquote {
     padding: 15px 20px;
     margin: 15px 0
 }
+.tagged-item{
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+}
 #tags {
     margin: 30px 0
 }
