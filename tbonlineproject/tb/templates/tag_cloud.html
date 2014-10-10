@@ -1,9 +1,3 @@
-<script type="text/javascript">
-function searchForTag(tag) {
-  google.search.cse.element.getElement("standard0").execute(tag);
-  return false;
-}
-</script>
 <ol class="tagcloud">
   {% for t in tags %}
   <li class="li size-{{t.font_size}}"><a href="/posts/tag/{{t.name|urlencode}}">{{t.name}}</a></li>
