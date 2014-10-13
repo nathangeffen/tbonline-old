@@ -8,71 +8,31 @@
 {% endwith %}
 
 <div class="box">
-	<h2>{% trans "Learn about TB" %}</h2>
+	<h2>{% trans "Learn About TB" %}</h2>
 	<ul>
-		<li><a href="{% url 'tb_patient_info'%}">{% trans "Questions and answers about TB" %}</a></li>
-		<li><a href="/learn">{% trans "Simple tutorial on the science of TB" %}</a></li>
+		<li class="learn-about-item"><a href="{% url 'tb_patient_info'%}">{% trans "Questions and answers about TB" %}</a></li>
+		<li class="learn-about-item"><a href="/learn">{% trans "Simple tutorial on the science of TB" %}</a></li>
 	</ul>
 </div><!-- /box -->
 
-<div class="box">
-	<h2><a href="{% url 'post_category_list' 'News'%}">{% trans "Latest TB news" %}</a></h2>
+<div class="box tb-news">
+	<h2><a href="{% url 'post_category_list' 'News'%}">{% trans "Latest TB News" %}</a></h2>
 	<ul>
 	    {% get_posts_by_categories "News" as news_posts  %}
 	    {% for post in news_posts|slice:":10" %}
 	    <li><strong>{{post.date_published|date:"d N"}}</strong> &middot; <a href="{% url 'post_detail' post.date_published.year post.date_published.month post.date_published.day post.slug %}">{{post.title}}</a></li>
 		</li>
-		{% endfor %}		
+		{% endfor %}
 	</ul>
 </div><!-- /box -->
 
 <div class="box">
-<a href="https://www.facebook.com/pages/TB-Online/234621373332022?ref=ts&fref=ts" target="_blank"><img src="{{ STATIC_URL }}tb/gfx/facebook_64.png" /></a><br/>
-<a href="https://www.facebook.com/pages/TB-Online/234621373332022?ref=ts&fref=ts" target="_blank" >Follow us on Facebook.</a>&nbsp;
-</div>
-
-<div class="box">
-	<h2>Video Guide to TB</h2>
-	<object width="280" height="230">
-<iframe width="280" height="230" src="http://www.youtube.com/embed/videoseries?list=PL8236CC6402659B5E&amp;hl=en_US" frameborder="0" allowfullscreen></iframe>
-	</object>
-	<ul>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/3Qm-FzQ2TTk">Introduction</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/BZW6_b-tOgU"><strong>Ch. 1</strong> - Who can get TB?</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/QCZ-pj1xPHg"><strong>Ch. 2</strong> - The relationship between TB & HIV</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/vN-ig3lQ-Vs"><strong>Ch. 3</strong> - How do you identify TB?</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/9LpmOaX3qbI"><strong>Ch. 4</strong> - How TB is transmitted</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/DOcUa68o72o"><strong>Ch. 5</strong> - The interactions between TB & HIV</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/x-lMHizMHYE"><strong>Ch. 6</strong> - Diagnosing TB</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/c9txHNd6668"><strong>Ch. 7</strong> - Treating TB</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/AAcjAUremlA"><strong>Ch. 8</strong> - TB prophylaxis - this chapter is undergoing revision</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/jIm7lw2efXA"><strong>Ch. 9</strong> - Side effects of TB treatment</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/bnVG4cdBXWI"><strong>Ch. 10</strong> - Directly Observed Treatment Short-Course&nbsp;(DOTS)</a></li>
-		<li><a target="_blank" href="http://www.beatit.co.za/flash/popup.php?videourl=http://www.youtube.com/v/bnVG4cdBXWI"><strong>Ch. 11</strong> - Multi Drug Resistant TB (MDR-TB)</a></li>
-	</ul>
-	<p><a href="http://beatit.co.za/treatment-literacy-series-english/tb-and-hiv">{% trans "Watch the full HIV and TB treatment literacy programme free on the Beat-it website &rarr;" %}</a></p>
-	
+	<h2>Tag Cloud</h2>
+	{% get_tag_cloud %}
+	</ol>
 </div><!-- /box -->
 
 <div class="box">
-			<h2>{% trans "Recommended Reading" %}</h2>
-			<ul>
-                <li><a title="Get tested for TB. It can be cured." href="http://www.tac.org.za/community/files/file/TBPamphlets/TBTreatmentbrochureEnglish.pdf">Get tested for TB: A simple pamphlet from the TAC</a></li>
-                <li><a title="Blogs from people living with drug-resistant TB" href="http://www.msf.org.za/">MSF's TB &amp; Me: Real stories of people living with drug-resistant TB</a></li>
-                <li><a title="TAG&rsquo;s annually updated report on drugs, diagnostics, vaccines, immune-based therapies  and preventative technologies in development for HIV, TB and hepatitis" href="http://www.treatmentactiongroup.org/publication.aspx?id=3798">TAG Pipeline Report: Drugs, diagnostics and vaccines in development for TB, HIV and hepatitis</a></li>
-                <li><a title="TAG&rsquo;s 2010 Report on Tuberculosis research funding trends" href="http://www.treatmentactiongroup.org/publication.aspx?id=4450">Tuberculosis funding trends: A report by the Treatment Action Group</a></li>
-                <li><a title="WHO recommendations on the implementation of the Gene Xpert TB diagnostic, March 2011" href="http://www.tbonline.info/wp-content/uploads/2011/03/who_xpert_implementation_document_final_draft_6_march.pdf">WHO Recommendations on the Implementation of the Gene Xpert</a></li>
-            </ul>
-</div>
-
-<div class="box">
-	<h2>{% trans "Latest TB on Pubmed" %}</h2>
-	{% get_feeder "latest-tb-public-library-medicine" as feed %}
-	<ul>
-	    {% for entry in feed.get_rss_items|slice:"5" %}
-	        <li><a href="{{ entry.link }}">{{entry.title}}</a>
-	    {% empty %}
-	        {% trans "There are currently no entries for this feed" %}.
-	    {% endfor %}
-	</ul>			
+	<a href="https://www.facebook.com/pages/TB-Online/234621373332022?ref=ts&fref=ts" target="_blank"><img src="{{ STATIC_URL }}tb/gfx/facebook_64.png" /></a><br/>
+	<a href="https://www.facebook.com/pages/TB-Online/234621373332022?ref=ts&fref=ts" target="_blank" >Follow us on Facebook.</a>&nbsp;
 </div>

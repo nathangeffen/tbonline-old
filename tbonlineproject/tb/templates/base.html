@@ -3,111 +3,120 @@
 
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="CMT, TAC, TAG, i-Base"/>
+      <meta name="description" content="Tuberculosis advocacy and education"/>
+      <meta name="keywords" content="TB, Tuberculosis, white plague, consumption, INH, IPT, medicines"/>
 
-<head>
-    <meta name="viewport" content="width=device-width; initial-scale=1"/>    
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="CMT, TAC, TAG, i-Base"/>
-    <meta name="description" content="Tuberculosis advocacy and education"/>
-    <meta name="keywords" content="TB, Tuberculosis, white plague, consumption, INH, IPT, medicines"/>        
+      <link rel="alternate" type="application/rss+xml"  title="TB Online" href="/posts/feed/">
+      <link rel="shortcut icon" href="{{STATIC_URL}}tb/images/favicon.ico" />
 
-    <link rel="alternate" type="application/rss+xml"  title="TB Online" href="/posts/feed/">
-    
-    <link rel="shortcut icon" href="{{STATIC_URL}}tb/images/favicon.ico" />
-    
+      {% block stylesheets %}
+          <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+          <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}tb/css/site.css" />
 
-    {% with google_code="UA-22851877-1" %}
-    {% include 'google_analytics_script_snippet.html' %}
-    {% endwith %}
+          {% block inline-styles %}
+          {% endblock %}
+      {% endblock %}
 
-    {% block scripts %}
-    
-    {% endblock %}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-    {% block stylesheets %}
-        <link rel="stylesheet" media="screen, projection" 
-        href="{{ STATIC_URL }}tb/css/site.css" />
-        <meta name="HandheldFriendly" content="True">
-        <meta name="MobileOptimized" content="320">
-                
-        {% comment %}
-        Inline styles can be used if the style depends on context data.
-        {% endcomment %}
-        
-        {% block inline-styles %}     
-        {% endblock %}
-        
-        
-    {% endblock %}
-   
-                     
-    <title>{% block title %}{{site.name}}{% endblock %}</title>
-
-</head>
-
+      <title>{% block title %}{{site.name}}{% endblock %}</title>
+  </head>
 <body>
 
-<div id="wrapper">
-
-    <div id="head">
-        <div>
-
-          <a href="/"><img src="{{ STATIC_URL }}tb/gfx/brand.png" alt="TB Online logo" /></a>
-          <p><strong>Information for activists, patients, health workers &amp; researchers working to end&nbsp;Tuberculosis</strong></p>
-                        
-            {% include 'search_button_snippet.html' %}
-            <small><em>Website of the Global Tuberculosis Community Advisory Board
-      {% if user.is_authenticated %}
-          <p></p>
-          {% trans "Welcome" %}
-  
-      <a href="{% url 'update_profile' %}">
-      
-          {% if user.get_full_name %} 
-              {{user.get_full_name}}
-          {% else %}
-              {{user.username}}
-          {% endif %}
-
+<div class="container">
+  <header id="head" class="navbar-collapse collapse row">
+    <div class="col-sm-6 col-12-xs brand">
+      <a href="/">
+        <img class="brand-logo" src="{{ STATIC_URL }}tb/gfx/brand.png" alt="TB Online logo" />
       </a>
 
-          |          
-          <a href="{% url 'django.contrib.auth.views.logout' %}">
-          {% trans "Logout" %}
-          </a>
-
-      {% endif %}      
-          </small></em>                                    
-        </div>
-    </div> <!-- header --> 
-    
-    {% include 'menu_snippet.html' %}
-    
-    <div class="grid">
-
-        <div id="content">{% block content %}{% endblock %}</div>
-        <div id="secondary">
-        {% block sidebar-1 %}
-
-        {% endblock %}
-        </div>
-        
-        <div id="sponsors">
-			<a href="http://www.tac.org.za/"><img src="{{ STATIC_URL }}tb/gfx/tac_logo.png" alt="TAC logo" /></a>
-			<a href="http://www.treatmentactiongroup.org/"><img src="{{ STATIC_URL }}tb/gfx/tag_logo.jpeg" alt="TAG logo" /></a>
-			<a href="http://i-base.info/"><img src="{{ STATIC_URL }}tb/gfx/ibase_logo.png" alt="i-base logo" /></a>
-			<a href="http://www.eatg.org/"><img src="{{ STATIC_URL }}tb/gfx/eatg_logo.jpg" alt="EATG logo" /></a>
-			<a href="http://www.sadevelopmentfund.org/"><img src="{{ STATIC_URL }}tb/gfx/sadf_logo.jpeg" alt="SADF logo" /></a>
-			<a href="http://www.cmt.org.za/"><img src="{{ STATIC_URL }}tb/gfx/cmt_logo.png" alt="CMT logo" /></a>
-		</div>
-        
+      <p class="brand-info hidden-xs">Information for activists, patients, health workers &amp;  researchers working to end&nbsp;tuberculosis</p>
     </div>
 
-    {% block footer %}
-        {% include 'footer_snippet.html' %}
-    {% endblock %}
+    <div class="col-sm-6 hidden-xs">
+      {% include 'search_button_snippet.html' %}
 
-</div>  <!-- wrapper -->
+      <small class="tbcab-brand">
+        <img class="tbcab-brand-img" src="{{ STATIC_URL }}tb/gfx/tcab_logo.png" alt="TBCAB logo" />
+        <p class="tbcab-brand-text">Website of the Global Tuberculosis Community Advisory Board</p>
+      </small>
+
+      {% if user.is_authenticated %}
+        <p></p>
+        {% trans "Welcome" %}
+
+        <a href="{% url 'update_profile' %}">
+        {% if user.get_full_name %}
+          {{user.get_full_name}}
+        {% else %}
+          {{user.username}}
+        {% endif %}
+        </a>
+        |
+        <a href="{% url 'django.contrib.auth.views.logout' %}">
+        {% trans "Logout" %}
+        </a>
+
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <a class="navbar-brand visible-xs" href="/">TB Online</a>
+      </div>
+
+      {% include 'menu_snippet.html' %}
+    </div><!--/.container-fluid -->
+  </div>
+
+
+  <div class="row">
+    <div id="content" class="col-md-8">
+      {% block content %}{% endblock %}
+    </div>
+
+    <div id="secondary" class="col-md-4">
+      {% block sidebar-1 %}
+      {% endblock %}
+    </div>
+  </div>
+
+  </div>
+
+{% block footer %}
+    {% include 'footer_snippet.html' %}
+{% endblock %}
+
+{% with google_code="UA-22851877-1" %}
+{% include 'google_analytics_script_snippet.html' %}
+{% endwith %}
+
+{% block scripts %}
+
+{% endblock %}
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js'></script>
 
 </body>
 

@@ -1,9 +1,16 @@
 {% load i18n %}
 
 <p>{% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }} &middot;  {% trans "Total posts" %}: {{posts|length}}</p>
-{% if page_obj.has_previous %}
-    <p class="more"><a href="?page={{ page_obj.previous_page_number }}">&larr; {% trans "Newer posts" %}</a></p>
+{% if page_obj.number > 1 %}
+<a href="?page=1">&larr;{% trans "First" %}</a>
 {% endif %}
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+{% endif %}
+<a href="?page={{ page_obj.number }}"><b>{{ page_obj.number }}</b></a>
 {% if page_obj.has_next %}
-    <p class="more"><a href="?page={{ page_obj.next_page_number }}">{% trans "Older posts" %} &rarr;</a></p>
+<a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+{% endif %}
+{% if page_obj.number < page_obj.paginator.num_pages %}
+<a href="?page={{ page_obj.paginator.num_pages }}">{% trans "Last" %}&rarr;</a>
 {% endif %}

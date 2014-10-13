@@ -7,21 +7,20 @@
     {% is_notified "post" as notified %}
     {% if not notified %}
         <form name="notify" action="{% url 'notify_post'  %}?next={{request.path}}" method="post">{% csrf_token %}
-        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />        
+        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />
         <input type="submit" value="{% trans "Email" %}"/>
         {% trans "me weekly about new articles." %}
         </form>
     {% else %}
         <form name="notify" action="{% url 'remove_post_notification'  %}?next={{request.path}}" method="post">{% csrf_token %}
-        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />        
-        {% trans "Please" %} 
-        <input type="submit" value="{% trans "stop" %}"/>
-        {% trans "emailing me about new articles." %}
-        </form>    
-    {% endif %}    
-{% else %} 
-	<p><a href="{% url 'django.contrib.auth.views.login' %}?next={{post.get_absolute_url}}">{% trans "Login" %}</a> {% trans "or" %}
-	<a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">{% trans "register" %}</a>
-	{% trans "to be notified of new posts." %}</p>
-{% endif %}    
+        <input type="hidden" name="name" value="{{notification_name}}" id="id_name" />
+        <input type="submit" value="{% trans "Unsubscribe" %}"/>
+        </form>
+    {% endif %}
+{% else %}
+	<p>
+        <a href="{% url 'registration.views.register' %}?next={{post.get_absolute_url}}">{% trans "Subscribe" %}</a>
+        {% trans "to weekly news digest" %}
+    </p>
+{% endif %}
 </div>

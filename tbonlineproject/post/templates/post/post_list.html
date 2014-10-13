@@ -4,6 +4,8 @@
 
 {% block title %}{{block.super}} - Posts{% endblock %}
 
+<h1 class="title">{% trans "Items tagged with " %}<em>{{tag}}</em></h1>
+
 {% block content %}
 
 {% include "post/post_list_snippet.html" %}
