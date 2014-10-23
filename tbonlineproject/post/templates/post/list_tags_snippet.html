@@ -4,9 +4,9 @@
 <div id="tags">
     <p>{% trans "Tags" %}:
     {% for taggeditem in post.tags.all %}
-        <a href="{% url "post_tag_list" taggeditem.tag.name %}">{{taggeditem.tag}}</a>{% if not forloop.last %}, {% endif %}
+        <a href="/tags/{{ taggeditem.tag.name|urlencode }}">{{taggeditem.tag}}</a>{% if not forloop.last %}, {% endif %}
     {% empty %}
         {% trans "None" %}
-    {% endfor %} 
+    {% endfor %}
     </p>
 </div>
