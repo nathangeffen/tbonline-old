@@ -9,6 +9,8 @@
 
 <p>{% trans "Send us an email using this contact form" %}.</p>
 
+<p>TB Online does not intend to offer medical advice, consultations, or treatment of any kind. If you or a loved one has a specific medical need or question, please contact a care provider or your national treatment program. If you are a clinician looking for advice for a case, please consult the ERS/WHO TB Consilium: https://www.tbconsilium.org/. TB Online does NOT sell or provide quotes for any medical devices; please do not contact us with requests related to purchasing GeneXpert or other TB diagnostic products.</p>
+
 <div id="contact-form">   
 <form method="POST" action="" enctype="multipart/form-data">{% csrf_token %}
     {{ form.name.errors }}
